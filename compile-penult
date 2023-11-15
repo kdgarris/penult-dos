@@ -1,0 +1,2 @@
+#!/bin/bash
+dosbox /home/karl/dos/cpenult.bat -fullscreen

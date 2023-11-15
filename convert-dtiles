@@ -1,0 +1,3 @@
+#!/bin/bash
+for i in `cat dtiles.txt`; do ./convert-ppm.py ${i}.ppm >${i}.txt; done
+for i in `cat dtiles.txt`; do ./mkbitmap.py ${i}.txt dtiles.cga; done

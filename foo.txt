@@ -1,0 +1,645 @@
+Open Watcom Linker Version 1.9
+Portions Copyright (c) 1985-2002 Sybase, Inc. All Rights Reserved.
+Created on:       23/05/16 11:23:36
+Executable Image: penult.exe
+creating a DOS executable
+Error! E2028: _SaveKey is an undefined reference
+Error! E2028: bit_create_ is an undefined reference
+Error! E2028: bit_ink_ is an undefined reference
+Error! E2028: bit_box_ is an undefined reference
+Error! E2028: bit_read_ is an undefined reference
+Error! E2028: bit_put_ is an undefined reference
+Error! E2028: scr_put_ is an undefined reference
+Error! E2028: bit_destroy_ is an undefined reference
+Error! E2028: scr_palette_ is an undefined reference
+Error! E2028: scr_destroy_ is an undefined reference
+Error! E2028: scr_create_ is an undefined reference
+Error! E2028: new_KeyHandler_ is an undefined reference
+
+
+                        +------------+
+                        |   Groups   |
+                        +------------+
+
+Group                           Address              Size
+=====                           =======              ====
+
+DGROUP                          070f:0000            00004da0
+
+
+
+                        +--------------+
+                        |   Segments   |
+                        +--------------+
+
+Segment                Class          Group          Address         Size
+=======                =====          =====          =======         ====
+
+BEGTEXT                CODE           AUTO           0000:0000       00000007
+_TEXT                  CODE           AUTO           0000:0010       000070df
+FAR_DATA               FAR_DATA       AUTO           070e:000f       00000000
+_NULL                  BEGDATA        DGROUP         070f:0000       00000020
+_AFTERNULL             BEGDATA        DGROUP         0711:0000       00000002
+CONST                  DATA           DGROUP         0711:0002       00002c8c
+CONST2                 DATA           DGROUP         09d9:000e       00000ce8
+_DATA                  DATA           DGROUP         0aa8:0006       00000854
+XIB                    DATA           DGROUP         0b2d:000a       00000000
+XI                     DATA           DGROUP         0b2d:000a       0000001e
+XIE                    DATA           DGROUP         0b2f:0008       00000000
+YIB                    DATA           DGROUP         0b2f:0008       00000000
+YI                     DATA           DGROUP         0b2f:0008       00000018
+YIE                    DATA           DGROUP         0b31:0000       00000000
+STRINGS                DATA           DGROUP         0b31:0000       00000000
+DATA                   DATA           DGROUP         0b31:0000       00000000
+_BSS                   BSS            DGROUP         0b31:0000       0000037a
+STACK                  STACK          DGROUP         0b69:0000       00000800
+
+
+                        +----------------+
+                        |   Memory Map   |
+                        +----------------+
+
+* = unreferenced symbol
++ = symbol only referenced locally
+
+Address        Symbol
+=======        ======
+
+Module: PENULT.OBJ(C:\PENULT\penult.c)
+070f:4220+     _Game
+070f:4224+     _prev_int_1c
+070f:4228+     _Tiles
+070f:4332+     _Hero
+070f:4350+     _Combat
+070f:4376+     _Menu
+070f:437c+     _CurrentFont
+070f:437e+     _ClearText
+070f:4380+     _ViewportBuffer
+070f:4382+     _JoyYUp
+070f:4384+     _JoyYDown
+070f:4386+     _CurrentMap
+070f:4388+     _Flags
+070f:438a+     _MyScreen
+070f:438c+     _JoyXRight
+070f:438e+     _JoyXLeft
+070f:2cae+     _world19
+070f:2cb2+     _world33
+070f:2cb6+     _world36
+070f:2cba+     _world38
+070f:2cbe+     _world41
+070f:2cc2+     _world46
+070f:2cc6+     _world48
+070f:2cca+     _world69
+070f:2cce+     _world71
+070f:2cd2+     _acadia5
+070f:2cd6+     _castle40
+070f:2cda+     _castleb40
+070f:2cde+     _castleb1
+070f:2ce2+     _castleb45
+070f:2ce6+     _duskgrove45
+070f:2cea+     _world_triggers
+070f:2d26+     _castle_triggers
+070f:2d32+     _acadia_triggers
+070f:2d3e+     _stoneheart_triggers
+070f:2d44+     _oak_triggers
+070f:2d4a+     _waters_triggers
+070f:2d50+     _freehaven_triggers
+070f:2d56+     _castleb_triggers
+070f:2d6e+     _duskgrove_triggers
+070f:2d7a+     _spiretop_triggers
+070f:2d80+     _thanas_hold_triggers
+070f:2d86+     _keep_of_shadow_triggers
+070f:2d8c+     _blocked_sound_data
+070f:2da0+     _walk_sound_data
+070f:2da4+     _cast_sound_data
+070f:2dc6+     _heal_sound_data
+070f:2dd8+     _miss_sound_data
+070f:2de6+     _hit_sound_data
+070f:2df0+     _missile_sound_data
+070f:3996+     _TileProperties
+070f:3a1b+     _OutdoorMenuActions
+070f:3a21+     _TownMenuActions
+070f:3a29+     _VendorMenuActions
+070f:3a2d+     _HeroCombatMenuActions
+070f:3a35+     _DragonCombatMenuActions
+070f:3a3b+     _MenuActions
+070f:3a45+     _Actions
+070f:3a4b+     _Triggers
+070f:3a63+     _map_names
+070f:3a7b+     _Sounds
+070f:3a8d+     _o1_indexes
+070f:3a93+     _o2_indexes
+070f:3a9d+     _o3_indexes
+070f:3aa7+     _o4_indexes
+070f:3aad+     _o5_indexes
+070f:3ab3+     _o6_indexes
+070f:3abd+     _o7_indexes
+070f:3ac7+     _o8_indexes
+0000:0010+     timer_rtn_
+0000:011e+     check_joystick_input_
+0000:0196+     check_button_press_
+0000:01c2+     read_joy_buttons_
+0000:0212+     read_joy_
+0000:0259+     parse_option_
+0000:0287*     init_joystick_
+0000:02c7+     load_display_gui_
+0000:03e7+     draw_stats_
+0000:057c+     load_tiles_
+0000:05d3+     leave_town_
+0000:062d+     update_town_map_at_
+0000:06e1+     update_world_map_at_
+0000:07b9+     do_vision_
+0000:0c13+     display_map_
+0000:0cb5+     get_direction_
+0000:0ce8+     CheckMoveHero_
+0000:0e12+     play_sound_
+0000:0e37+     cleanup_
+0000:0e6d+     set_timer_
+0000:0e9b+     check_triggers_
+0000:0f29+     load_acadia_
+0000:0f72+     load_castle_
+0000:0faa+     load_oak_
+0000:0fe3+     load_duskgrove_
+0000:101c+     load_stoneheart_
+0000:1061+     load_waters_
+0000:109a+     load_spiretop_
+0000:10d3+     load_guru_
+0000:10f1+     load_castleb_
+0000:110e+     load_refugee_camp_
+0000:1116+     load_duskgrove_up_
+0000:1137+     load_castle_up_
+0000:1145+     load_map_
+0000:11d7+     print_line_formatted_
+0000:121a+     print_line_
+0000:12f4+     clear_text_window_
+0000:1324*     generate_character_
+0000:1a9e+     validate_name_
+0000:1ae3+     save_game_
+0000:1b49+     load_game_
+0000:1bcd+     check_update_menu_
+0000:1cc8+     create_menu_
+0000:1d8a+     activate_menu_item_
+0000:1dbb+     split_line_start_
+0000:1e20+     queen_talk_
+0000:1ec0+     vendor_function_
+0000:1fcd+     do_buy_yes_
+0000:21a6+     do_buy_no_
+0000:21d1+     do_talk_
+0000:228d+     print_pager_line_
+0000:2373+     do_use_
+0000:237e+     do_cast_
+0000:2386+     do_stats_
+0000:238f+     oh_shit_
+0000:23aa+     flash_effect_
+0000:23ef+     load_arena_
+0000:2563+     start_combat_
+0000:26c4+     do_attack_
+0000:2882+     which_direction_
+0000:28bf+     do_ranged_
+0000:29a8+     update_missile_
+0000:2a2f+     do_combat_cast_
+0000:2a35+     do_combat_use_
+0000:2a3b+     do_combat_move_
+0000:2b28+     do_dragon_heal_
+0000:2b2e+     advance_combat_state_
+0000:2b7a+     TileCreature_
+0000:2bfa      main_
+070f:2e00+     _breath_sound_data
+070f:2e10+     _combat_start_data
+070f:2ea6+     _SoundLength
+070f:3b8f+     _CurrentPalette
+070f:3b90+     _ClockTicks
+070f:3b92+     _PrevTicks
+070f:3b94+     _LogicalTicks
+070f:3b95+     _CurrentTiles
+070f:3b97+     _DOSTimer
+070f:3b9b+     _CurrentSound
+070f:3b9c+     _SoundPos
+070f:4390+     _joy_y
+070f:4392+     _joy_x
+070f:4394+     _MyKeyHandler
+070f:4396+     _viewport_prev
+070f:43f9+     _viewport
+070f:445c+     _b0
+070f:445d+     _b1
+Module: GAMETXT.OBJ(C:\PENULT\gametxt.c)
+070f:2eb0      _EnemyToTile
+070f:2eca      _EnemyPower
+070f:2ef2      _EnemyStartX
+070f:2ef6      _EnemyStartY
+070f:2efa      _EnemyHPBase
+070f:2f05      _MenuText
+070f:2f0a      _MenuPrompt
+070f:2f0f      _MenuChoices
+070f:2f14+     _OutdoorMenuPos
+070f:2f17+     _TownMenuPos
+070f:2f1b+     _YesNoMenuPos
+070f:2f1d+     _HeroCombatMenuPos
+070f:2f21+     _DragonMenuPos
+070f:2f24+     _plains_arena
+070f:2f87+     _forest_arena
+070f:2fea+     _heavy_forest_arena
+070f:304d+     _bridge_arena
+070f:30b0+     _sand_arena
+070f:3113+     _ship_arena
+070f:3176+     _city_arena
+070f:31d9+     _lava_arena
+070f:323c+     _castle_arena
+070f:329f+     _water_arena
+070f:3302+     _ship_ship_arena
+070f:3365      _NPCText
+070f:3467      _NPCName
+070f:3569+     _OutdoorNPC
+070f:356c+     _CastleNPC
+070f:35fc+     _AcadiaNPC
+070f:3659+     _StoneheartNPC
+070f:36b9+     _OakNPC
+070f:3725+     _WatersNPC
+070f:3773+     _FreehavenNPC
+070f:37d9+     _CastleBNPC
+070f:3848+     _DuskgroveNPC
+070f:387e+     _SpiretopNPC
+070f:38c6+     _ThanasHoldNPC
+070f:3908+     _KeepofShadowNPC
+070f:3914      _NPCFunction
+070f:3ba4      _Armor
+070f:3bb0      _Melee
+070f:3bbc      _Ranged
+070f:3bc6      _Status
+070f:3bcc      _Gender
+070f:3bd2      _MarkerPos
+070f:3bdc      _Arena
+070f:3bf2      _NPC
+070f:3c0a      _MonsterName
+070f:3c5a      _Messages
+Module: D:\WATCOM/lib286/dos\clibs.lib(disable.c)
+0000:2e4f      _disable_
+Module: D:\WATCOM/lib286/dos\clibs.lib(inp.c)
+0000:2e51      inp_
+Module: D:\WATCOM/lib286/dos\clibs.lib(outp.c)
+0000:2e59      outp_
+Module: D:\WATCOM/lib286/dos\clibs.lib(chainint)
+0000:2e64      _chain_intr_
+Module: D:\WATCOM/lib286/dos\clibs.lib(enable.c)
+0000:2e84      _enable_
+Module: D:\WATCOM/lib286/dos\clibs.lib(stk)
+0000:2e8b      __STK
+0000:2ea2*     __STKOVERFLOW_
+Module: D:\WATCOM/lib286/dos\clibs.lib(fopen.c)
+0000:2ebd+     __open_flags_
+0000:305d+     _fsopen_
+0000:30a2      fopen_
+0000:3102*     freopen_
+Module: D:\WATCOM/lib286/dos\clibs.lib(fseek.c)
+0000:31a5      fseek_
+Module: D:\WATCOM/lib286/dos\clibs.lib(fclose.c)
+0000:32a6      __doclose_
+0000:3327      __shutdown_stream_
+0000:3338      fclose_
+070f:445e+     ___RmTmpFileFn
+Module: D:\WATCOM/lib286/dos\clibs.lib(d_setvec.c)
+0000:335a      _dos_setvect_
+Module: D:\WATCOM/lib286/dos\clibs.lib(nfree.c)
+0000:3367      _nfree_
+0000:3367      free_
+070f:4460+     ___MiniHeapFreeRover
+Module: D:\WATCOM/lib286/dos\clibs.lib(nmalloc.c)
+0000:3428      _nmalloc_
+0000:3428      malloc_
+070f:3eee      ___nheapbeg
+070f:3ef0      ___MiniHeapRover
+070f:3ef2      ___LargestSizeB4MiniHeapRover
+Module: D:\WATCOM/lib286/dos\clibs.lib(fread.c)
+0000:34e1      fread_
+Module: D:\WATCOM/lib286/dos\clibs.lib(vsprintf.c)
+0000:368a      vsprintf_
+Module: D:\WATCOM/lib286/dos\clibs.lib(fmemcpy.c)
+0000:369c      _fmemcpy_
+Module: D:\WATCOM/lib286/dos\clibs.lib(strcpy.c)
+0000:36c1      strcpy_
+Module: D:\WATCOM/lib286/dos\clibs.lib(strlen.c)
+0000:3700      strlen_
+Module: D:\WATCOM/lib286/dos\clibs.lib(fwrite.c)
+0000:3717      fwrite_
+Module: D:\WATCOM/lib286/dos\clibs.lib(fgetc.c)
+0000:38c2      __fill_buffer_
+0000:3977      fgetc_
+Module: D:\WATCOM/lib286/dos\clibs.lib(strncpy.c)
+0000:39f6      strncpy_
+Module: D:\WATCOM/lib286/dos\clibs.lib(puts.c)
+0000:3a1f      puts_
+Module: D:\WATCOM/lib286/dos\clibs.lib(exit.c)
+0000:3a45+     __null_int23_exit_
+0000:3a46      exit_
+0000:3a64*     _exit_
+070f:3ef4+     ___int23_exit
+070f:3ef6+     ___FPE_handler_exit
+Module: D:\WATCOM/lib286/dos\clibs.lib(rand.c)
+0000:3a74      rand_
+0000:3aa6      srand_
+Module: D:\WATCOM/lib286/dos\clibs.lib(time.c)
+0000:3abd      time_
+Module: D:\WATCOM/lib286/dos\clibs.lib(d_getvec.c)
+0000:3af6      _dos_getvect_
+Module: D:\WATCOM/lib286/dos\clibs.lib(abs.c)
+0000:3b01      abs_
+Module: D:\WATCOM/lib286/dos\clibs.lib(cstart)
+0000:0003*     ___begtext
+070f:0000*     __nullarea
+0000:3b0a      _cstart_
+0000:3bdf*     _Not_Enough_Memory_
+0000:3d0a      __exit_
+0000:3d29      __do_exit_with_msg__
+0000:3d6c      __GETDS
+Module: D:\WATCOM/lib286/dos\clibs.lib(cmodel)
+0000:3d76      _small_code_
+0000:3d76*     CodeModelMismatch
+Module: D:\WATCOM/lib286/dos\clibs.lib(argcv.c)
+070f:4462      __argc
+070f:4464      __argv
+070f:4466      ___argc
+070f:4468      ___argv
+Module: D:\WATCOM/lib286/dos\clibs.lib(xmsg.c)
+0000:3d76*     __exit_with_msg_
+0000:3d79      __fatal_runtime_error_
+Module: D:\WATCOM/lib286/dos\clibs.lib(crwdata)
+070f:3efc      __curbrk
+070f:3f04      __STACKLOW
+070f:3f06      __STACKTOP
+070f:3f08      __cbyte
+070f:3f0a      __child
+070f:3f0c      __no87
+070f:3f1a      ___FPE_handler
+070f:3efe      __psp
+070f:3f0e      __get_ovl_stack
+070f:3f12      __restore_ovl_stack
+070f:3f16      __close_ovl_file
+070f:3f1e      __LpCmdLine
+070f:3f22      __LpPgmName
+070f:3f00      __osmajor
+070f:3f01      __osminor
+070f:3f02      __osmode
+070f:3f03      __HShift
+Module: D:\WATCOM/lib286/dos\clibs.lib(comtflag.c)
+0000:3d94*     __set_commode_
+070f:3f26      __commode
+Module: D:\WATCOM/lib286/dos\clibs.lib(seterrno.c)
+0000:3d9b      __set_errno_
+0000:3da9*     __set_EDOM_
+0000:3db5*     __set_ERANGE_
+0000:3dc1*     __set_EINVAL_
+0000:3dd0      __set_doserrno_
+Module: D:\WATCOM/lib286/dos\clibs.lib(iob.c)
+070f:3f28      ___iob
+070f:4040      __fmode
+070f:446a      ___OpenStreams
+070f:446c      ___ClosedStreams
+Module: D:\WATCOM/lib286/dos\clibs.lib(tolower.c)
+0000:3dd9      tolower_
+Module: D:\WATCOM/lib286/dos\clibs.lib(open.c)
+0000:3f8c*     open_
+0000:3fab      sopen_
+Module: D:\WATCOM/lib286/dos\clibs.lib(chktty.c)
+0000:3fd0      __chktty_
+Module: D:\WATCOM/lib286/dos\clibs.lib(freefp.c)
+0000:3ff5      __freefp_
+0000:4022      __purgefp_
+Module: D:\WATCOM/lib286/dos\clibs.lib(allocfp.c)
+0000:4046      __allocfp_
+Module: D:\WATCOM/lib286/dos\clibs.lib(lseek.c)
+0000:40d7      lseek_
+Module: D:\WATCOM/lib286/dos\clibs.lib(flush.c)
+0000:4102      __flush_
+Module: D:\WATCOM/lib286/dos\clibs.lib(tell.c)
+0000:41eb      tell_
+Module: D:\WATCOM/lib286/dos\clibs.lib(__lseek.c)
+0000:41fa      __lseek_
+Module: D:\WATCOM/lib286/dos\clibs.lib(_clse.c)
+0000:4232      __close_
+Module: D:\WATCOM/lib286/dos\clibs.lib(mem.c)
+0000:4270      __MemAllocator
+0000:433a      __MemFree
+Module: D:\WATCOM/lib286/dos\clibs.lib(nmemneed.c)
+0000:4497      __nmemneed_
+Module: D:\WATCOM/lib286/dos\clibs.lib(grownear.c)
+0000:4506+     __LastFree_
+0000:456d      __ExpandDGROUP_
+Module: D:\WATCOM/lib286/dos\clibs.lib(qread.c)
+0000:4647      __qread_
+Module: D:\WATCOM/lib286/dos\clibs.lib(ioalloc.c)
+0000:465d      __ioalloc_
+Module: D:\WATCOM/lib286/dos\clibs.lib(prtf.c)
+0000:46c9      __prtf_
+Module: D:\WATCOM/lib286/dos\clibs.lib(qwrit.c)
+0000:5228      __qwrite_
+Module: D:\WATCOM/lib286/dos\clibs.lib(errno.c)
+0000:527e      __get_errno_ptr_
+0000:5282      __get_doserrno_ptr_
+070f:446e+     _errno
+070f:4470+     __doserrno
+Module: D:\WATCOM/lib286/dos\clibs.lib(fputc.c)
+0000:5286      fputc_
+Module: D:\WATCOM/lib286/dos\clibs.lib(flushall.c)
+0000:532c      __flushall_
+0000:535d*     flushall_
+Module: D:\WATCOM/lib286/dos\clibs.lib(gtche.c)
+0000:5362      getche_
+Module: D:\WATCOM/lib286/dos\clibs.lib(fputs.c)
+0000:5377      fputs_
+Module: D:\WATCOM/lib286/dos\clibs.lib(initrtns.c)
+0000:5429*     __FInitRtns
+0000:542d      __InitRtns
+0000:5488*     __FFiniRtns
+0000:548c      __FiniRtns
+Module: D:\WATCOM/lib286/dos\clibs.lib(i4m)
+0000:54f0      __I4M
+0000:54f0      __U4M
+Module: D:\WATCOM/lib286/dos\clibs.lib(gtctm.c)
+0000:5508      __getctime_
+Module: D:\WATCOM/lib286/dos\clibs.lib(mktime.c)
+0000:5591      mktime_
+Module: D:\WATCOM/lib286/dos\clibs.lib(cmain086.c)
+0000:562c      __CMain
+Module: D:\WATCOM/lib286/dos\clibs.lib(uselfn.c)
+070f:4042      ___uselfn
+Module: D:\WATCOM/lib286/dos\clibs.lib(dosseg)
+0000:5642      __DOSseg__
+Module: D:\WATCOM/lib286/dos\clibs.lib(initargv.c)
+0000:5643      __Init_Argv_
+0000:5674+     _getargv_
+0000:57d9      __Fini_Argv_
+Module: D:\WATCOM/lib286/dos\clibs.lib(enterdb.c)
+0000:57e4      __EnterWVIDEO_
+070f:4044+     ___WD_Present
+Module: D:\WATCOM/lib286/dos\clibs.lib(initfile.c)
+0000:5800      __InitFiles_
+Module: D:\WATCOM/lib286/dos\clibs.lib(ioexit.c)
+0000:58c2*     fcloseall_
+0000:58c7      __full_io_exit_
+Module: D:\WATCOM/lib286/dos\clibs.lib(opendos.c)
+0000:58cf      _dos_open_
+Module: D:\WATCOM/lib286/dos\clibs.lib(iomode.c)
+0000:58e3      __GetIOMode_
+0000:58fa      __SetIOMode_nogrow_
+070f:4046      ___NFiles
+070f:4048      ___init_mode
+070f:4070      ___io_mode
+Module: D:\WATCOM/lib286/dos\clibs.lib(isatt.c)
+0000:590f      isatty_
+Module: D:\WATCOM/lib286/dos\clibs.lib(dosret.c)
+0000:592b*     _dosretax_
+0000:5930*     _dosret0_
+0000:5937      __set_errno_dos_
+0000:5987*     __set_errno_dos_reterr_
+Module: D:\WATCOM/lib286/dos\clibs.lib(umaskval.c)
+070f:4086      ___umaskval
+Module: D:\WATCOM/lib286/dos\clibs.lib(creatdos.c)
+0000:5991      _dos_creat_
+0000:59a3*     _dos_creatnew_
+Module: D:\WATCOM/lib286/dos\clibs.lib(stiomode.c)
+0000:59b6+     __grow_iomode_
+0000:5a3a+     __shrink_iomode_
+0000:5a53      __SetIOMode_
+Module: D:\WATCOM/lib286/dos\clibs.lib(fsync.c)
+0000:5aa4      fsync_
+Module: D:\WATCOM/lib286/dos\clibs.lib(amblksiz.c)
+070f:4088      __amblksiz
+Module: D:\WATCOM/lib286/dos\clibs.lib(heapen.c)
+0000:5aa7*     _heapenable_
+070f:408a      ___heap_enabled
+Module: D:\WATCOM/lib286/dos\clibs.lib(sbrk.c)
+0000:5ab3*     sbrk_
+0000:5ab7      __brk_
+Module: D:\WATCOM/lib286/dos\clibs.lib(wctomb.c)
+0000:5b0b      wctomb_
+Module: D:\WATCOM/lib286/dos\clibs.lib(itoa.c)
+0000:5b28+     utoa_
+0000:5b6d      itoa_
+Module: D:\WATCOM/lib286/dos\clibs.lib(strupr.c)
+0000:5b88      strupr_
+Module: D:\WATCOM/lib286/dos\clibs.lib(noefgfmt.c)
+070f:408c      ___EFG_printf
+070f:408e*     ___EFG_scanf
+Module: D:\WATCOM/lib286/dos\clibs.lib(mbisdbcs.c)
+070f:4476      ___IsDBCS
+Module: D:\WATCOM/lib286/dos\clibs.lib(mbislead.c)
+0000:5bb8*     _ismbblead_
+070f:4478      ___MBCSIsTable
+Module: D:\WATCOM/lib286/dos\clibs.lib(lltoa.c)
+0000:5bcd      ulltoa_
+0000:5c92*     lltoa_
+Module: D:\WATCOM/lib286/dos\clibs.lib(ltoa.c)
+0000:5ce5      ultoa_
+0000:5d38*     ltoa_
+Module: D:\WATCOM/lib286/dos\clibs.lib(sgdef086)
+070f:41ea      __Start_XI
+070f:4208      __End_XI
+070f:4208      __Start_YI
+070f:4220      __End_YI
+Module: D:\WATCOM/lib286/dos\clibs.lib(locmktim.c)
+0000:5d58      __local_mktime_
+Module: D:\WATCOM/lib286/dos\clibs.lib(gmtime.c)
+0000:5f34      __brktime_
+0000:6067+     _gmtime_
+0000:608a*     gmtime_
+Module: D:\WATCOM/lib286/dos\clibs.lib(tzset.c)
+070f:4090      ___start_dst
+070f:40a2      ___end_dst
+070f:41b6*     _tzname
+070f:41ba      _timezone
+070f:41be      _daylight
+070f:41c0      ___dst_adjust
+0000:6093*     __DontCacheOSTZ_
+0000:60a7*     __CacheOSTZ_
+0000:64db+     __parse_tz_
+0000:6635      tzset_
+Module: D:\WATCOM/lib286/dos\clibs.lib(timeutil.c)
+0000:674d      __isindst_
+Module: D:\WATCOM/lib286/dos\clibs.lib(___argc.c)
+070f:458c      ____Argc
+070f:458e      ____Argv
+Module: D:\WATCOM/lib286/dos\clibs.lib(histsplt.c)
+070f:4590      ___historical_splitparms
+Module: D:\WATCOM/lib286/dos\clibs.lib(doserror)
+0000:69bc      __doserror_
+Module: D:\WATCOM/lib286/dos\clibs.lib(nrealloc.c)
+0000:69c8*     _nrealloc_
+0000:69c8      realloc_
+Module: D:\WATCOM/lib286/dos\clibs.lib(iomodtty.c)
+0000:6a36      __ChkTTYIOMode_
+0000:6a68*     __IOMode_
+Module: D:\WATCOM/lib286/dos\clibs.lib(filedos.c)
+0000:6a75*     _dos_close_
+0000:6a81      _dos_commit_
+Module: D:\WATCOM/lib286/dos\clibs.lib(alphabet.c)
+070f:2c54      ___Alphabet
+Module: D:\WATCOM/lib286/dos\clibs.lib(mbinit.c)
+0000:6ac3      __mbinit_
+070f:41e8      ___MBCodePage
+Module: D:\WATCOM/lib286/dos\clibs.lib(leapyear.c)
+0000:6b93      __leapyear_
+070f:2c7a      ___diyr
+070f:2c94      ___dilyr
+Module: D:\WATCOM/lib286/dos\clibs.lib(i4d)
+0000:6bbe*     __I4D
+0000:6c07      __U4D
+Module: D:\WATCOM/lib286/dos\clibs.lib(getenv.c)
+0000:6c8b      getenv_
+Module: D:\WATCOM/lib286/dos\clibs.lib(nmsize.c)
+0000:6cf1*     _msize_
+0000:6cf1      _nmsize_
+Module: D:\WATCOM/lib286/dos\clibs.lib(nexpand.c)
+0000:6d00      _nexpand_
+0000:6d00*     _expand_
+0000:6d4f+     __HeapManager_expand_
+Module: D:\WATCOM/lib286/dos\clibs.lib(environ.c)
+070f:4592      ___env_mask
+070f:4594      _environ
+070f:4596*     __wenviron
+Module: D:\WATCOM/lib286/dos\clibs.lib(mbterm.c)
+0000:6ed6      _mbterm_
+Module: D:\WATCOM/lib286/dos\clibs.lib(mbsnextc.c)
+0000:6f0d      _mbsnextc_
+Module: D:\WATCOM/lib286/dos\clibs.lib(mbcupper.c)
+0000:6f37      _mbctoupper_
+Module: D:\WATCOM/lib286/dos\clibs.lib(mbsinc.c)
+0000:6f4b      _mbsinc_
+Module: D:\WATCOM/lib286/dos\clibs.lib(bfree.c)
+0000:6f77      _bfree_
+Module: D:\WATCOM/lib286/dos\clibs.lib(setenvp.c)
+0000:6f98      __setenvp_
+0000:703f      __freeenvp_
+Module: D:\WATCOM/lib286/dos\clibs.lib(mbdtoupp.c)
+0000:7064      _mbdtoupper_
+Module: D:\WATCOM/lib286/dos\clibs.lib(toupper.c)
+0000:7072      toupper_
+Module: D:\WATCOM/lib286/dos\clibs.lib(clearenv.c)
+0000:7080      clearenv_
+
+
+                        +---------------------------+
+                        |   Unresolved References   |
+                        +---------------------------+
+
+Undefined Symbol                Referenced by
+================                =============
+
+_SaveKey                        PENULT.OBJ(C:\PENULT\penult.c)
+bit_create_                     PENULT.OBJ(C:\PENULT\penult.c)
+bit_ink_                        PENULT.OBJ(C:\PENULT\penult.c)
+bit_box_                        PENULT.OBJ(C:\PENULT\penult.c)
+bit_read_                       PENULT.OBJ(C:\PENULT\penult.c)
+bit_put_                        PENULT.OBJ(C:\PENULT\penult.c)
+scr_put_                        PENULT.OBJ(C:\PENULT\penult.c)
+bit_destroy_                    PENULT.OBJ(C:\PENULT\penult.c)
+scr_palette_                    PENULT.OBJ(C:\PENULT\penult.c)
+scr_destroy_                    PENULT.OBJ(C:\PENULT\penult.c)
+scr_create_                     PENULT.OBJ(C:\PENULT\penult.c)
+new_KeyHandler_                 PENULT.OBJ(C:\PENULT\penult.c)
+
+
+                        +--------------------+
+                        |   Libraries Used   |
+                        +--------------------+
+
+D:\WATCOM/lib286/dos\clibs.lib

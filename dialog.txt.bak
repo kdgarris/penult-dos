@@ -1,0 +1,1315 @@
+    data status__queen_avaline
+    __Q, __u, __e, __e, __n, _sp, __A, __v, __a, __l, __i, __n, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__a_mysterious_voice_says
+    __A, _sp, __m, __y, __s, __t, __e, __r, __i, __o, __u, __s, _sp, __v, __o, __i, __c, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__loot_this_chest
+    __L, __o, __o, __t, _sp, __t, __h, __i, __s, _sp, __c, __h, __e, __s, __t, _qu, $FF
+end
+
+    data status__warden_gregory
+    __W, __a, __r, __d, __e, __n, _sp, __G, __r, __e, __g, __o, __r, __y, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__server_xavier
+    __S, __e, __r, __v, __e, __r, _sp, __X, __a, __v, __i, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__explorer_constance
+    __E, __x, __p, __l, __o, __r, __e, __r, _sp, __C, __o, __n, __s, __t, __a, __n, __c, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__fenrick
+    __F, __e, __n, __r, __i, __c, __k, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__the_oracle_says
+    __T, __h, __e, _sp, __O, __r, __a, __c, __l, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__cure_potion_vendor
+    __B, __u, __y, _sp, __a, _sp, __c, __u, __r, __e, _sp, __p, __o, __t, __i, __o, __n, _sp, __f, __o, __r, _sp, __2, __0, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__beatrice_the_guard
+    __B, __e, __a, __t, __r, __i, __c, __e, _sp, __t, __h, __e, _sp, __G, __u, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__roxanne_the_maid
+    __R, __o, __x, __a, __n, __n, __e, _sp, __t, __h, __e, _sp, __M, __a, __i, __d, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__groundsman_hector
+    __G, __r, __o, __u, __n, __d, __s, __m, __a, __n, _sp, __H, __e, __c, __t, __o, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+#    data status__dungeon_orb
+#    __O, __r, __b, _sp, __o, __f, _sp, __t, __h, __e, _sp, __P, __h, __o, __e, __n, __i, __x, _sp, __f, __o, __u, __n, __d, _ex, $FF
+#    __O, __r, __b, _sp, __o, __f, _sp, __E, __n, __c, __h, __a, __n, __t, __m, __e, __n, __t, _sp, __f, __o, __u, __n, __d, _ex, $FF
+#    __T, __h, __e, _sp, __O, __r, __b, _sp, __o, __f, _sp, __S, __e, __c, __r, __e, __t, __s, _sp, __F, __o, __u, __n, __d, _ex, $FF
+#end
+
+    data status__mazinna_the_hermit
+    __M, __a, __z, __i, __n, __n, __a, _sp, __t, __h, __e, _sp, __h, __e, __r, __m, __i, __t, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__leta_the_gardener
+    __L, __e, __t, __a, _sp, __t, __h, __e, _sp, __G, __a, __r, __d, __e, __n, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__drink_from_the_fountain
+    __D, __r, __i, __n, __k, _sp, __f, __r, __o, __m, _sp, __t, __h, __e, _sp, __f, __o, __u, __n, __t, __a, __i, __n, _qu, $FF
+end
+
+    data status__you_hear_water_drink
+    __Y, __o, __u, _sp, __h, __e, __a, __r, _sp, __w, __a, __t, __e, __r, _qu, _sp, __T, __a, __k, __e, _sp, __a, _sp, __d, __r, __i, __n, __k, _qu, $FF
+end
+
+    data status__jaylan_the_smith
+    __J, __a, __y, __l, __a, __n, _sp, __t, __h, __e, _sp, __S, __m, __i, __t, __h, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__captain_rodrick
+    __C, __a, __p, __t, __a, __i, __n, _sp, __R, __o, __d, __r, __i, __c, __k, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__first_mate_willie
+    __F, __i, __r, __s, __t, _sp, __M, __a, __t, __e, _sp, __W, __i, __l, __l, __i, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__greta_the_goblin
+    __G, __r, __e, __t, __a, _sp, __t, __h, __e, _sp, __G, __o, __b, __l, __i, __n, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__ex_pirate_fleta
+    __E, __x, _hy, __p, __i, __r, __a, __t, __e, _sp, __F, __l, __e, __t, __a, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__guard_maddox
+    __G, __u, __a, __r, __d, _sp, __M, __a, __d, __d, __o, __x, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__garrick_the_wizard
+    __G, __a, __r, __r, __i, __c, __k, _sp, __t, __h, __e, _sp, __W, __i, __z, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__marden_the_elder
+    __M, __a, __r, __d, __e, __n, _sp, __t, __h, __e, _sp, __E, __l, __d, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__fay_the_traveler
+    __F, __a, __y, _sp, __t, __h, __e, _sp, __T, __r, __a, __v, __e, __l, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__wixa_the_alchemist
+    __W, __i, __x, __a, _sp, __t, __h, __e, _sp, __A, __l, __c, __h, __e, __m, __i, __s, __t, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__baxton_the_wizard
+    __B, __a, __x, __t, __o, __n, _sp, __t, __h, __e, _sp, __W, __i, __z, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__did_you_bring_me_acorns
+    __D, __i, __d, _sp, __y, __o, __u, _sp, __b, __r, __i, __n, __g, _sp, __m, __e, _sp, __a, __c, __o, __r, __n, __s, _qu, $FF
+end
+
+    data status__mage_maximilian
+    __M, __a, __g, __e, _sp, __M, __a, __x, __i, __m, __i, __l, __i, __a, __n, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__train_with_me
+    __W, __o, __u, __l, __d, _sp, __y, __o, __u, _sp, __l, __i, __k, __e, _sp, __t, __o, _sp, __t, __r, __a, __i, __n, _sp, __w, __i, __t, __h, _sp, __m, __e, _qu, $FF
+end
+
+    data status__clanelder_duron
+    __C, __l, __a, __n, _hy, __e, __l, __d, __e, __r, _sp, __D, __u, __r, __o, __n, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__goldwine_the_bard_says
+    __G, __o, __l, __d, __w, __i, __n, __e, _sp, __t, __h, __e, _sp, __B, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__the_prisoner_says
+    __T, __h, __e, _sp, __p, __r, __i, __s, __o, __n, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__the_ogre_says
+    __T, __h, __e, _sp, __o, __g, __r, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__the_creature_says
+    __T, __h, __e, _sp, __c, __r, __e, __a, __t, __u, __r, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__wik_the_grunt
+    __W, __i, __k, _sp, __t, __h, __e, _sp, __G, __r, __u, __n, __t, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__overseer_thal
+    __O, __v, __e, __r, __s, __e, __e, __r, _sp, __T, __h, __a, __l, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__overseer_yargot
+    __O, __v, __e, __r, __s, __e, __e, __r, _sp, __Y, __a, __r, __g, __o, __t, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__grunt_baluzag
+    __G, __r, __u, __n, __t, _sp, __B, __a, __l, __u, __z, __a, __g, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__grunt_eruk
+    __G, __r, __u, __n, __t, _sp, __E, __r, __u, __k, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__deserter_tragut
+    __D, __e, __s, __e, __r, __t, __e, __r, _sp, __T, __r, __a, __g, __u, __t, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__grunt_bokur
+    __G, __r, __u, __n, __t, _sp, __B, __o, __k, __u, __r, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__samuel_the_medic
+    __S, __a, __m, __u, __e, __l, _sp, __t, __h, __e, _sp, __M, __e, __d, __i, __c, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__give_how_many_potions
+    __H, __o, __w, _sp, __m, __a, __n, __y, _sp, __p, __o, __t, __i, __o, __n, __s, _sp, __d, __o, _sp, __y, __o, __u, _sp, __g, __i, __v, __e, _qu, $FF
+end
+
+    data status__mayorinexile_jul
+    __M, __a, __y, __o, __r, _hy, __i, __n, _hy, __e, __x, __i, __l, __e, _sp, __J, __u, __l, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__watchman_bernard
+    __W, __a, __t, __c, __h, __m, __a, __n, _sp, __B, __e, __r, __n, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__edwin_the_wayfarer
+    __E, __d, __w, __i, __n, _sp, __t, __h, __e, _sp, __W, __a, __y, __f, __a, __r, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__theobald_the_sage
+    __T, __h, __e, __o, __b, __a, __l, __d, _sp, __t, __h, __e, _sp, __S, __a, __g, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__ranulf_the_wizard
+    __R, __a, __n, __u, __l, __f, _sp, __t, __h, __e, _sp, __W, __i, __z, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__ranger_juliana
+    __R, __a, __n, __g, __e, __r, _sp, __J, __u, __l, __i, __a, __n, __a, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__high_priestess_ada
+    __H, __i, __g, __h, _sp, __P, __r, __i, __e, __s, __t, __e, __s, __s, _sp, __A, __d, __a, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__elder_sapphire
+    __E, __l, __d, __e, __r, _sp, __S, __a, __p, __p, __h, __i, __r, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__alderney_the_seer
+    __A, __l, __d, __e, __r, __n, __e, __y, _sp, __t, __h, __e, _sp, __S, __e, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__avil_the_warrior
+    __A, __v, __i, __l, _sp, __t, __h, __e, _sp, __W, __a, __r, __r, __i, __o, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__ray_the_apprentice
+    __R, __a, __y, _sp, __t, __h, __e, _sp, __A, __p, __p, __r, __e, __n, __t, __i, __c, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__sam_the_adventurer
+    __S, __a, __m, _sp, __t, __h, __e, _sp, __A, __d, __v, __e, __n, __t, __u, __r, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__audrey_the_convict
+    __A, __u, __d, __r, __e, __y, _sp, __t, __h, __e, _sp, __C, __o, __n, __v, __i, __c, __t, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__barnaby_the_pirate
+    __B, __a, __r, __n, __a, __b, __y, _sp, __t, __h, __e, _sp, __P, __i, __r, __a, __t, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__john_the_insurgent
+    __J, __o, __h, __n, _sp, __t, __h, __e, _sp, __I, __n, __s, __u, __r, __g, __e, __n, __t, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__clan_elder_thorina
+    __C, __l, __a, __n, _hy, __e, __l, __d, __e, __r, _sp, __T, __h, __o, __r, __i, __n, __a, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__dorothy_the_tipsy
+    __D, __o, __r, __o, __t, __h, __y, _sp, __t, __h, __e, _sp, __T, __i, __p, __s, __y, _sp, __s, __l, __u, __r, __s, _co, $FF
+end
+
+    data status__steward_rowland
+    __S, __t, __e, __w, __a, __r, __d, _sp, __R, __o, __w, __l, __a, __n, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__marshal_catherine
+    __M, __a, __r, __s, __h, __a, __l, _sp, __C, __a, __t, __h, __e, __r, __i, __n, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__soldier_leonard
+    __S, __o, __l, __d, __i, __e, __r, _sp, __L, __e, __o, __n, __a, __r, __d, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__sailor_tobias
+    __S, __a, __i, __l, __o, __r, _sp, __T, __o, __b, __i, __a, __s, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__gymara_the_sailor
+    __G, __y, __m, __a, __r, __a, _sp, __t, __h, __e, _sp, __S, __a, __i, __l, __o, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__demon_guard
+    __D, __e, __m, __o, __n, _sp, __G, __u, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__umfrey_the_spy
+    __U, __m, __f, __r, __e, __y, _sp, __t, __h, __e, _sp, __S, __p, __y, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__mage_mary_ann
+    __M, __a, __g, __e, _sp, __M, __a, __r, __y, _sp, __A, __n, __n, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__hilda_the_explorer
+    __H, __i, __l, __d, __a, _sp, __t, __h, __e, _sp, __E, __x, __p, __l, __o, __r, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__prospector_divana
+    __P, __r, __o, __s, __p, __e, __c, __t, __o, __r, _sp, __D, __i, __v, __a, __n, __a, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__bronk_the_servant
+    __B, __r, __o, __n, __k, _sp, __t, __h, __e, _sp, __S, __e, __r, __v, __a, __n, __t, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__you_say
+    __Y, __o, __u, _sp, __s, __a, __y, _co, $FF
+end
+
+    data status__thana_the_usurper
+    __T, __h, __a, __n, __a, _sp, __t, __h, __e, _sp, __U, __s, __u, __r, __p, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__the_bartender_says
+    __T, __h, __e, _sp, __B, __a, __r, __t, __e, __n, __d, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__king_rufus
+    __K, __i, __n, __g, _sp, __R, __u, __f, __u, __s, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__ida_the_jester
+    __I, __d, __a, _sp, __t, __h, __e, _sp, __J, __e, __s, __t, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__grocer
+    __P, __u, __r, __c, __h, __a, __s, __e, _sp, __2, __0, _sp, __r, __a, __t, __i, __o, __n, __s, _sp, __f, __o, __r, _sp, __5, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__robin_the_barfly
+    __R, __o, __b, __i, __n, _sp, __t, __h, __e, _sp, __B, __a, __r, __f, __l, __y, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__mayor_wade
+    __M, __a, __y, __o, __r, _sp, __W, __a, __d, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__clan_chief_travok
+    __C, __l, __a, __n, _hy, __c, __h, __i, __e, __f, _sp, __T, __r, __a, __v, __o, __k, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__rutgar_the_miner
+    __R, __u, __t, __g, __a, __r, _sp, __t, __h, __e, _sp, __M, __i, __n, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__borin_the_miner
+    __B, __o, __r, __i, __n, _sp, __t, __h, __e, _sp, __M, __i, __n, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__amber_the_juvenile
+    __A, __m, __b, __e, __r, _sp, __t, __h, __e, _sp, __J, __u, __v, __e, __n, __i, __l, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__soldier_gadora
+    __S, __o, __l, __d, __i, __e, __r, _sp, __G, __a, __d, __o, __r, __a, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__vistra_the_smith
+    __V, __i, __s, __t, __r, __a, _sp, __t, __h, __e, _sp, __S, __m, __i, __t, __h, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__eva_the_fighter
+    __E, __v, __a, _sp, __t, __h, __e, _sp, __F, __i, __g, __h, __t, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__randall_the_loner
+    __R, __a, __n, __d, __a, __l, __l, _sp, __t, __h, __e, _sp, __L, __o, __n, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__alistair_the_elder
+    __A, __l, __i, __s, __t, __a, __i, __r, _sp, __t, __h, __e, _sp, __E, __l, __d, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__guard
+    __T, __h, __e, _sp, __G, __u, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__ezin_the_sage
+    __E, __z, __i, __n, _sp, __t, __h, __e, _sp, __S, __a, __g, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__mysterious_hermit
+    __T, __h, __e, _sp, __M, __y, __s, __t, __e, __r, __i, __o, __u, __s, _sp, __H, __e, __r, __m, __i, __t, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__fulk_the_departed
+    __F, __u, __l, __k, _sp, __t, __h, __e, _sp, __D, __e, __p, __a, __r, __t, __e, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__dalin_the_dwarf
+    __D, __a, __l, __i, __n, _sp, __t, __h, __e, _sp, __D, __w, __a, __r, __f, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__sir_devon
+    __S, __i, __r, _sp, __D, __e, __v, __o, __n, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__swordsman_pengenar
+    __S, __w, __o, __r, __d, __s, __m, __a, __n, _sp, __P, __e, __n, __g, __e, __n, __a, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__baern_the_smith
+    __B, __a, __e, __r, __n, _sp, __t, __h, __e, _sp, __S, __m, __i, __t, __h, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__sling_vendor
+    __B, __u, __y, _sp, __a, _sp, __s, __l, __i, __n, __g, _sp, __f, __o, __r, _sp, __5, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__bow_vendor
+    __B, __u, __y, _sp, __a, _sp, __b, __o, __w, _sp, __f, __o, __r, _sp, __6, __0, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__axe_vendor
+    __B, __u, __y, _sp, __a, __n, _sp, __a, __x, __e, _sp, __f, __o, __r, _sp, __1, __0, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__mace_vendor
+    __B, __u, __y, _sp, __a, _sp, __m, __a, __c, __e, _sp, __f, __o, __r, _sp, __2, __0, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__sword_vendor
+    __B, __u, __y, _sp, __a, _sp, __s, __w, __o, __r, __d, _sp, __f, __o, __r, _sp, __2, _cm, __1, __0, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__chainmail_vendor
+    __B, __u, __y, _sp, __c, __h, __a, __i, __n, __m, __a, __i, __l, _sp, __a, __r, __m, __o, __r, _sp, __f, __o, __r, _sp, __9, __0, __0, _qu, $FF
+end
+
+    data status__leather_vendor
+    __B, __u, __y, _sp, __l, __e, __a, __t, __h, __e, __r, _sp, __a, __r, __m, __o, __r, _sp, __f, __o, __r, _sp, __1, __0, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__platemail_vendor
+    __B, __u, __y, _sp, __p, __l, __a, __t, __e, __m, __a, __i, __l, _sp, __a, __r, __m, __o, __r, _sp, __f, __o, __r, _sp, __1, _cm, __5, __0, __0, _qu, $FF
+end
+
+    data status__healer
+    __D, __o, _sp, __y, __o, __u, _sp, __n, __e, __e, __d, _sp, __h, __e, __a, __l, __i, __n, __g, _sp, __f, __o, __r, _sp, __5, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__healing_potion_vendor
+    __B, __u, __y, _sp, __a, _sp, __h, __e, __a, __l, __i, __n, __g, _sp, __p, __o, __t, __i, __o, __n, _sp, __f, __o, __r, _sp, __5, __0, _qu, $FF
+end
+
+    data status__grove_warden_glynn
+    __G, __r, __o, __v, __e, _hy, __w, __a, __r, __d, __e, __n, _sp, __G, __l, __y, __n, __n, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__mayor_baldric
+    __M, __a, __y, __o, __r, _sp, __B, __a, __l, __d, __r, __i, __c, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__deckhand_jordan
+    __D, __e, __c, __k, __h, __a, __n, __d, _sp, __J, __o, __r, __d, __a, __n, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__friar_henry
+    __F, __r, __i, __a, __r, _sp, __H, __e, __n, __r, __y, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__captain_sabina
+    __C, __a, __p, __t, __a, __i, __n, _sp, __S, __a, __b, __i, __n, __a, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__millie_the_gossip
+    __M, __i, __l, __l, __i, __e, _sp, __t, __h, __e, _sp, __G, __o, __s, __s, __i, __p, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__farmer_william
+    __F, __a, __r, __m, __e, __r, _sp, __W, __i, __l, __l, __i, __a, __m, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__isabel_the_recluse
+    __I, __s, __a, __b, __e, __l, _sp, __t, __h, __e, _sp, __R, __e, __c, __l, __u, __s, __e, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__forwin_the_wizard
+    __F, __o, __r, __w, __i, __n, _sp, __t, __h, __e, _sp, __W, __i, __z, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__rolf_the_mighty
+    __R, __o, __l, __f, _sp, __t, __h, __e, _sp, __M, __i, __g, __h, __t, __y, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__giles_the_ranger
+    __G, __i, __l, __e, __s, _sp, __t, __h, __e, _sp, __R, __a, __n, __g, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__nesta_the_ranger
+    __N, __e, __s, __t, __a, _sp, __t, __h, __e, _sp, __R, __a, __n, __g, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__nigel_the_lost
+    __N, __i, __g, __e, __l, _sp, __t, __h, __e, _sp, __L, __o, __s, __t, _sp, __a, __s, __k, __s, _co, $FF
+end
+
+    data status__terric_the_sage
+    __T, __e, __r, __r, __i, __c, _sp, __t, __h, __e, _sp, __S, __a, __g, __e, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__elena_the_youth
+    __E, __l, __e, __n, __a, _sp, __t, __h, __e, _sp, __Y, __o, __u, __t, __h, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__oracle_guard
+    __T, __h, __e, _sp, __O, __r, __a, __c, __l, __e, _sp, __G, __u, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__ship_vendor
+    __B, __u, __y, _sp, __a, _sp, __s, __h, __i, __p, _sp, __f, __o, __r, _sp, __2, _cm , __0, __0, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__bartender
+    __H, __a, __v, __e, _sp, __a, _sp, __d, __r, __i, __n, __k, _sp, __f, __o, __r, _sp, __5, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__the_merchant_says
+    __T, __h, __e, _sp, __m, __e, __r, __c, __h, __a, __n, __t, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__the_healer_says
+    __T, __h, __e, _sp, __h, __e, __a, __l, __e, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__free_healing
+    __D, __o, _sp, __y, __o, __u, _sp, __r, __e, __q, __u, __i, __r, __e, _sp, __h, __e, __a, __l, __i, __n, __g, _qu, $FF
+end
+
+    data status__ascend_to_next_level
+    __A, __s, __c, __e, __n, __d, _sp, __t, __o, _sp, __t, __h, __e, _sp, __n, __e, __x, __t, _sp, __l, __e, __v, __e, __l, _qu, $FF
+end
+
+    data status__descend_to_previous_level
+    __D, __e, __s, __c, __e, __n, __d, _sp, __t, __o, _sp, __t, __h, __e, _sp, __p, __r, __e, __v, __i, __o, __u, __s, _sp, __l, __e, __v, __e, __l, _qu, $FF
+end
+
+    data status__ascend_or_descend
+    __D, __o, _sp, __y, __o, __u, _sp, __a, __s, __c, __e, __n, __d, _sp, __o, __r, _sp, __d, __e, __s, __c, __e, __n, __d, _qu, $FF
+end
+
+    data status__actions
+    __A, __c, __t, __i, __o, __n, __s, _co, $FF
+end
+
+    data status__spells
+    __C, __a, __s, __t, _sp, __w, __h, __i, __c, __h, _sp, __s, __p, __e, __l, __l, _qu, $FF
+end
+
+    data status__items
+    __I, __t, __e, __m, __s, _co, $FF
+end
+
+    data status__rest_and_save_your_game
+    __R, __e, __s, __t, _sp, __h, __e, __r, __e, _sp, __a, __n, __d, _sp, __s, __a, __v, __e, _sp, __y, __o, __u, __r, _sp, __g, __a, __m, __e, _qu, $FF
+end
+
+    data status__rest_here
+    __R, __e, __s, __t, _sp, __h, __e, __r, __e, _qu, $FF
+end
+
+    data status__victory
+    __V, __i, __c, __t, __o, __r, __y, _ex, $FF
+end
+
+    data status__msword_vendor
+    __B, __u, __y, _sp, __a, _sp, __m, __a, __g, __i, __c, __a, __l, _sp, __s, __w, __o, __r, __d, _sp, __f, __o, __r, _sp, __1, _cm , __4, __0, __0, _qu, $FF
+end
+
+    data status__mbow_vendor
+    __B, __u, __y, _sp, __a, _sp, __m, __a, __g, __i, __c, _sp, __b, __o, __w, _sp, __f, __o, __r, _sp, __2, _cm, __1, __0, __0, _sp, __g, __o, __l, __d, _qu, $FF
+end
+
+    data status__forgeguru_riswynn
+    __F, __o, __r, __g, __e, _hy, __g, __u, __r, __u, _sp, __R, __i, __s, __w, __y, __n, __n, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__clan_elder_duron
+    __C, __l, __a, __n, _hy, __e, __l, __d, __e, __r, _sp, __D, __u, __r, __o, __n, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__goldwine_the_bard
+    __G, __o, __l, __d, __w, __i, __n, __e, _sp, __t, __h, __e, _sp, __B, __a, __r, __d, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__plate_vendor
+    __B, __u, __y, _sp, __p, __l, __a, __t, __e, __m, __a, __i, __l, _sp, __a, __r, __m, __o, __r, _sp, __f, __o, __r, _sp, __1, _cm, __5, __0, __0, _qu, $FF
+end
+
+    data status__ogre_chieftain_dak
+    __O, __g, __r, __e, _sp, __C, __h, __i, __e, __f, __t, __a, __i, __n, _sp, __D, __a, __k, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data status__guardsman_taylor
+    __G, __u, __a, __r, __d, __s, __m, __a, __n, _sp, __T, __a, __y, __l, __o, __r, _sp, __s, __a, __y, __s, _co, $FF
+end
+
+    data message__return_when_your_deeds_are_more_noteworthy
+    __R, __e, __t, __u, __r, __n, _sp, __w, __h, __e, __n, _sp, __y, __o, __u, __r, _sp, __d, __e, __e, __d, __s, _sp, __a, __r, __e, _sp, __m, __o, __r, __e, _sp, __n, __o, __t, __e, __w, __o, __r, __t, __h, __y, _pd, $FF
+end
+
+
+    data message__entering_stoneheart
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __S, __t, __o, __n, __e, __h, __e, __a, __r, __t, _pd, $FF
+end
+
+    data message__entering_waters
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __W, __a, __t, __e, __r, __s, _pd, $FF
+end
+
+    data message__entering_oak
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __O, __a, __k, _pd, $FF
+end
+
+    data message__entering_castle_avalina
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __C, __a, __s, __t, __l, __e, _sp, __A, __v, __a, __l, __i, __n, __a, _pd, $FF
+end
+
+    data message__entering_spiretop
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __S, __p, __i, __r, __e, __t, __o, __p, _pd, $FF
+end
+
+    data message__exiting_to_the_high_sea
+    __E, __x, __i, __t, __i, __n, __g, _sp, __t, __o, _sp, __t, __h, __e, _sp, __h, __i, __g, __h, _sp, __s, __e, __a, _pd, $FF
+end
+
+    data message__entering_thanas_hold
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __T, __h, __a, __n, __a, _ap, __s, _sp, __H, __o, __l, __d, _pd, $FF
+end
+
+    data message__entering_freehaven
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __F, __r, __e, __e, __h, __a, __v, __e, __n, _pd, $FF
+end
+
+    data message__entering_keep_of_shadow
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __K, __e, __e, __p, _sp, __o, __f, _sp, __S, __h, __a, __d, __o, __w, _pd, $FF
+end
+
+    data message__the_disguise_wears_off
+    __T, __h, __e, _sp, __d, __i, __s, __g, __u, __i, __s, __e, _sp, __w, __e, __a, __r, __s, _sp, __o, __f, __f, _pd, $FF
+end
+
+    data message__you_find_fire_acorns
+    __Y, __o, __u, _sp, __f, __i, __n, __d, _sp, __s, __o, __m, __e, _sp, __f, __i, __r, __e, _sp, __a, __c, __o, __r, __n, __s, _ex, $FF
+end
+
+    data message__you_find_spirit_stone
+    __Y, __o, __u, _sp, __f, __i, __n, __d, _sp, __a, _sp, __s, __p, __i, __r, __i, __t, _sp, __s, __t, __o, __n, __e, _ex, $FF
+end
+
+    data message__entering_acadia
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __A, __c, __a, __d, __i, __a, _pd, $FF
+end
+
+    data message__yes_no
+    _tr, __Y, __e, __s, _sp, __N, __o, $FF
+end
+
+    data message__exiting_to_faradur
+    __E, __x, __i, __t, __i, __n, __g, _sp, __t, __o, _sp, __F, __a, __r, __a, __d, __u, __r, _pd, $FF
+end
+
+    data message__the_ruins_of_duskgrove
+    __E, __n, __t, __e, __r, __i, __n, __g, _sp, __t, __h, __e, _sp, __r, __u, __i, __n, __s, _sp, __o, __f, _sp, __D, __u, __s, __k, __g, __r, __o, __v, __e, _pd, $FF
+end
+
+    data message__go_and_experience_more
+    __G, __o, _sp, __a, __n, __d, _sp, __e, __x, __p, __e, __r, __i, __e, __n, __c, __e, _sp, __m, __o, __r, __e, _pd, $FF
+end
+
+    data message__you_cant_go_that_way
+    __Y, __o, __u, _sp, __c, __a, __n, _ap, __t, _sp, __g, __o, _sp, __t, __h, __a, __t, _sp, __w, __a, __y, _pd, $FF
+end
+
+    data message__dungeon_menu
+    _tr, __C, __a, __s, __t, _sp, __L, __o, __o, __t, _sp, __U, __s, __e, $FF
+end
+
+    data message__dungeon_menu_up
+    _tr, __C, __a, __s, __t, _sp, __L, __o, __o, __t, _sp, __U, __s, __e, _sp, __A, __s, __c, __e, __n, __d, $FF
+end
+
+    data message__dungeon_menu_down
+    _tr, __C, __a, __s, __t, _sp, __L, __o, __o, __t, _sp, __U, __s, __e, _sp, __D, __e, __s, __c, __e, __n, __d, $FF
+end
+
+    data message__dungeon_menu_up_down
+    _tr, __C, __a, __s, __t, _sp, __L, __o, __o, __t, _sp, __U, __s, __e, _sp, __A, __s, __c, __e, __n, __d, _sp, __D, __e, __s, __c, __e, __n, __d, $FF
+end
+
+    data message__outdoor_menu
+    _tr, __C, __a, __s, __t, _sp, __U, __s, __e, _sp, __S, __t, __a, __t, __s, $FF
+end
+
+    data message__hero_combat_menu
+    _tr, __A, __t, __t, __a, __c, __k, _sp, __R, __a, __n, __g, __e, __d, _sp, __C, __a, __s, __t, _sp, __U, __s, __e, $FF
+end
+
+    data message__dragon_combat_menu
+    _tr, __B, __i, __t, __e, _sp, __B, __r, __e, __a, __t, __h, _sp, __H, __e, __a, __l, $FF
+end
+
+    data message__town_menu
+    _tr, __T, __a, __l, __k, _sp, __C, __a, __s, __t, _sp, __U, __s, __e, _sp, __S, __t, __a, __t, __s, $FF
+end
+
+    data message__swapped_grapple_broken
+    __S, __w, __a, __p, __p, __e, __d, _ex, _sp, __G, __r, __a, __p, __p, __l, __e, _sp, __B, __r, __o, __k, __e, __n, _ex, $FF
+end
+
+    data message__not_enough_spell_points
+    __N, __o, __t, _sp, __e, __n, __o, __u, __g, __h, _sp, __s, __p, __e, __l, __l, _sp, __p, __o, __i, __n, __t, __s, _ex, $FF
+end
+
+    data message__nothing_much_happens
+    __N, __o, __t, __h, __i, __n, __g, _sp, __m, __u, __c, __h, _sp, __h, __a, __p, __p, __e, __n, __s, $FF
+end
+
+    data message__party_healed
+    __P, __a, __r, __t, __y, _sp, __h, __e, __a, __l, __e, __d, _ex, $FF
+end
+
+    data message__cured
+    __C, __u, __r, __e, __d, _ex, $FF
+end
+
+    data message__which_direction
+    __W, __h, __i, __c, __h, _sp, __d, __i, __r, __e, __c, __t, __i, __o, __n, _qu, $FF
+end
+
+    data message__already_healed
+    __A, __l, __r, __e, __a, __d, __y, _sp, __h, __e, __a, __l, __e, __d, _ex, $FF
+end
+
+    data message__saved
+    __S, __a, __v, __e, __d, _ex, $FF
+end
+
+    data message__rested
+    __R, __e, __s, __t, __e, __d, _ex, $FF
+end
+
+    data message__swapped
+    __S, __w, __a, __p, __p, __e, __d, _ex, $FF
+end
+
+    data message__not_here
+    __N, __o, __t, _sp, __h, __e, __r, __e, _ex, $FF
+end
+
+    data message__you_change_form
+    __Y, __o, __u, _sp, __c, __h, __a, __n, __g, __e, _sp, __f, __o, __r, __m, _ex, $FF
+end
+
+    data message__no_ranged_weapon
+    __N, __o, _sp, __r, __a, __n, __g, __e, __d, _sp, __w, __e, __a, __p, __o, __n, _ex, $FF
+end
+
+    data message__nothing_to_use
+    __N, __o, __t, __h, __i, __n, __g, _sp, __t, __o, _sp, __u, __s, __e, _ex, $FF
+end
+
+    data message__homing_gem_invoked
+    __H, __o, __m, __i, __n, __g, _sp, __g, __e, __m, _sp, __i, __n, __v, __o, __k, __e, __d, _ex, $FF
+end
+
+    data message__fey_dragon_is_not_here
+    __T, __h, __e, _sp, __F, __e, __y, _sp, __D, __r, __a, __g, __o, __n, _sp, __i, __s, _sp, __n, __o, __t, _sp, __h, __e, __r, __e, _ex, $FF
+end
+
+    data message__avaline_talk
+    __W, __e, __l, __c, __o, __m, __e, _cm, _sp, $FF
+end
+
+    data message__rufus_talk
+    __M, __e, __o, __w, _pd, $FF
+end
+
+    data message__ezin_the_sage_talk
+    __S, __e, __e, __k, _sp, __t, __h, __e, _sp, __m, __a, __g, __i, __c, _sp, __c, __i, __r, __c, __l, __e, __s, _ex, $FF
+end
+
+    data message__dalin_the_dwarf_talk
+    __H, __a, __v, __e, _sp, __y, __o, __u, _sp, __e, __v, __e, __r, _sp, __b, __e, __e, __n, _sp, __t, __o, _sp, __S, __t, __o, __n, __e, __h, __e, __a, __r, __t, _qu, $FF
+end
+
+    data message__guard_talk
+    __G, __o, __o, __d, _sp, __d, __a, __y, _pd, $FF
+end
+
+    data message__ida_the_jester_talk
+    __I, _sp, __b, __e, __t, _sp, __R, __u, __f, __u, __s, _sp, __i, __s, _sp, __t, __h, __e, _sp, __r, __e, __a, __l, _sp, __p, __o, __w, __e, __r, _sp, __b, __e, __h, __i, __n, __d, _sp, __t, __h, __e, _sp, __t, __h, __r, __o, __n, __e, _pd, $FF
+end
+
+    data message__swordsman_pengenar_talk
+    __S, __l, __a, __y, __i, __n, __g, _sp, __b, __e, __a, __s, __t, __s, _sp, __i, __s, _sp, __t, __h, __i, __r, __s, __t, __y, _sp, __w, __o, __r, __k, _ex, $FF
+end
+
+    data message__robin_the_barfly_talk
+    __S, __t, __a, __y, _sp, __a, __n, __d, _sp, __h, __a, __v, __e, _sp, __a, _sp, __d, __r, __i, __n, __k, _ex, $FF
+end
+
+    data message__randall_the_loner_talk
+    __B, __e, __w, __a, __r, __e, _sp, __o, __f, _sp, __l, __a, __v, __a, _sp, __u, __n, __l, __e, __s, __s, _sp, __y, __o, __u, _sp, __k, __n, __o, __w, _sp, __t, __h, __e, _sp, __r, __i, __t, __u, __a, __l, _pd, $FF
+end
+
+    data message__alistair_the_elder_talk
+    __T, __h, __e, _sp, __m, __o, __u, __n, __t, __a, __i, __n, __s, _sp, __t, __o, _sp, __t, __h, __e, _sp, __s, __o, __u, __t, __h, _sp, __h, __o, __l, __d, _sp, __g, __r, __e, __a, __t, _sp, __m, __a, __g, __i, __c, _pd, $FF
+end
+
+    data message__guardsman_taylor_talk
+    __B, __e, __w, __a, __r, __e, _sp, __o, __f, _sp, __t, __r, __o, __l, __l, _sp, __b, __r, __i, __d, __g, __e, __s, _pd, $FF
+end
+
+    data message__eva_the_fighter_talk
+    __A, __r, __m, __s, _sp, __a, __r, __e, _sp, __s, __c, __a, __r, __c, __e, _sp, __n, __o, __w, _sp, __d, __u, __e, _sp, __t, __o, _sp, __o, __u, __r, _sp, __t, __r, __o, __u, __b, __l, __e, __d, _sp, __t, __i, __m, __e, __s, _pd, $FF
+end
+
+    data message__acadia_bartender_talk
+    __I, _sp, __h, __e, __a, __r, _sp, __d, __w, __a, __r, __v, __e, __s, _sp, __m, __a, __k, __e, _sp, __s, __u, __p, __e, __r, __i, __o, __r, _sp, __a, __r, __m, __s, _sp, __a, __n, __d, _sp, __a, __r, __m, __o, __r, _pd, $FF
+end
+
+    data message__mayor_wade_talk
+    __W, __e, __l, __c, __o, __m, __e, _sp, __t, __o, _sp, __A, __c, __a, __d, __i, __a, _ex, $FF
+end
+
+    data message__castle_bartender_talk
+    __T, __h, __e, __y, _sp, __s, __a, __y, _sp, __o, __n, __l, __y, _sp, __m, __a, __g, __i, __c, __a, __l, _sp, __l, __i, __g, __h, __t, __s, _sp, __w, __o, __r, __k, _sp, __i, __n, _sp, __d, __u, __n, __g, __e, __o, __n, __s, _pd, $FF
+end
+
+    data message__mysterious_hermit_talk
+    __Y, __o, __u, _sp, __c, __a, __n, _sp, __u, __s, __e, _sp, __y, __o, __u, __r, _sp, __s, __p, __e, __l, __l, __s, _sp, __t, __o, _sp, __t, __r, __a, __v, __e, __l, _sp, __w, __h, __e, __r, __e, _sp, __y, __o, __u, _sp, __c, __a, __n, _sp, __n, __e, __i, __t, __h, __e, __r, _sp, __w, __a, __l, __k, _sp, __n, __o, __r, _sp, __s, __a, __i, __l, _pd, $FF
+end
+
+    data message__baern_the_smith_talk
+    __R, __i, __s, __w, __y, __n, __n, _sp, __i, __s, _sp, __t, __h, __e, _sp, __g, __r, __e, __a, __t, __e, __s, __t, _sp, __s, __m, __i, __t, __h, _sp, __w, __h, __o, _sp, __e, __v, __e, __r, _sp, __l, __i, __v, __e, __d, _pd, $FF
+end
+
+    data message__clan_chief_travok_talk
+    __W, __e, __l, __c, __o, __m, __e, _sp, __t, __o, _sp, __S, __t, __o, __n, __e, __h, __e, __a, __r, __t, _cm, _sp, __c, __i, __t, __y, _sp, __o, __f, _sp, __t, __h, __e, _sp, __d, __w, __a, __r, __v, __e, __s, _pd, $FF
+end
+
+    data message__stoneheart_bartender_talk
+    __T, __h, __e, __y, _sp, __s, __a, __y, _sp, __t, __h, __a, __t, _sp, __t, __h, __e, __r, __e, _sp, __a, __r, __e, _sp, __s, __o, __m, __e, _sp, __w, __h, __o, _sp, __c, __a, __n, _sp, __w, __a, __l, __k, _sp, __o, __n, _sp, __l, __a, __v, __a, _pd, $FF
+end
+
+    data message__amber_the_juvenile_talk
+    __S, __l, __a, __y, _sp, __a, _sp, __g, __o, __b, __l, __i, __n, _sp, __f, __o, __r, _sp, __m, __e, _ex, $FF
+end
+
+    data message__vistra_the_smith_talk
+    __D, __o, __n, _ap, __t, _sp, __t, __o, __u, __c, __h, _sp, __a, __n, __y, __t, __h, __i, __n, __g, _ex, $FF
+end
+
+    data message__rutgar_the_miner_talk
+    __T, __h, __e, _sp, __g, __o, __b, __l, __i, __n, __s, _sp, __h, __a, __v, __e, _sp, __b, __e, __e, __n, _sp, __b, __o, __l, __d, __e, __r, _sp, __s, __i, __n, __c, __e, _sp, __t, __h, __e, _sp, __I, __n, __c, __u, __r, __s, __i, __o, __n, __s, _sp, __s, __t, __a, __r, __t, __e, __d, _pd, $FF
+end
+
+    data message__borin_the_miner_talk
+    __H, __e, __i, __g, __h, _hy, __h, __o, _ex, $FF
+end
+
+    data message__soldier_gadora_talk
+    __A, __v, __i, __l, _sp, __c, __o, __u, __l, __d, _sp, __s, __a, __v, __e, _sp, __u, __s, _cm, _sp, __b, __u, __t, _sp, __h, __e, _sp, __i, __s, _sp, __m, __i, __s, __s, __i, __n, __g, _pd, $FF
+end
+
+    data message__forgeguru_riswynn_talk
+    __F, __i, __n, __d, _sp, __t, __h, __e, _sp, __S, __p, __i, __r, __i, __t, _sp, __S, __t, __o, __n, __e, _cm, _sp, __a, __n, __d, _sp, __I, _sp, __c, __a, __n, _sp, __m, __a, __k, __e, _sp, __a, _sp, __w, __e, __a, __p, __o, __n, _sp, __t, __h, __a, __t, _sp, __y, __o, __u, _sp, __c, __a, __n, _sp, __n, __e, __v, __e, __r, _sp, __l, __o, __s, __e, _pd, $FF
+end
+
+    data message__grove_warden_glynn_talk
+    __W, __e, __l, __c, __o, __m, __e, _sp, __t, __o, _sp, __O, __a, __k, _ex, $FF
+end
+
+    data message__oracle_guard_talk
+    __Y, __o, __u, _sp, __m, __a, __y, _sp, __a, __p, __p, __r, __o, __a, __c, __h, _sp, __t, __h, __e, _sp, __O, __r, __a, __c, __l, __e, _sp, __o, __n, __l, __y, _sp, __i, __f, _sp, __y, __o, __u, _sp, __a, __r, __e, _sp, __w, __o, __r, __t, __h, __y, _pd, $FF
+end
+
+    data message__giles_the_ranger_talk
+    __T, __h, __e, _sp, __s, __r, __r, __o, __u, __n, __d, __i, __n, __g, _sp, __f, __o, __r, __e, __s, __t, _sp, __i, __s, _sp, __b, __e, __s, __e, __t, _sp, __w, __i, __t, __h, _sp, __f, __e, __l, __l, _sp, __f, __o, __e, __s, _pd, $FF
+end
+
+    data message__nesta_the_ranger_talk
+    __W, __e, _sp, __p, __r, __o, __t, __e, __c, __t, _sp, __t, __h, __e, _sp, __O, __a, __k, _sp, __f, __o, __l, __k, _sp, __f, __r, __o, __m, _sp, __t, __h, __e, _sp, __I, __n, __c, __u, __r, __s, __i, __o, __n, __s, _pd, $FF
+end
+
+    data message__nigel_the_lost_talk
+    __W, __h, __i, __c, __h, _sp, __w, __a, __y, _sp, __i, __s, _sp, __N, __o, __r, __t, __h, _qu, $FF
+end
+
+    data message__elena_the_youth_talk
+    __I, _sp, __w, __a, __n, __t, _sp, __t, __o, _sp, __l, __e, __a, __r, __n, _sp, __a, __r, __c, __h, __e, __r, __y, _pd, $FF
+end
+
+    data message__terric_the_sage_talk
+    __L, __e, __a, __r, __n, _sp, __t, __h, __e, _sp, __r, __i, __t, __u, __a, __l, __s, _ex, $FF
+end
+
+    data message__oak_bartender_talk
+    __I, _sp, __h, __e, __a, __r, _sp, __s, __o, __m, __e, _sp, __p, __l, __a, __c, __e, __d, _sp, __c, __a, __n, _sp, __o, __n, __l, __y, _sp, __b, __e, _sp, __f, __o, __u, __n, __d, _sp, __v, __i, __a, _sp, __m, __a, __g, __i, __c, _pd, $FF
+end
+
+    data message__mayor_baldric_talk
+    __W, __e, __l, __c, __o, __m, __e, _sp, __t, __o, _sp, __W, __a, __t, __e, __r, __s, _ex, $FF
+end
+
+    data message__waters_bartender_talk
+    __T, __h, __e, __y, _sp, __s, __a, __y, _sp, __t, __h, __a, __t, _sp, __t, __r, __o, __l, __l, __s, _sp, __a, __t, __t, __a, __c, __k, _sp, __t, __h, __o, __s, __e, _sp, __w, __h, __o, _sp, __a, __p, __p, __e, __a, __r, _sp, __w, __e, __a, __k, _pd, $FF
+end
+
+    data message__deckhand_jordan_talk
+    __S, __h, __i, __p, __s, _sp, __m, __a, __y, _sp, __b, __e, _sp, __p, __u, __r, __c, __h, __a, __s, __e, __d, _sp, __o, __n, __l, __y, _sp, __b, __y, _sp, __w, __o, __r, __t, __h, __y, _sp, __h, __e, __r, __o, __e, __s, _pd, $FF
+end
+
+    data message__friar_henry_talk
+    __G, __r, __o, __g, _sp, __i, __s, _sp, __m, __y, _sp, __h, __o, __l, __y, _sp, __w, __a, __t, __e, __r, _pd, $FF
+end
+
+    data message__captain_sabina_talk
+    __I, _sp, __m, __i, __s, __s, _sp, __m, __y, _sp, __s, __h, __i, __p, _pd, $FF
+end
+
+    data message__isabel_the_recluse_talk
+    __T, __h, __e, _sp, __S, __o, __u, __t, __h, __e, __r, __n, _sp, __c, __o, __n, __t, __i, __n, __e, __n, __t, _sp, __h, __o, __l, __d, __s, _sp, __g, __r, __e, __a, __t, _sp, __m, __y, __s, __t, __e, __r, __i, __e, __s, _pd, $FF
+end
+
+    data message__farmer_william_talk
+    __A, __r, __e, _sp, __y, __o, __u, _sp, __t, __h, __e, _sp, __n, __e, __w, _sp, __h, __e, __r, __o, _qu, $FF
+end
+
+    data message__forwin_the_wizard_talk
+    __A, _sp, __s, __k, __i, __l, __l, __e, __d, _sp, __m, __a, __g, __e, _sp, __c, __a, __n, _sp, __u, __s, __e, _sp, _ap, __S, __u, __n, _ap, _sp, __f, __o, __r, _sp, __d, __i, __v, __i, __n, __a, __t, __i, __o, __n, _pd, $FF
+end
+
+    data message__millie_the_gossip_talk
+    __W, __h, __a, __t, _sp, __i, __s, _sp, __y, __o, __u, __r, _sp, __n, __a, __m, __e, _qu, _sp, __Y, __o, __u, __r, _sp, __j, __o, __b, _qu, $FF
+end
+
+    data message__warden_gregory_talk
+    __T, __h, __e, _sp, __f, __o, __r, __c, __e, _sp, __b, __a, __r, __r, __i, __e, __r, __s, _sp, __w, __i, __l, __l, _sp, __k, __e, __e, __p, _sp, __m, __o, __s, __t, _sp, __f, __r, __o, __m, _sp, __p, __a, __s, __s, __i, __n, __g, _pd, $FF
+end
+
+    data message__server_xavier_talk
+    __T, __h, __e, _sp, __c, __a, __s, __t, __l, __e, _sp, __p, __r, __o, __b, __a, __b, __l, __y, _sp, __h, __a, __s, _sp, __m, __a, __n, __y, _sp, __s, __e, __c, __r, __e, __t, _sp, __p, __a, __s, __s, __a, __g, __e, __s, _pd, $FF
+end
+
+    data message__explorer_constance_talk
+    __A, __v, __o, __i, __d, _sp, __t, __h, __e, _sp, __d, __u, __n, __g, __e, __o, __n, __s, _sp, __u, __n, __t, __i, __l, _sp, __y, __o, __u, _sp, __a, __r, __e, _sp, __s, __t, __r, __o, __n, __g, _sp, __e, __n, __o, __u, __g, __h, _pd, $FF
+end
+
+    data message__fenrick_talk
+    __L, __a, __v, __a, _sp, __i, __s, _sp, __v, __e, __r, __y, _sp, __h, __o, __t, _pd, $FF
+end
+
+    data message__castle_oracle_talk
+    __E, __a, __c, __h, _sp, __d, __u, __n, __g, __e, __o, __n, _sp, __h, __a, __s, _sp, __a, __n, _sp, __o, __r, __b, _sp, __y, __o, __u, _sp, __m, __u, __s, __t, _sp, __f, __i, __n, __d, _sp, __t, __o, _sp, __e, __m, __e, __r, __g, __e, _sp, __v, __i, __c, __t, __o, __r, __i, __o, __u, __s, _pd, $FF
+end
+
+    data message__beatrice_the_guard_talk
+    __I, _ap, __m, _sp, __o, __n, _sp, __m, __y, _sp, __w, __i, __n, __e, _sp, __b, __r, __e, __a, __k, _pd, $FF
+end
+
+    data message__roxanne_the_maid_talk
+    __W, __h, __a, __t, _sp, __a, __r, __e, _sp, __y, __o, __u, _sp, __d, __o, __i, __n, __g, _sp, __i, __n, _sp, __t, __h, __e, _sp, __Q, __u, __e, __e, __n, _ap, __s, _sp, __b, __e, __d, __c, __h, __a, __m, __b, __e, __r, _qu, $FF
+end
+
+    data message__groundsman_hector_talk
+    __A, _sp, __r, __e, __w, __a, __r, __d, _sp, __a, __w, __a, __i, __t, __s, _sp, __y, __o, __u, _sp, __a, __t, _sp, __t, __h, __e, _sp, __t, __o, __p, _sp, __o, __f, _sp, __e, __a, __c, __h, _sp, __d, __u, __n, __g, __e, __o, __n, _pd, $FF
+end
+
+    data message__mazinna_the_hermit_talk
+    __W, __e, __l, __l, _sp, __d, __o, __n, __e, _cm, _sp, __h, __e, __r, __o, _ex, _sp, __I, _sp, __w, __i, __l, __l, _sp, __t, __e, __a, __c, __h, _sp, __y, __o, __u, _sp, __w, __h, __a, __t, _sp, __I, _sp, __k, __n, __o, __w, _pd, $FF
+end
+
+    data message__leta_the_gardener_talk
+    __B, __e, _sp, __c, __a, __r, __e, __f, __u, __l, _sp, __n, __o, __t, _sp, __t, __o, _sp, __s, __t, __r, __a, __y, _sp, __t, __o, __o, _sp, __f, __a, __r, _sp, __f, __r, __o, __m, _sp, __h, __o, __m, __e, _sp, __y, __e, __t, _pd, $FF
+end
+
+    data message__freehaven_bartender_talk
+    __I, _sp, __h, __e, __a, __r, _sp, __t, __h, __a, __t, _sp, __t, __h, __e, __r, __e, _ap, __s, _sp, __a, _sp, __h, __i, __d, __d, __e, __n, _sp, __c, __i, __t, __y, _sp, __s, __e, __t, __t, __l, __e, __d, _sp, __b, __y, _sp, __h, __e, __r, __o, __e, __s, _pd, $FF
+end
+
+    data message__jaylan_the_smith_talk
+    __G, __o, _sp, __a, __w, __a, __y, _pd, _sp, __I, _ap, __m, _sp, __b, __u, __s, __y, _pd, $FF
+end
+
+    data message__captain_rodrick_talk
+    __T, __h, __e, _sp, __s, __o, __v, __e, __r, __e, __i, __g, __n, _sp, __h, __a, __m, __l, __e, __t, _sp, __o, __f, _sp, __F, __r, __e, __e, __h, __a, __v, __e, __n, _sp, __w, __e, __l, __c, __o, __m, __e, __s, _sp, __y, __o, __u, _ex, $FF
+end
+
+    data message__first_mate_willie_talk
+    __W, __e, _sp, __a, __r, __e, _sp, __a, _sp, __h, __a, __v, __e, __n, _sp, __f, __o, __r, _sp, __t, __h, __o, __s, __e, _sp, __w, __h, __o, _sp, __d, __o, _sp, __n, __o, __t, _sp, __f, __i, __t, _sp, __i, __n, _sp, __e, __l, __s, __e, __w, __h, __e, __r, __e, _pd, $FF
+end
+
+    data message__greta_the_goblin_talk
+    __H, __a, __v, __e, _sp, __y, __o, __u, _sp, __e, __v, __e, __r, _sp, __m, __e, __t, _sp, __a, _sp, __r, __e, __a, __l, _sp, __g, __o, __b, __i, __n, _qu, $FF
+end
+
+    data message__ex_pirate_fleta_talk
+    __I, __t, _sp, __b, __e, _sp, __a, _sp, __b, __a, __d, _sp, __t, __i, __m, __e, _sp, __t, __o, _sp, __b, __e, _sp, __i, __n, _sp, __t, __h, __e, _sp, __s, __h, __i, __p, _sp, __b, __u, __s, __i, __n, __e, __s, __s, _pd, $FF
+end
+
+    data message__guard_maddox_talk
+    __I, _sp, __a, __m, _sp, __o, __n, _sp, __l, __o, __o, __k, __o, __u, __t, _sp, __d, __u, __t, __y, _sp, __t, __o, _sp, __w, __a, __r, __n, _sp, __o, __f, _sp, __c, __o, __m, __i, __n, __g, _sp, __m, __o, __n, __s, __t, __e, __r, __s, _pd, $FF
+end
+
+    data message__garrick_the_wizard_talk
+    __I, _sp, __h, __o, __p, __e, _sp, __w, __e, _sp, __w, __o, __n, _ap, __t, _sp, __s, __h, __a, __r, __e, _sp, __t, __h, __e, _sp, __s, __a, __m, __e, _sp, __f, __a, __t, __e, _sp, __a, __s, _sp, __D, __u, __s, __k, __g, __r, __o, __v, __e, _pd, $FF
+end
+
+    data message__marden_the_elder_talk
+    __O, __u, __r, _sp, __h, __i, __d, __d, __e, __n, _sp, __l, __o, __c, __a, __t, __i, __o, __n, _sp, __h, __a, __s, _sp, __k, __e, __p, __t, _sp, __u, __s, _sp, __m, __o, __s, __t, __l, __y, _sp, __s, __a, __f, __e, _pd, $FF
+end
+
+    data message__fay_the_traveler_talk
+    __I, _ap, __m, _sp, __s, __t, __r, __a, __n, __d, __e, __d, _sp, __h, __e, __r, __e, _sp, __u, __n, __t, __i, __l, _sp, __t, __h, __e, _sp, __I, __n, __c, __u, __r, __s, __i, __o, __n, __s, _sp, __a, __r, __e, _sp, __o, __v, __e, __r, _pd, $FF
+end
+
+    data message__wixa_the_alchemist_talk
+    __I, _sp, __n, __e, __e, __d, _sp, __m, __o, __r, __e, _sp, __f, __i, __r, __e, _sp, __a, __c, __o, __r, __n, __s, _ex, $FF
+end
+
+    data message__baxton_the_wizard_talk
+    __M, __o, __s, __t, _sp, __i, __m, __p, __r, __e, __s, __s, __i, __v, __e, _ex, _sp, __I, _sp, __w, __i, __l, __l, _sp, __t, __e, __a, __c, __h, _sp, __y, __o, __u, _sp, __w, __h, __a, __t, _sp, __I, _sp, __k, __n, __o, __w, _pd, $FF
+end
+
+    data message__mage_maximilian_talk
+    __I, _sp, __r, __e, __g, __r, __e, __t, _sp, __m, __y, _sp, __c, __r, __i, __m, __e, __s, _pd, _sp, __I, _sp, __c, __a, __n, _sp, __i, __m, __p, __a, __r, __t, _sp, __m, __y, _sp, __m, __a, __g, __i, __c, _sp, __k, __n, __o, __w, __l, __e, __d, __g, __e, _sp, __i, __f, _sp, __y, __o, __u, _sp, __w, __a, __n, __t, _pd, $FF
+end
+
+    data message__clan_elder_duron_talk
+    __I, _sp, __w, __a, __s, _sp, __o, __n, __c, __e, _sp, __t, __h, __e, _sp, __g, __r, __e, __a, __t, __e, __s, __t, _sp, __w, __a, __r, __r, __i, __o, __r, _sp, __o, __f, _sp, __t, __h, __e, _sp, __d, __w, __a, __r, __v, __e, __s, _pd, _sp, __I, _sp, __c, __a, __n, _sp, __t, __e, __a, __c, __h, _sp, __y, __o, __u, _sp, __t, __o, _sp, __b, __e, _sp, __a, _sp, __m, __o, __r, __e, _sp, __e, __f, __f, __e, __c, __t, __i, __v, __e, _sp, __w, __a, __r, __r, __i, __o, __r, _pd, $FF
+end
+
+    data message__goldwine_the_bard_talk
+    __I, _ap, __v, __e, _sp, __t, __r, __a, __v, __e, __l, __e, __d, _sp, __t, __h, __e, _sp, __l, __a, __n, __d, __s, _sp, __f, __o, __r, _sp, __a, __g, __e, __s, _sp, __b, __e, __f, __o, __r, __e, _sp, __s, __e, __t, __t, __l, __i, __n, __g, _sp, __h, __e, __r, __e, _pd, _sp, __I, _ap, __m, _sp, __f, __l, __e, __e, __t, _sp, __o, __f, _sp, __f, __o, __o, __t, _cm, _sp, __a, __n, __d, _sp, __k, __n, __o, __w, _sp, __m, __a, __n, __y, _sp, __s, __k, __i, __l, __l, __s, _pd, $FF
+end
+
+    data message__wik_the_grunt_talk
+    __D, __i, __d, _sp, __y, __o, __u, _sp, __s, __e, __e, _sp, __a, _sp, __h, __u, __m, __a, __n, _qu, $FF
+end
+
+    data message__ogre_chieftain_dak_talk
+    __P, __r, __a, __i, __s, __e, _sp, __t, __o, _sp, __T, __h, __a, __n, __a, _cm, _sp, __g, __r, __u, __n, __t, _ex, $FF
+end
+
+    data message__overseer_thal_talk
+    __A, __r, __e, _sp, __y, __o, __u, _sp, __r, __e, __a, __d, __y, _sp, __f, __o, __r, _sp, __t, __h, __e, _sp, __i, __n, __v, __a, __s, __i, __o, __n, _cm, _sp, __g, __r, __u, __n, __t, _qu, $FF
+end
+
+    data message__overseer_yargot_talk
+    __I, _sp, __c, __a, __n, _ap, __t, _sp, __f, __i, __n, __d, _sp, __T, __r, __a, __g, __u, __t, _ex, $FF
+end
+
+    data message__grunt_baluzag_talk
+    __W, __a, __n, __n, __a, _sp, __p, __l, __a, __y, _sp, __s, __p, __e, __a, __r, __s, _qu, $FF
+end
+
+    data message__grunt_eruk_talk
+    __I, _sp, __t, __h, __i, __n, __k, _sp, __T, __r, __a, __g, __u, __t, _sp, __m, __a, __y, _sp, __h, __a, __v, __e, _sp, __d, __e, __s, __e, __r, __t, __e, __d, _sp, __o, __n, _sp, __u, __s, _pd, $FF
+end
+
+    data message__deserter_tragut_talk
+    __T, __h, __a, __n, __a, _sp, __m, __u, __s, __t, _sp, __b, __e, _sp, __s, __t, __o, __p, __p, __e, __d, _ex, _sp, __H, __e, __r, _sp, __s, __t, __r, __o, __n, __g, __h, __o, __l, __d, _sp, __m, __a, __y, _sp, __o, __n, __l, __y, _sp, __b, __e, _sp, __r, __e, __a, __c, __h, __e, __d, _sp, __b, __y, _sp, __m, __a, __g, __i, __c, _pd, $FF
+end
+
+    data message__grunt_bokur_talk
+    __W, __h, __e, __r, __e, _sp, __i, __s, _sp, __y, __o, __u, __r, _sp, __p, __o, __s, __t, _qu, $FF
+end
+
+    data message__duskgrove_bartender_talk
+    __I, _sp, __h, __e, __a, __r, _sp, __t, __h, __a, __t, _sp, __T, __h, __a, __n, __a, _ap, __s, _sp, __H, __o, __l, __d, _sp, __h, __a, __s, _sp, __t, __h, __e, _sp, __b, __e, __s, __t, _sp, __a, __l, __e, _pd, $FF
+end
+
+    data message__samuel_the_medic_talk
+    __C, __a, __n, _sp, __y, __o, __u, _sp, __s, __p, __a, __r, __e, _sp, __a, __n, __y, _sp, __h, __e, __a, __l, _sp, __p, __o, __t, __i, __o, __n, __s, _sp, __f, __o, __r, _sp, __t, __h, __e, _sp, __s, __i, __c, __k, _qu, $FF
+end
+
+    data message__mayorinexile_jul_talk
+    __W, __e, __l, __c, __o, __m, __e, _sp, __t, __o, _sp, __D, __u, __s, __k, __g, __r, __o, __v, __e, _ap, __s, _sp, __r, __e, __f, __u, __g, __e, __e, _sp, __b, __u, __n, __k, __e, __r, _pd, $FF
+end
+
+    data message__watchman_bernard_talk
+    __W, __e, _sp, __a, __r, __e, _sp, __h, __i, __d, __i, __n, __g, _sp, __p, __e, __o, __p, __l, __e, _sp, __u, __n, __t, __i, __l, _sp, __o, __u, __t, _sp, __c, __i, __t, __y, _sp, __i, __s, _sp, __l, __i, __b, __e, __r, __a, __t, __e, __d, _pd, $FF
+end
+
+    data message__spiretop_bartender_talk
+    __I, _sp, __h, __e, __a, __r, _sp, __t, __h, __e, __r, __e, _ap, __s, _sp, __a, _sp, __m, __a, __g, __i, __c, _sp, __g, __e, __m, _sp, __t, __h, __a, __t, _sp, __c, __a, __n, _sp, __s, __e, __n, __d, _sp, __y, __o, __u, _sp, __h, __o, __m, __e, _pd, $FF
+end
+
+    data message__edwin_the_wayfarer_talk
+    __I, __t, _sp, __l, __o, __o, __k, __s, _sp, __l, __i, __k, __e, _sp, __y, __o, __u, _sp, __a, __r, __e, _sp, __s, __t, __u, __c, __k, _sp, __h, __e, __r, __e, _sp, __n, __o, __w, _sp, __w, __i, __t, __h, _sp, __t, __h, __e, _sp, __r, __e, __s, __t, _sp, __o, __f, _sp, __u, __s, _pd, $FF
+end
+
+    data message__theobald_the_sage_talk
+    __W, __e, _sp, __c, __a, __m, __e, _sp, __t, __o, _sp, __S, __p, __i, __r, __e, __t, __o, __p, _sp, __t, __o, _sp, __r, __e, __t, __i, __r, __e, _sp, __i, __n, _sp, __p, __e, __a, __c, __e, _pd, $FF
+end
+
+    data message__ranulf_the_wizard_talk
+    __M, __a, __g, __i, __c, _sp, __w, __a, __r, __d, __s, _sp, __b, __a, __r, _sp, __u, __s, _sp, __f, __r, __o, __m, _sp, __l, __e, __a, __v, __i, __n, __g, _sp, __t, __h, __i, __s, _sp, __v, __a, __l, __l, __e, __y, _pd, $FF
+end
+
+    data message__ranger_juliana_talk
+    __W, __e, _sp, __w, __a, __n, __t, _sp, __t, __o, _sp, __h, __e, __l, __p, _cm, _sp, __b, __u, __t, _sp, __w, __e, _sp, __c, __a, __n, _ap, __t, _sp, __l, __e, __a, __v, __e, _sp, __t, __h, __i, __s, _sp, __v, __a, __l, __l, __e, __y, _pd, $FF
+end
+
+    data message__high_priestess_ada_talk
+    __T, __h, __e, _sp, __r, __i, __f, __t, _sp, __m, __u, __s, __t, _sp, __b, __e, _sp, __h, __e, __a, __l, __e, __d, _cm, _sp, __o, __r, _sp, __F, __a, __r, __a, __d, __u, __r, _sp, __i, __s, _sp, __d, __o, __o, __m, __e, __d, _pd, $FF
+end
+
+    data message__elder_sapphire_talk
+    __H, __i, _ex, _sp, __W, __e, __l, __c, __o, __m, __e, _sp, __t, __o, _sp, __S, __p, __i, __r, __e, __t, __o, __p, _co, _sp, __h, __i, __d, __d, __e, __n, _sp, __c, __i, __t, __y, _sp, __o, __f, _sp, __h, __e, __r, __o, __e, __s, _pd, $FF
+end
+
+    data message__alderney_the_seer_talk
+    __T, __h, __a, __n, __a, _sp, __w, __a, __s, _sp, __o, __n, __e, _sp, __o, __f, _sp, __u, __s, _sp, __u, __n, __t, __i, __l, _sp, __h, __e, __r, _sp, __p, __o, __w, __e, __r, _hy, __l, __u, __s, __t, _sp, __l, __e, __d, _sp, __h, __e, __r, _sp, __t, __o, _sp, __s, __e, __e, __k, _sp, __d, __a, __r, __k, _sp, __m, __a, __g, __i, __c, _pd, _sp, __S, __h, __e, _sp, __o, __p, __e, __n, __e, __d, _sp, __a, _sp, __r, __i, __f, __t, _sp, __t, __o, _sp, __s, __h, __a, __d, __o, __w, _cm, _sp, __a, __n, __d, _sp, __t, __r, __a, __p, __p, __e, __d, _sp, __u, __s, _sp, __h, __e, __r, __e, _pd, _sp, __Y, __o, __u, _sp, __m, __u, __s, __t, _sp, __p, __e, __n, __e, __t, __r, __a, __t, __e, _sp, __h, __e, __r, _sp, __l, __a, __i, __r, _sp, __o, __n, _sp, __t, __h, __e, _sp, __i, __s, __l, __a, __n, __d, _sp, __t, __o, _sp, __t, __h, __e, _sp, __E, __a, __s, __t, _pd, $FF
+end
+
+    data message__avil_the_warrior_talk
+    __I, __f, _sp, __y, __o, __u, _sp, __c, __a, __n, _sp, __f, __i, __n, __d, _sp, __a, _sp, __w, __a, __y, _sp, __t, __o, _sp, __l, __e, __a, __v, __e, _cm, _sp, __t, __e, __l, __l, _sp, __J, __a, __y, __l, __a, __n, _sp, __t, __h, __a, __t, _sp, __I, _sp, __s, __e, __n, __t, _sp, __y, __o, __u, _pd, $FF
+end
+
+    data message__clan_elder_thorina_talk
+    __L, __e, __a, __v, __e, _sp, __m, __e, _sp, __a, __l, __o, __n, __e, _cm, _sp, __h, __u, __m, __a, __n, _pd, $FF
+end
+
+    data message__barnaby_the_pirate_talk
+    __I, _sp, __s, __h, __o, __u, __l, __d, _sp, __h, __a, __v, __e, _sp, __s, __t, __a, __y, __e, __d, _sp, __i, __n, _sp, __F, __r, __e, __e, __h, __a, __v, __e, __n, _pd, $FF
+end
+
+    data message__audrey_the_convict_talk
+    __T, __h, __e, _sp, __q, __u, __e, __e, __n, _sp, __d, __i, __d, _sp, __n, __o, __t, _sp, __a, __p, __p, __r, __e, __c, __i, __a, __t, __e, _sp, __m, __e, _sp, __i, __m, __p, __e, __r, __s, __o, __n, __a, __t, __i, __n, __g, _sp, __h, __e, __r, _pd, $FF
+end
+
+    data message__john_the_insurgent_talk
+    __J, __o, __i, __n, _sp, __m, __e, _sp, __t, __o, _sp, __d, __e, __p, __o, __s, __e, _sp, __t, __h, __e, _sp, __Q, __u, __e, __e, __n, _pd, $FF
+end
+
+    data message__dorothy_the_tipsy_talk
+    __T, __h, __i, __s, _sp, __i, __s, _sp, __t, __h, __e, _sp, __s, __a, __f, __e, __s, __t, _sp, __p, __l, __a, __c, __e, _sp, __t, __o, _sp, __d, __r, __i, __n, __k, _sp, __i, __n, _sp, __a, __l, __l, _sp, __o, __f, _sp, __F, __a, __r, __a, __d, __u, __r, _pd, $FF
+end
+
+    data message__steward_rowland_talk
+    __L, __o, __n, __g, _sp, __l, __i, __v, __e, _sp, __t, __h, __e, _sp, __Q, __u, __e, __e, __n, _ex, $FF
+end
+
+    data message__marshal_catherine_talk
+    __O, __u, __r, _sp, __s, __o, __l, __d, __i, __e, __r, __s, _sp, __a, __r, __e, _sp, __s, __p, __r, __e, __a, __d, _sp, __t, __o, __o, _sp, __t, __h, __i, __n, _pd, $FF
+end
+
+    data message__soldier_leonard_talk
+    __D, __i, __d, _sp, __y, __o, __u, _sp, __h, __e, __a, __r, _sp, __a, __b, __o, __u, __t, _sp, __t, __h, __e, _sp, __f, __a, __l, __l, _sp, __o, __f, _sp, __D, __u, __s, __k, __g, __r, __o, __v, __e, _qu, $FF
+end
+
+    data message__oak_oracle_talk
+    __O, __n, __e, _sp, __c, __i, __r, __c, __l, __e, _sp, __o, __f, _sp, __p, __o, __w, __e, __r, _sp, __l, __i, __e, __s, _sp, __b, __e, __n, __e, __a, __t, __h, _sp, __t, __h, __e, _sp, __o, __c, __e, __a, __n, _sp, __w, __a, __v, __e, __s, _pd, $FF
+end
+
+    data message__sailor_tobias_talk
+    _ap, __A, __v, __e, _sp, __y, __e, _sp, __s, __e, __e, __n, _sp, __m, __e, _sp, __b, __r, __o, __t, __h, __e, __r, _sp, __B, __a, __r, __n, __a, __b, __y, _qu, $FF
+end
+
+    data message__gymara_the_sailor_talk
+    __D, __w, __a, __r, __v, __e, __n, _sp, __s, __a, __i, __l, __o, __r, __s, _sp, __a, __r, __e, _sp, __v, __e, __r, __y, _sp, __r, __a, __r, __e, _pd, $FF
+end
+
+    data message__thanas_hold_bartender_talk
+    __I, _sp, __h, __e, __a, __r, _sp, __t, __h, __e, _sp, __p, __a, __s, __s, __w, __o, __r, __d, _sp, __w, __a, __s, _sp, __c, __h, __a, __n, __g, __e, __d, _sp, __t, __o, _sp, _ap, __N, __e, __w, _sp, __L, __i, __e, __g, __e, _ap, _pd, $FF
+end
+
+    data message__demon_guard_talk
+    __P, __r, __a, __i, __s, __e, _sp, __T, __h, __a, __n, __a, _cm, _sp, __g, __o, __b, __l, __i, __n, _pd, $FF
+end
+
+    data message__umfrey_the_spy_talk
+    __E, __n, __t, __e, __r, _sp, __t, __h, __e, _sp, __k, __e, __e, __p, _sp, __f, __r, __o, __m, _sp, __t, __h, __e, _sp, __w, __e, __s, __t, _sp, __s, __i, __d, __e, _sp, __i, __f, _sp, __y, __o, __u, _sp, __a, __t, __t, __a, __i, __n, _sp, __t, __h, __e, _sp, __p, __a, __s, __s, __w, __o, __r, __d, _pd, $FF
+end
+
+    data message__mage_mary_ann_talk
+    __Y, __o, __u, _sp, __m, __u, __s, __t, _sp, __c, __l, __o, __s, __e, _sp, __t, __h, __e, _sp, __r, __i, __f, __t, _sp, __t, __o, _sp, __t, __h, __e, _sp, __S, __h, __a, __d, __o, __w, _sp, __R, __e, __a, __l, __m, _ex, $FF
+end
+
+    data message__hilda_the_explorer_talk
+    __T, __h, __i, __s, _sp, __c, __i, __t, __y, _sp, __i, __s, _sp, __d, __a, __n, __g, __e, __r, __o, __u, __s, _sp, __w, __i, __t, __h, __o, __u, __t, _sp, __d, __i, __s, __g, __u, __i, __s, __e, _sp, __d, __u, __s, __t, _pd, $FF
+end
+
+    data message__prospector_divana_talk
+    __I, _sp, __p, __i, __c, __k, __e, __d, _sp, __t, __h, __e, _sp, __w, __r, __o, __n, __g, _sp, __h, __i, __l, __l, _sp, __t, __o, _sp, __m, __i, __n, __e, _pd, $FF
+end
+
+    data message__bronk_the_servant_talk
+    __G, __o, __b, __l, __i, __n, __s, _sp, __n, __o, _sp, __h, __a, __v, __e, _sp, __t, __o, _sp, __h, __i, __d, __e, _sp, __n, __o, _sp, __m, __o, __r, __e, _sp, __o, __n, __c, __e, _sp, __T, __h, __a, __n, __a, _sp, __t, __a, __k, __e, __s, _sp, __o, __v, __e, __r, _pd, $FF
+end
+
+    data message__open_sesame
+    _ap, __O, __p, __e, __n, _sp, __s, __e, __s, __a, __m, __e, _ex, _ap, $FF
+end
+
+    data message__go_away_force_field
+    _ap, __G, __o, _sp, __a, __w, __a, __y, _cm, _sp, __f, __o, __r, __c, __e, _sp, __f, __i, __e, __l, __d, _ex, _ap, $FF
+end
+
+    data message__fool_you_cant_harm_me
+    __F, __o, __o, __l, _ex, _sp, __Y, __o, __u, _sp, __c, __a, __n, _ap, __t, _sp, __h, __a, __r, __m, _sp, __m, __e, _sp, __o, __r, _sp, __t, __h, __e, _sp, __f, __o, __r, __c, __e, _sp, __f, __i, __e, __l, __d, _pd, $FF
+end
+
+    data message__fulk_the_departed
+    __T, __o, _sp, __d, __i, __s, __p, __e, __l, _sp, __m, __a, __g, __i, __c, _cm, _sp, __r, __e, __c, __i, __t, __e, _co, $FF
+end
+
+    data message__sir_devon_talk
+    __Y, __o, __u, _sp, __m, __u, __s, __t, _sp, __t, __r, __a, __v, __e, __l, _sp, __t, __o, _sp, __O, __a, __k, _sp, __t, __o, _sp, __f, __i, __n, __d, _sp, __h, __e, __a, __l, __i, __n, __g, _sp, __p, __o, __t, __i, __o, __n, __s, _pd, $FF
+end
+
+    data message__ray_the_apprentice_talk
+    __I, _sp, __c, __a, __n, _ap, __t, _sp, __b, __e, __l, __i, __e, __v, __e, _sp, __t, __h, __a, __t, _sp, __T, __h, __a, __n, __a, _sp, __t, __u, __r, __n, __e, __d, _sp, __o, __n, _sp, __u, __s, _ex, $FF
+end
+
+    data message__sam_the_adventurer_talk
+    __Y, __o, __u, _sp, __w, __i, __l, __l, _sp, __n, __e, __e, __d, _sp, __m, __a, __g, __i, __c, _sp, __t, __o, _sp, __e, __x, __p, __l, __o, __r, __e, _sp, __t, __h, __e, _sp, __n, __e, __a, __r, __b, __y, _sp, __d, __u, __n, __g, __e, __o, __n, _pd, $FF
+end
+
+    data message__rolf_the_mighty_talk
+    __T, __h, __e, __y, _sp, __h, __a, __v, __e, _sp, __b, __e, __t, __t, __e, __r, _sp, __a, __r, __m, __o, __r, _sp, __i, __n, _sp, __F, __r, __e, __e, __h, __a, __v, __e, __n, _pd, $FF
+end
+
+    data message__give_spirit_hammer
+    __W, __i, __t, __h, _sp, __t, __h, __i, __s, _sp, __g, __i, __f, __t, _cm, _sp, __y, __o, __u, _sp, __m, __a, __y, _sp, __n, __e, __v, __e, __r, _sp, __b, __e, _sp, __f, __o, __u, __n, __d, _sp, __u, __n, __a, __r, __m, __e, __d, _pd, $FF
+end
+
+    data message__thank_you_for_your_help
+    __T, __h, __a, __n, __k, _sp, __y, __o, __u, _sp, __f, __o, __r, _sp, __y, __o, __u, __r, _sp, __h, __e, __l, __p, _pd, $FF
+end
+
+    data message__already_have_dragon_armor
+    __S, __a, __f, __e, _sp, __j, __o, __u, __r, __n, __e, __y, __s, _cm, _sp, __H, __e, __r, __o, _pd, $FF
+end
+
+    data message__you_are_now_greater
+    __Y, __o, __u, _sp, __a, __r, __e, _sp, __n, __o, __w, _sp, __g, __r, __e, __a, __t, __e, __r, _ex, $FF
+end
+
+    data message__a_human_attack
+    __A, _sp, __h, __u, __m, __a, __n, _ex, _sp, __A, __t, __t, __a, __c, __k, _ex, $FF
+end
+
+    data message__another_time_perhaps
+    __A, __n, __o, __t, __h, __e, __r, _sp, __t, __i, __m, __e, _cm, _sp, __p, __e, __r, __h, __a, __p, __s, _pd, $FF
+end
+
+    data message__thana_secondary_dialog
+    __Y, __o, __u, _sp, __r, __i, __s, __k, _sp, __k, __i, __l, __l, __i, __n, __g, _sp, __u, __s, _sp, __a, __l, __l, _sp, __i, __f, _sp, __y, __o, __u, _sp, __u, __s, __e, _sp, __y, __o, __u, __r, _sp, __m, __a, __g, __i, __c, _sp, __h, __e, __r, __e, _pd, $FF
+end
+
+    data message__find_fulk
+    __F, __u, __l, __k, _sp, __w, __a, __s, _sp, __t, __h, __e, _sp, __w, __i, __s, __e, __s, __t, _sp, __o, __f, _sp, __a, __l, __l, _sp, __s, __a, __g, __e, __s, _pd, _sp, __S, __e, __e, __k, _sp, __h, __i, __m, _sp, __a, __t, _sp, __C, __a, __v, __e, _sp, __o, __f, _sp, __t, __h, __e, _sp, __D, __e, __a, __d, _pd, $FF
+end
+
+    data message__thank_you_come_again
+    __T, __h, __a, __n, __k, _sp, __y, __o, __u, _pd, _sp, __C, __o, __m, __e, _sp, __a, __g, __a, __i, __n, _ex, $FF
+end
+
+    data message__use_this_only_when_your
+    __U, __s, __e, _sp, __t, __h, __i, __s, _sp, __o, __n, __l, __y, _sp, __w, __h, __e, __n, _sp, __y, __o, __u, __r, _sp, __p, __e, __r, __i, __l, $FF
+end
+
+    data message__peril_is_most_dire
+    __i, __s, _sp, __m, __o, __s, __t, _sp, __d, __i, __r, __e, _pd, $FF
+end
+
+    data message__give_dragon_armor
+    __A, __v, __i, __l, _sp, __s, __e, __n, __t, _sp, __y, __o, __u, _qu, _sp, __Y, __o, __u, _sp, __m, __a, __y, _sp, __h, __a, __v, __e, _sp, __m, __y, _sp, __g, __r, __e, __a, __t, __e, __s, __t, _sp, __w, __o, __r, __k, _pd, $FF
+end
+
+    data message__you_have_enough_already
+    __Y, __o, __u, _sp, __h, __a, __v, __e, _sp, __e, __n, __o, __u, __g, __h, _sp, __a, __l, __r, __e, __a, __d, __y, _pd, $FF
+end
+
+    data message__go_away
+    __G, __o, _sp, __a, __w, __a, __y, _ex, $FF
+end
+
+    data message__you_have_no_need_of_it
+    __Y, __o, __u, _sp, __h, __a, __v, __e, _sp, __n, __o, _sp, __n, __e, __e, __d, _sp, __o, __f, _sp, __i, __t, _pd, $FF
+end
+
+    data message__already_have_spirit_hammer
+    __W, __i, __e, __l, __d, _sp, __y, __o, __u, __r, _sp, __h, __a, __m, __m, __e, __r, _sp, __w, __i, __t, __h, _sp, __h, __o, __n, __o, __r, _pd, $FF
+end
+
+    data message__why_not
+    __W, __h, __y, _sp, __n, __o, __t, _qu, $FF
+end
+
+    data message__anmarbokfilot
+    _ap, __A, __n, _hy, __M, __a, __r, _hy, __B, __o, __k, _hy, __F, __i, _hy, __L, __o, __t, _ex, _ap, $FF
+end
+
+    data message__find_the_other_trainers
+    __G, __o, _sp, __f, __i, __n, __d, _sp, __t, __h, __e, _sp, __o, __t, __h, __e, __r, _sp, __t, __r, __a, __i, __n, __e, __r, __s, _ex, $FF
+end
+
+    data message__you_dont_have_enough
+    __Y, __o, __u, _sp, __d, __o, __n, _ap, __t, _sp, __h, __a, __v, __e, _sp, __e, __n, __o, __u, __g, __h, _pd, $FF
+end
+
+    data message__where
+    __W, __h, __e, __r, __e, _qu, $FF
+end
+
+    data message__spirit_stone_clue
+    __S, __p, __i, __r, __i, __t, _sp, __S, __t, __o, __n, __e, __s, _sp, __a, __r, __e, _sp, __f, __o, __u, __n, __d, _sp, __i, __n, _sp, __t, __h, __e, _sp, __C, __a, __v, __e, _sp, __o, __f, _sp, __t, __h, __e, _sp, __D, __e, __a, __d, _sp, __o, __n, _sp, __t, __h, __e, _sp, __I, __s, __l, __e, _sp, __o, __f, _sp, __M, __y, __s, __t, __e, __r, __y, _pd, $FF
+end
+
+    data message__no_one_is_here
+    __N, __o, _sp, __o, __n, __e, _sp, __i, __s, _sp, __h, __e, __r, __e, _ex, $FF
+end
+
+    data message__poisoned
+    __P, __o, __i, __s, __o, __n, __e, __d, _ex, $FF
+end
+
+    data message__out_of_food
+    __O, __u, __t, _sp, __o, __f, _sp, __f, __o, __o, __d, _ex, $FF
+end
+

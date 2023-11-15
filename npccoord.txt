@@ -1,0 +1,334 @@
+CastleNPC
+    .byte 18,6, queen_avaline
+    .byte 22,8, king_rufus
+    .byte 15,6,   ezin_the_sage ; up
+    .byte 15,8,   ezin_the_sage ; down
+    .byte 14,7,   ezin_the_sage ; left
+    .byte 16,7,   ezin_the_sage ; right
+    .byte 17,10,  guard ; up
+    .byte 17,12,  guard ; down
+    .byte 18,11,  guard ; right
+    .byte 20,10,  guard ; up
+    .byte 20,12,  guard ; down
+    .byte 19,11,  guard ; left
+    .byte 17,20,  guard ; up
+    .byte 16,21,  guard ; left
+    .byte 18,21,  guard ; right
+    .byte 20,20,  guard ; up
+    .byte 19,21,  guard ; left
+    .byte 21,21,  guard ; right
+    .byte 24,13,  ida_the_jester ; down
+    .byte 23,12,  ida_the_jester ; left
+    .byte 36,23,  guard ; up
+    .byte 36,25,  guard ; down
+    .byte 35,24,  guard ; left
+    .byte 31,15,  dalin_the_dwarf ; up
+    .byte 30,16,  dalin_the_dwarf ; left
+    .byte 32,16,  dalin_the_dwarf ; right
+    .byte 5,15,   sir_devon ; left
+    .byte 7,15,   sir_devon ; right
+    .byte 5,5,    grocer ; down
+    .byte 4,4,    grocer ; left
+    .byte 6,4,    grocer ; right
+    .byte 31,8,   healer
+    .byte 7,13,   millie_the_gossip ; left
+    .byte 9,13,   millie_the_gossip ; right
+    .byte 5,8,    server_xavier ; up
+    .byte 4,9,    server_xavier ; left
+    .byte 6,9,    server_xavier ; right
+    .byte 26,8,   explorer_constance ; up
+    .byte 26,10,  explorer_constance ; down
+    .byte 2,18,   beatrice_the_guard ; up
+    .byte 2,20,   beatrice_the_guard ; down
+    .byte 3,19,   beatrice_the_guard ; right
+    .byte 3,22,   roxanne_the_maid ; up
+    .byte 3,24,   roxanne_the_maid ; down
+    .byte 2,23,   roxanne_the_maid ; left
+    .byte 5,0,    groundsman_hector ; up
+    .byte 6,1,    groundsman_hector ; right
+    .byte npc_end
+
+AcadiaNPC
+    .byte 42,11,    guard
+    .byte 42,12,    guard
+    .byte 251,11,   guard
+    .byte 251,12,   guard
+    .byte 33,17,    grocer ; 86 him
+    .byte 4,2,      robin_the_barfly ; up
+    .byte 5,3,      robin_the_barfly ; right
+    .byte 27,2,     randall_the_loner
+    .byte 35,26,    alistair_the_elder
+    .byte 36,27,    alistair_the_elder
+    .byte 37,26,    alistair_the_elder
+    .byte 36,25,    alistair_the_elder
+    .byte 11,17,    guardsman_taylor
+    .byte 12,18,    guardsman_taylor
+    .byte 13,17,    guardsman_taylor
+    .byte 12,16,    guardsman_taylor
+    .byte 24,3,     eva_the_fighter
+    .byte 25,4,     eva_the_fighter
+    .byte 19,3,     sling_vendor
+    .byte 23,3,     mace_vendor
+    .byte 32,2,     leather_vendor
+    .byte 8,2,      acadia_bartender
+    .byte 0,20,     mayor_wade
+    .byte 2,20,     mayor_wade
+    .byte 1,19,     mayor_wade
+    .byte 1,21,     mayor_wade
+    .byte 255,0,  leta_the_gardener ; up
+    .byte 255,2,  leta_the_gardener ; down
+    .byte 254,1,  leta_the_gardener ; left
+    .byte 0,1,    leta_the_gardener ; right
+    .byte npc_end
+
+StoneheartNPC
+    .byte 4,26,  grocer
+    .byte 26,1,  baern_the_smith
+    .byte 27,0,  baern_the_smith
+    .byte 27,2,  baern_the_smith
+    .byte 29,1,  baern_the_smith
+    .byte 8,0,   clan_chief_travok
+    .byte 9,1,   clan_chief_travok
+    .byte 10,0,  clan_chief_travok
+    .byte 5,16,  stoneheart_bartender
+    .byte 31,22, amber_the_juvenile
+    .byte 32,21, amber_the_juvenile
+    .byte 39,0,  vistra_the_smith
+    .byte 40,255,   vistra_the_smith
+    .byte 41,0,  vistra_the_smith
+    .byte 40,2,  vistra_the_smith
+    .byte 2,8,   rutgar_the_miner
+    .byte 3,7,   rutgar_the_miner
+    .byte 254,6, borin_the_miner
+    .byte 253,5, borin_the_miner
+    .byte 0,16,  soldier_gadora
+    .byte 1,15,  soldier_gadora
+    .byte 2,16,  soldier_gadora
+    .byte 35,21, plate_vendor
+    .byte 26,27, forgeguru_riswynn
+    .byte 25,26, forgeguru_riswynn
+    .byte 24,27, forgeguru_riswynn
+    .byte 35,25, axe_vendor
+    .byte 28,10, clan_elder_duron ; up
+    .byte 29,11, clan_elder_duron ; right
+    .byte 15,7,  clan_elder_thorina ; up
+    .byte 16,8,  clan_elder_thorina ; right
+
+    .byte npc_end
+
+OakNPC
+    .byte 14,12,  grove_warden_glynn
+    .byte 15,11,  grove_warden_glynn
+    .byte 15,13,  grove_warden_glynn
+    .byte 16,12,  grove_warden_glynn
+    .byte 33,20,  bow_vendor
+    .byte 14,5,   oracle_guard
+    .byte 14,3,   oracle_guard
+    .byte 13,4,   oracle_guard
+    .byte 15,4,   oracle_guard
+    .byte 2,24,   healer
+    .byte 2,1,    grocer
+    .byte 34,2,   giles_the_ranger
+    .byte 34,0,   giles_the_ranger
+    .byte 33,1,   giles_the_ranger
+    .byte 35,1,   giles_the_ranger
+    .byte 39,1,   nesta_the_ranger
+    .byte 38,0,   nesta_the_ranger
+    .byte 40,0,   nesta_the_ranger
+    .byte 27,7,   nigel_the_lost ; up
+    .byte 27,9,   nigel_the_lost ; down
+    .byte 26,8,   nigel_the_lost ; left
+    .byte 28,8,   nigel_the_lost ; right
+    .byte 29,18,  elena_the_youth ; up
+    .byte 29,20,  elena_the_youth ; down
+    .byte 30,19,  elena_the_youth ; right
+    .byte 40,27,  terric_the_sage ; up
+    .byte 40,29,  terric_the_sage ; down
+    .byte 39,28,  terric_the_sage ; left
+    .byte 41,28,  terric_the_sage ; right
+    .byte 17,2,   oak_oracle ; up
+    .byte 17,4,   oak_oracle ; down
+    .byte 16,3,   oak_oracle ; left
+    .byte 18,3,   oak_oracle ; right
+     .byte 37,0,   oak_bartender
+    .byte 17,27,  healing_potion_vendor
+    .byte npc_end
+
+WatersNPC
+    .byte 23,13,  mayor_baldric ; down
+    .byte 22,12,  mayor_baldric ; left
+    .byte 34,0,   waters_bartender
+    .byte 22,6,   deckhand_jordan ; down
+    .byte 21,5,   deckhand_jordan ; left
+    .byte 23,5,   deckhand_jordan ; right
+    .byte 31,1,   friar_henry ; down
+    .byte 30,0,   friar_henry ; left
+    .byte 32,0,   friar_henry ; right
+    .byte 14,6,   ship_vendor
+    .byte 25,0,   captain_sabina ; up
+    .byte 26,1,   captain_sabina ; right
+    .byte 1,8,    isabel_the_recluse ; up
+    .byte 1,10,   isabel_the_recluse ; down
+    .byte 0,9,    isabel_the_recluse ; left
+    .byte 2,9,    isabel_the_recluse ; right
+    .byte 4,255,  farmer_william ; down
+    .byte 3,254,  farmer_william ; left
+    .byte 2,24,   sword_vendor
+    .byte 8,24,   chainmail_vendor
+    .byte 41,255, forwin_the_wizard ; down
+    .byte 40,254, forwin_the_wizard ; left
+    .byte 32,23,  grocer
+    .byte 10,22,  rolf_the_mighty ; down
+    .byte 9,21,   rolf_the_mighty ; left
+    .byte npc_end
+
+FreehavenNPC
+    .byte 37,0,   cure_potion_vendor ; down
+    .byte 10,27,  grocer ; up
+    .byte 27,27,  healer ; up
+    .byte 5,27,   freehaven_bartender ; up
+    .byte 38,26,  jaylan_the_smith ; up
+    .byte 39,27,  jaylan_the_smith ; right
+    .byte 25,10,  captain_rodrick ; up
+    .byte 25,12,  captain_rodrick ; down
+    .byte 24,11,  captain_rodrick ; left
+    .byte 26,11,  captain_rodrick ; right
+    .byte 28,10,  first_mate_willie ; up
+    .byte 28,12,  first_mate_willie ; down
+    .byte 27,11,  first_mate_willie ; left
+    .byte 29,11,  first_mate_willie ; right
+    .byte 13,26,  greta_the_goblin ; up
+    .byte 12,27,  greta_the_goblin ; left
+    .byte 3,8,    ex_pirate_fleta ; down
+    .byte 3,25,   sailor_tobias ; down
+    .byte 4,24,   sailor_tobias ; right
+    .byte 40,4,   gymara_the_sailor ; down
+    .byte 39,3,   gymara_the_sailor ; left
+    .byte 41,3,   gymara_the_sailor ; right
+    .byte 1,255,  guard_maddox ; up
+    .byte 1,1,    guard_maddox ; down
+    .byte 0,0,    guard_maddox ; left
+    .byte 2,0,    guard_maddox ; right
+    .byte 11,25,  garrick_the_wizard ; down
+    .byte 12,24,  garrick_the_wizard ; right
+    .byte 0,22,   marden_the_elder ; up
+    .byte 255,23, marden_the_elder ; left
+    .byte 18,23,  fay_the_traveler ; down
+    .byte 17,22,  fay_the_traveler ; left
+    .byte 24,7,   sam_the_adventurer ; right
+    .byte npc_end
+
+CastleBNPC
+    .byte 252,15, mysterious_hermit ; down
+    .byte 253,14, mysterious_hermit ; right
+    .byte 15,6,   swordsman_pengenar ; up
+    .byte 16,7,   swordsman_pengenar ; right
+    .byte 26,18,  warden_gregory
+    .byte 2,25,   fenrick ; right
+    .byte 7,20,   castle_oracle
+    .byte 11,6,   castle_bartender ; down
+    .byte 31,28,  mazinna_the_hermit ; down
+    .byte 253,27, wixa_the_alchemist ; down
+    .byte 41,8,   baxton_the_wizard ; up
+    .byte 26,22,  mage_maximilian ; up
+    .byte 25,23,  mage_maximilian ; left
+    .byte 30,22,  barnaby_the_pirate ; up
+    .byte 29,23,  barnaby_the_pirate ; left
+    .byte 36,24,  audrey_the_convict ; down
+    .byte 35,23,  audrey_the_convict ; left
+    .byte 20,22,  john_the_insurgent ; up
+    .byte 21,23,  john_the_insurgent ; right
+    .byte 4,9,    dorothy_the_tipsy ; down
+    .byte 3,8,    dorothy_the_tipsy ; left
+    .byte 7,6,    steward_rowland ; up
+    .byte 8,7,    steward_rowland ; right
+    .byte 24,12,  marshal_catherine ; down
+    .byte 23,11,  marshal_catherine ; left
+    .byte 25,11,  marshal_catherine ; right
+    .byte 32,8,   soldier_leonard ; up
+    .byte 31,254, samuel_the_medic ; right
+    .byte 41,3,   guard ; up
+    .byte 40,4,   guard ; left
+    .byte 18,18,  guard ; up
+    .byte 17,19,  guard ; left
+    .byte 42,254, mayorinexile_jul ; down
+    .byte 34,255, watchman_bernard ; left
+    .byte 36,255, watchman_bernard ; right
+    .byte 9,254,  fulk_the_departed ; down
+    .byte npc_end
+
+DuskgroveNPC
+    .byte 24,9,   wik_the_grunt ; down
+    .byte 23,8,   wik_the_grunt ; left
+    .byte 0,27,   ogre_chieftain_dak ; left
+    .byte 2,27,   ogre_chieftain_dak ; right
+    .byte 1,23,   overseer_thal ; left
+    .byte 3,23,   overseer_thal ; right
+    .byte 34,10,  overseer_yargot ; down
+    .byte 35,9,   overseer_yargot ; right
+    .byte 37,22,  grunt_baluzag ; down
+    .byte 36,21,  grunt_baluzag ; left
+    .byte 38,25,  grunt_eruk ; left
+    .byte 26,15,  deserter_tragut ; up
+    .byte 26,17,  deserter_tragut ; down
+    .byte 25,16,  deserter_tragut ; left
+    .byte 27,16,  deserter_tragut ; right
+    .byte 255,9,  grunt_bokur ; down
+    .byte 37,25,  duskgrove_bartender ; up
+    .byte npc_end
+
+SpiretopNPC
+    .byte 12,3,   goldwine_the_bard ; left
+    .byte 36,24,  grocer ; up
+    .byte 32,24,  healing_potion_vendor ; up
+    .byte 28,24,  healer ; up
+    .byte 24,3,   spiretop_bartender ; down
+    .byte 38,21,  edwin_the_wayfarer ; up
+    .byte 37,22,  edwin_the_wayfarer ; left
+    .byte 38,1,   theobald_the_sage ; down
+    .byte 33,5,   ranulf_the_wizard ; up
+    .byte 22,3,   ranger_juliana ; right
+    .byte 21,5,   high_priestess_ada ; up
+    .byte 22,6,   high_priestess_ada ; right
+    .byte 38,12,  elder_sapphire ; up
+    .byte 38,14,  elder_sapphire ; down
+    .byte 37,13,  elder_sapphire ; left
+    .byte 39,13,  elder_sapphire ; right
+    .byte 1,24,   alderney_the_seer ; down
+    .byte 2,23,   alderney_the_seer ; right
+    .byte 2,27,   avil_the_warrior ; up
+    .byte 3,28,   avil_the_warrior ; right
+    .byte 16,27,  msword_vendor     ; up
+    .byte 19,27,  mbow_vendor     ; up
+    .byte 40,26,  ray_the_apprentice ; down
+    .byte npc_end
+
+ThanasHoldNPC
+    .byte 4,27,   thanas_hold_bartender ; up
+    .byte 30,20,  grocer ; up
+    .byte 31,5,   healing_potion_vendor ; down
+    .byte 34,5,   cure_potion_vendor ; down
+    .byte 18,18,  demon_guard ; down
+    .byte 19,18,  demon_guard ; down
+    .byte 0,9,    demon_guard ; up
+    .byte 36,9,   demon_guard ; up
+    .byte 0,16,   demon_guard ; down
+    .byte 36,16,  demon_guard ; down
+    .byte 0,12,   demon_guard
+    .byte 0,13,   demon_guard
+    .byte 36,12,  demon_guard
+    .byte 36,13,  demon_guard
+    .byte 23,25,  demon_guard
+    .byte 24,26,  demon_guard
+    .byte 10,6,   umfrey_the_spy ; left
+    .byte 10,3,   mage_mary_ann ; left
+    .byte 1,3,    hilda_the_explorer ; right
+    .byte 1,6,    prospector_divana ; right
+    .byte 36,26,  bronk_the_servant ; left
+    .byte npc_end
+
+KeepofShadowNPC
+    .byte 255,12, password_square
+    .byte 19,10, circle_control
+    .byte 19,9, thana_the_usurper
+    .byte npc_end

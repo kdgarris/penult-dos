@@ -1,0 +1,4 @@
+del penult.obj
+del penult.exe
+wcc penult.c -I=..\cgalib\inc -I=..\keylib\inc
+wcl penult.obj ..\cgalib\cgalib\cga-ms.lib ..\keylib\keylib\key-ms.lib
