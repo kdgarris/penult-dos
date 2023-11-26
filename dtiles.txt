@@ -17,4 +17,8 @@ denergy-alt
 fountain-alt
 fuzzy1
 fuzzy2
-dorb
+orb
+trap
+fake-wall
+wind
+message

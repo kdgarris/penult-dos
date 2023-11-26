@@ -14,8 +14,9 @@
 #define DUNGEON_LEVELS 8
 #define ARENA_WIDTH 11
 #define ARENA_HEIGHT 9
-#define NUM_TILES 165
-#define NUM_DTILES 20
+#define NUM_TILES 166
+#define NUM_DTILES 24
+#define NUM_ALTTILES 22
 #define NUM_CHARS 91
 #define VIEWPORT_WIDTH 11
 #define VIEWPORT_HEIGHT 9
@@ -74,6 +75,9 @@
 #define DEFAULT_PALETTE    5
 #define COMPOSITE_PALETTE  4
 #define DUNGEON_PALETTE    2
+#define FLASH1_PALETTE     3
+#define FLASH2_PALETTE     4
+#define MAGICAL_PALETTE    4
 #define DUNGEON_COMBAT_PALETTE   0
 
 
@@ -103,10 +107,15 @@ void cleanup();
 void set_timer(unsigned int Divisor);
 void play_sound(int SoundNumber);
 void play_music(int MusicNumber);
+void load_town(uint8_t TownX, uint8_t TownY, uint8_t TownMap);
 void load_acadia();
 void load_castle();
+void load_keep_of_shadow();
+void set_side_flag();
+void clear_side_flag();
 void load_oak();
 void load_duskgrove();
+void load_freehaven();
 void load_stoneheart();
 void load_waters();
 void load_spiretop();
@@ -115,30 +124,44 @@ void load_castle_up();
 void load_thanas_hold_east();
 void load_thanas_hold_west();
 void load_guru();
+void load_spirit_cave();
 void load_refugee_camp();
 void load_duskgrove_up();
+void load_wixa_home();
+void load_freehaven_up();
 void load_phoenix();
 void load_energy();
 void load_secrets();
 void load_passage();
 void load_dungeon(int DungeonMap);
 void load_map(uint8_t MapNum);
+void move_ship(short NewX, short NewY, uint8_t Delete);
 int check_triggers();
 uint8_t dungeon_triggers();
+void do_dungeon_ladder();
 void do_death();
 void dungeon_cancel();
+void dungeon_teleport_failed();
+void dungeon_check_ascend();
 void dungeon_ascend();
+void dungeon_check_descend();
 void dungeon_descend();
 void dungeon_drink();
 void clear_dungeon_screen();
 void exit_dungeon();
+void check_change_wind();
 void leave_town();
 void print_line_formatted(int x, int y, uint8_t Invert, const char *fmt, ...);
 void print_line(int x, int y, uint8_t Invert, const char *message);
+void activate_divination();
+void cancel_divination();
 void clear_text_window();
 void generate_character();
 void draw_name_letter();
 int validate_name(char *Name);
+void check_save_game();
+void do_rest_yes();
+void do_rest_no();
 void save_game();
 void load_game();
 void create_menu();
@@ -152,7 +175,23 @@ void do_bartender_yes();
 void do_bartender_no();
 void vendor_function();
 void bartender_function();
+void tragut_function();
 void check_gain_fire_ritual();
+void check_gain_dragon_armor();
+void gain_dragon_armor();
+void check_find_fire_acorns();
+void check_gain_homing_gem();
+void fire_acorns_yes();
+void fire_acorns_no();
+void gain_homing_gem();
+void check_dust();
+void check_gain_dust();
+void gain_dust();
+void alderney_the_seer();
+void alderney_the_seer_2();
+void avil_talk();
+void password_square_function();
+void password_result();
 void fire_ritual_function();
 void check_gain_energy_ritual();
 void energy_ritual_function();
@@ -189,6 +228,7 @@ void do_dungeon_trap();
 uint8_t find_gold(uint8_t GoldLevel);
 void advance_combat_state();
 int which_direction();
+void TargetMove(int Direction);
 void update_missile();
 int TileCreature(int CombatX, int CombatY);
 int space_free(int CombatX, int CombatY);
@@ -197,16 +237,20 @@ void damage_hero(int Damage);
 void damage_dragon(int Damage);
 void damage_enemy(int Enemy, int Damage);
 void do_enemy_turn(int Enemy);
+void do_cast_missile(uint8_t Zap);
 void do_cast_ray();
 void do_cast_swap();
 void do_cast_sun();
 void do_cast_heal();
-void do_cast_hop();
+void do_cast_teleport();
 void do_cast_zap();
 int deduct_spell_points(int Points);
 int check_new_spell();
+void combat_teleport();
 void CheckEncountersAndStatus();
+void exit_ship();
 void do_poison();
+void check_spirit_hammer();
 
 typedef struct {
    uint8_t Y;
@@ -223,6 +267,7 @@ typedef struct {
 #define SHIP_TILE 1
 #define LAVA_TILE 2
 #define WATER_TILE 3
+#define WATER_TILE_ALT 125
 #define INNER_WALL_TILE 4
 #define INNER_WALL_SECRET_TILE 5
 #define BRIDGE_TILE 6
@@ -233,6 +278,7 @@ typedef struct {
 #define CASTLE_TILE 11
 #define CIRCLE_TILE 12
 #define TOWN_TILE 13
+#define TOWN_TILE_ALT 112
 #define DUNGEON_TILE 14
 #define HEAVY_FOREST_TILE 15
 #define HERO_TILE 16
@@ -240,7 +286,9 @@ typedef struct {
 #define NOTHING_TILE 17
 #define STONE_WALL_TILE 18
 #define ROCKY_WALL_TILE 95
+#define TARGET_TILE 90
 #define FORCE_FIELD_TILE 21
+#define FORCE_FIELD_TILE_ALT 165
 
 #define PLAINS_ARENA 0
 #define FOREST_ARENA 1
@@ -254,6 +302,7 @@ typedef struct {
 #define WATER_ARENA 9
 #define SHIP_SHIP_ARENA 10
 #define DUNGEON_ARENA 11
+#define LAVA_BRIDGE_ARENA 12
 
 
 #define BLOCKED_SOUND   0

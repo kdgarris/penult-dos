@@ -81,7 +81,7 @@ struct {
     uint8_t Solid : 1;
 } TileProperties[NUM_TILES] = {
     {0,1},  // water rock
-    {0,0},
+    {0,0},  // ship
     {0,0},
     {0,1},  // water
     {1,1},  // inner wall
@@ -154,12 +154,12 @@ struct {
     {0,1},  // shadow orb
     {0,1},  // head
     {0,0},
-    {0,1},  // weapon shop sign
-    {0,1},  // armor shop sign
-    {0,1},  // potion shop sign
-    {0,1},  // healer shop sign
+    {0,1},  // weapon steleport sign
+    {0,1},  // armor steleport sign
+    {0,1},  // potion steleport sign
+    {0,1},  // healer steleport sign
     {0,1},  // bar sign
-    {0,1},  // food shop sign
+    {0,1},  // food steleport sign
     {0,0},  // 80 - stairs up
     {0,0},  // stairs down
     {0,1},  // woman
@@ -175,7 +175,7 @@ struct {
     {0,0},
     {0,0},
     {0,0},
-    {0,0},  // dungeon combat wall
+    {1,1},  // dungeon combat wall
     {0,1},  // lava rock
     {0,0},  // dungeon combat tile 1
     {0,0},  // dungeon combat tile 2
@@ -206,7 +206,7 @@ struct {
     {0,1},  // woman alt
     {0,1},  // 110 - jester alt
     {0,1},  // water alt
-    {0,0},  // lava rock alt
+    {0,1},  // lava rock alt
     {0,0},  // 
     {0,0},  // 
     {0,0},  // 
@@ -230,7 +230,8 @@ struct {
     {0,0},  // 
     {0,0},  // 
     {0,0},  // 
-    {0,0}   // 
+    {0,0},  // 
+    {0,1}   // force field alt
 };
 
 const uint8_t DTilesOpaque[] = {
@@ -354,6 +355,29 @@ const uint8_t DTilesDarkAlt[] = {
     0  // open chest
 };
 
+const uint8_t DTilesDivination[] = {
+    1,  // wall
+    2,  // door
+    21, // fake wall
+    3,  // stairs-up
+    4,  // stairs-down
+    5,  // ladder
+    20, // trap
+    8,  // energy
+    12, // fountain
+    23, // message
+    22, // wind
+    9,  // chest
+    19, // orb
+    7,  // teleporter
+    6,  // pit
+    13, // stone floor
+    17, // fuzzy
+    18, // fuzzy2
+    0,  // blank
+    10  // open chest 
+};
+
 
 const uint8_t DTilesFlippable[] = {
     0,  // wall
@@ -427,7 +451,7 @@ void (*DragonCombatMenuActions[])() = {
 };
 
 void (*SpellMenuActions[])() = {
-    do_cast_ray, do_cast_swap, do_cast_sun, do_cast_heal, do_cast_hop, do_cast_zap
+    do_cast_ray, do_cast_swap, do_cast_sun, do_cast_heal, do_cast_teleport, do_cast_zap
 };
 
 
@@ -442,9 +466,12 @@ void (**MenuActions[])() = {
 };
 
 void (*Actions[])() = {
-    NULL, queen_talk, vendor_function, bartender_function, NULL,
-     check_gain_fire_ritual, NULL, NULL, check_gain_energy_ritual,
-     advanced_trainer_check
+    NULL, queen_talk, vendor_function, bartender_function,
+     check_spirit_hammer, check_gain_fire_ritual,
+     check_gain_dragon_armor, check_gain_homing_gem,
+     check_gain_energy_ritual, advanced_trainer_check,
+     tragut_function, check_dust, alderney_the_seer,
+     avil_talk, password_square_function
 };
 
 
@@ -454,6 +481,10 @@ const Trigger world6[] = {
 
 const Trigger world19[] = {
     {26, &load_guru}
+};
+
+const Trigger world30[] = {
+    {53, &load_secrets}
 };
 
 const Trigger world33[] = {
@@ -484,12 +515,32 @@ const Trigger world48[] = {
     {15, &load_acadia}
 };
 
+const Trigger world54[] = {
+    {4, &check_find_fire_acorns}
+};
+
 const Trigger world57[] = {
     {57, &load_thanas_hold_west}
 };
 
 const Trigger world59[] = {
     {57, &load_thanas_hold_east}
+};
+
+const Trigger world61[] = {
+    {55, &load_spirit_cave}
+};
+
+const Trigger world64[] = {
+    {54, &clear_side_flag}
+};
+
+const Trigger world65[] = {
+    {54, &set_side_flag}
+};
+
+const Trigger world66[] = {
+    {54, &load_keep_of_shadow}
 };
 
 const Trigger world69[] = {
@@ -500,8 +551,16 @@ const Trigger world71[] = {
     {9, &load_duskgrove}
 };
 
+const Trigger world72[] = {
+    {49, &load_passage}
+};
+
+const Trigger world75[] = {
+    {47, &load_freehaven}
+};
+
 const Trigger acadia5[] = {
-    {10, &save_game}
+    {10, &check_save_game}
 };
 
 const Trigger castle40[] = {
@@ -513,7 +572,12 @@ const Trigger castleb40[] = {
 };
 
 const Trigger castleb1[] = {
-    {23, &leave_town}
+    {23, &leave_town},
+    {32, &load_freehaven_up}
+};
+
+const Trigger castleb31[] = {
+    {0, &leave_town}
 };
 
 const Trigger castleb45[] = {
@@ -524,9 +588,18 @@ const Trigger duskgrove45[] = {
     {5, &load_refugee_camp}
 };
 
+//const Trigger castleb1[] = {
+//    {32, &load_freehaven_up}
+//};
+
+const Trigger freehaven1[] = {
+    {32, &load_wixa_home}
+};
+
 const TList world_triggers[] = {
     {6, world6, 1},
     {19, world19, 1},
+    {30, world30, 1},
     {33, world33, 1},
     {36, world36, 1},
     {38, world38, 1},
@@ -534,10 +607,17 @@ const TList world_triggers[] = {
     {45, world45, 1},
     {46, world46, 1},
     {48, world48, 1},
+    {54, world54, 1},
     {57, world57, 1},
     {59, world59, 1},
+    {64, world64, 1},
+    {61, world61, 1},
+    {65, world65, 1},
+    {66, world66, 1},
     {69, world69, 1},
     {71, world71, 1},
+    {72, world72, 1},
+    {75, world75, 1},
     {0, NULL, 0}
 };
 
@@ -564,11 +644,13 @@ const TList waters_triggers[] = {
 };
 
 const TList freehaven_triggers[] = {
+    {1, freehaven1, 1},
     {0, NULL, 0}
 };
 
 const TList castleb_triggers[] = {
-    {1, castleb1, 1},
+    {1, castleb1, 2},
+    {31, castleb31, 1},
     {40, castleb40, 1},
     {45, castleb45, 1},
     {0, NULL, 0}
@@ -706,8 +788,8 @@ static uint8_t tile_mapping[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 1
     100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110
 };
 
-static uint8_t tile_mapping_alt[] = {114, 1, 113, 125, 4, 5, 6, 7, 8, 9, 10, 111, 12, 112, 14,
-    15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+static uint8_t tile_mapping_alt[] = {114, 163, 113, 125, 4, 5, 6, 7, 8, 9, 10, 111, 12, 112, 14,
+    15, 16, 17, 18, 19, 20, 165, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
     32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48,
     49, 115, 117, 116, 120, 118, 119, 122, 57, 124, 121, 128, 134, 136, 130, 131, 133,
     135, 67, 132, 137, 70, 138, 139, 140, 74, 75, 76, 77, 78, 79, 80, 81, 123,
@@ -723,7 +805,6 @@ KeyHandler *MyKeyHandler;
 short joy_x, joy_y;  // stores joystick position
 unsigned char b0, b1;      // button status flags
 int JoyXLeft, JoyXRight, JoyYUp, JoyYDown;
-uint8_t CurrentPalette = DEFAULT_PALETTE;
 unsigned volatile int ClockTicks = 0;
 unsigned int PrevTicks = 0;
 uint8_t LogicalTicks = 0;
@@ -732,16 +813,27 @@ char *CurrentMap;
 uint16_t *CurrentFont;
 Bitmap *Tiles[NUM_TILES];
 Bitmap *DTiles[NUM_DTILES];
+Bitmap *AltTiles[NUM_ALTTILES];
 Bitmap *ViewportBuffer;
 Bitmap *ClearText;
 
 struct {
-    uint8_t FireRitual : 1;
-    uint8_t EnergyRitual : 1;
-    uint8_t FireAcorns : 1;
-    uint8_t SpiritStone : 1;
-    uint8_t HomingGem : 1;
-    uint8_t DisguiseDust : 1;
+    unsigned short FireRitual : 1;
+    unsigned short EnergyRitual : 1;
+    unsigned short FireAcorns : 1;
+    unsigned short SpiritStone : 1;
+    unsigned short HomingGem : 1;
+    unsigned short DisguiseDust : 1;
+    unsigned short ShipOwned : 1;
+    unsigned short InShip : 1;
+    unsigned short Divination : 1;
+    unsigned short MetAvil : 1;
+    unsigned short NeedAcorns : 1;
+    unsigned short NeedSpiritStone : 1;
+    unsigned short KnowMantra : 1;
+    unsigned short KnowPassword : 1;
+    uint8_t ShipX;
+    uint8_t ShipY;
     int8_t X;
     int8_t Y;
     int8_t PrevX;
@@ -793,6 +885,8 @@ struct {
    unsigned int Moved : 1;
    unsigned int WeaponCorroded : 1;
    unsigned int Disguised : 1;
+   unsigned int DivinationActive : 1;
+   unsigned int KeepSide : 1;
 } Flags;
 
 struct {
@@ -803,6 +897,8 @@ struct {
     uint8_t Pause;
     uint8_t DoInvert;
     uint8_t DisguiseTile;
+    uint8_t CurrentPalette;
+    uint8_t Wind;
     unsigned long long Turns, PrevTurns;
 } Game;
 
@@ -812,6 +908,7 @@ struct {
     unsigned int HeroGrappled : 1;
     unsigned int DragonGrappled : 1;
     unsigned int HealUsed : 1;
+    unsigned int TeleportActive : 1;
     uint8_t State;
     uint8_t Timer;
     uint8_t Arena;
@@ -829,6 +926,8 @@ struct {
     uint8_t DragonY;    
     uint8_t MissileX;
     uint8_t MissileY;
+    uint8_t TargetX;
+    uint8_t TargetY;
     uint8_t MissileType;
     uint8_t MissileOrigin;
     uint8_t MissileDirection;
@@ -903,9 +1002,53 @@ MessagesType enchantment_messages[] = {
     {.X = 0, .Y = 0, .Level = 0xFF, .Message = 0}
 };
 
-MessagesType secrets_messages[];
+MessagesType secrets_messages[] = {
+    {.X = 12, .Y = 15, .Level = 0, .Message = DUNGEON__PATHS_OF_DARKNESS},
+    {.X = 13, .Y = 14, .Level = 0, .Message = DUNGEON__PATHS_OF_DARKNESS},
+    {.X = 14, .Y = 15, .Level = 0, .Message = DUNGEON__PATHS_OF_DARKNESS},
+    {.X = 14, .Y = 0,  .Level = 1, .Message = DUNGEON__PITS_AND_LADDERS},
+    {.X = 0, .Y = 1,   .Level = 1, .Message = DUNGEON__PITS_AND_LADDERS},
+    {.X = 6, .Y = 0,   .Level = 2, .Message = DUNGEON__DROP_TO_ADVANCE},
+    {.X = 15, .Y = 1,  .Level = 2, .Message = DUNGEON__DROP_TO_ADVANCE},
+    {.X = 7, .Y = 14,  .Level = 3, .Message = DUNGEON__CORRIDOR_OF_DOOM},
+    {.X = 8, .Y = 13,  .Level = 3, .Message = DUNGEON__CORRIDOR_OF_DOOM},
+    {.X = 9, .Y = 14,  .Level = 3, .Message = DUNGEON__CORRIDOR_OF_DOOM},
+    {.X = 7, .Y = 0,   .Level = 4, .Message = DUNGEON__CAVERN_OF_WONDERS},
+    {.X = 8, .Y = 1,   .Level = 4, .Message = DUNGEON__CAVERN_OF_WONDERS},
+    {.X = 9, .Y = 0,   .Level = 4, .Message = DUNGEON__CAVERN_OF_WONDERS},
+    {.X = 14, .Y = 15, .Level = 5, .Message = DUNGEON__MINING_FOR_SECRETS},
+    {.X = 15, .Y = 14, .Level = 5, .Message = DUNGEON__MINING_FOR_SECRETS},
+    {.X = 13, .Y = 1,  .Level = 6, .Message = DUNGEON__EASIER_THAN_IT_SEEMS},
+    {.X = 14, .Y = 15, .Level = 7, .Message = DUNGEON__THE_LONG_MARCH},
+    {.X = 0, .Y = 0,   .Level = 0xFF, .Message = 0}
+};
 
-MessagesType passage_messages[];
+MessagesType passage_messages[] = {
+    {.X = 1, .Y = 0,  .Level = 0,  .Message = DUNGEON__MAGIC_WILL_TAKE_YOU_FAR},
+    {.X = 1, .Y = 0,  .Level = 1,  .Message = DUNGEON__PILLAR_OF_RICHES},
+    {.X = 15, .Y = 2, .Level = 1,  .Message = DUNGEON__PILLAR_OF_RICHES},
+    {.X = 1, .Y = 2,  .Level = 1,  .Message = DUNGEON__PILLAR_OF_RICHES},
+    {.X = 15, .Y = 14,.Level = 1,  .Message = DUNGEON__PILLAR_OF_RICHES},
+    {.X = 4 , .Y = 8 ,.Level = 2,  .Message = DUNGEON__FIND_THE_ENERGY_SOURCE},
+    {.X = 12, .Y = 8 ,.Level = 2,  .Message = DUNGEON__FIND_THE_ENERGY_SOURCE},
+    {.X = 5 , .Y = 5 ,.Level = 3,  .Message = DUNGEON__HIDDEN_MAZE},
+    {.X = 10, .Y = 5 ,.Level = 3,  .Message = DUNGEON__HIDDEN_MAZE},
+    {.X = 5 , .Y = 11,.Level = 3,  .Message = DUNGEON__HIDDEN_MAZE},
+    {.X = 10, .Y = 11,.Level = 3,  .Message = DUNGEON__HIDDEN_MAZE},
+    {.X = 6 , .Y = 6 ,.Level = 4,  .Message = DUNGEON__REWARDS_AND_DESPAIR},
+    {.X = 10, .Y = 6 ,.Level = 4,  .Message = DUNGEON__REWARDS_AND_DESPAIR},
+    {.X = 6 , .Y = 10,.Level = 4,  .Message = DUNGEON__REWARDS_AND_DESPAIR},
+    {.X = 10, .Y = 10,.Level = 4,  .Message = DUNGEON__REWARDS_AND_DESPAIR},
+    {.X = 6 , .Y = 8 ,.Level = 5,  .Message = DUNGEON__WATCH_YOUR_STEP},
+    {.X = 10, .Y = 8 ,.Level = 5,  .Message = DUNGEON__WATCH_YOUR_STEP},
+    {.X = 8 , .Y = 6 ,.Level = 5,  .Message = DUNGEON__WATCH_YOUR_STEP},
+    {.X = 8 , .Y = 10,.Level = 5,  .Message = DUNGEON__WATCH_YOUR_STEP},
+    {.X = 0 , .Y = 1 ,.Level = 6,  .Message = DUNGEON__WINDY_STASH},
+    {.X = 1 , .Y = 0 ,.Level = 6,  .Message = DUNGEON__WINDY_STASH},
+    {.X = 7 , .Y = 8 ,.Level = 7,  .Message = DUNGEON__BOONS_AND_ESCAPE},
+    {.X = 9 , .Y = 8 ,.Level = 7,  .Message = DUNGEON__BOONS_AND_ESCAPE},
+    {.X = 0, .Y = 14, .Level = 0xFF, .Message = 0}
+};
 
 
 const MessagesType *dungeon_messages[] = {
@@ -916,7 +1059,7 @@ const MessagesType *dungeon_messages[] = {
 };
 
 uint8_t *CurrentTiles = tile_mapping;
-uint8_t *CurrentDTiles = (uint8_t *)DTilesVisible;
+uint8_t *CurrentDTiles = (uint8_t *)DTilesDark;
 volatile long DOSTimer = 0xFFFF;
 volatile uint8_t CurrentSound = 0, CurrentMusic = 0, NoteLength = 0;
 volatile int SoundPos = -1, MusicPos = -1;
@@ -1221,11 +1364,14 @@ void draw_stats() {
     print_line_formatted(SW_X, SW_Y+110, FoodH, "Food:        %2d", Hero.Food);
     print_line_formatted(SW_X, SW_Y+120, StatusH, "Status:%8s", Status[Hero.Status]);
     if(Combat.Active) {
-        print_line_formatted(SW_X, SW_Y+130, 0, "Dragon HP:%02d", Hero.DragonHP);
+        print_line_formatted(SW_X, SW_Y+130, 0, "Dragon HP:%02d  ", Hero.DragonHP);
     } else {
-        print_line_formatted(SW_X, SW_Y+130, 0, "Wind: %s  ", "Calm");
+        if (Flags.InDungeon) {
+            print_line_formatted(SW_X, SW_Y+130, 0, "Dungeon Lvl: %d", Dungeon.Level + 1);
+        } else {
+            print_line_formatted(SW_X, SW_Y+130, 0, "Wind: %s    ", Wind[Game.Wind]);
+        }
     }
-//    print_line_formatted(SW_X, SW_Y+56, 0, "Wind:        %02d", Hero.Food);
 }
 
 void load_tiles() {
@@ -1241,6 +1387,18 @@ void load_tiles() {
         Tiles[Count] = bit_read(TileFile);
         if(!Tiles[Count]) {
             oh_shit("Can't load tile from \"tiles.cga\"");
+        }
+    }
+    fclose(TileFile);
+
+    if (! (TileFile = fopen ("alttiles.cga", "rb"))) {
+        oh_shit("Can't open \"alttiles.cga\" for reading.");
+    }
+    fseek(TileFile, 8, SEEK_SET);
+    for(Count = 0; Count < NUM_ALTTILES; Count++) {
+        AltTiles[Count] = bit_read(TileFile);
+        if(!AltTiles[Count]) {
+            oh_shit("Can't load tile from \"alttiles.cga\"");
         }
     }
     fclose(TileFile);
@@ -1274,13 +1432,24 @@ void leave_town() {
         Hero.X = Hero.PrevX;
     }
     Hero.Y = Hero.PrevY;
-    load_map(Hero.CurrentMap);
     if(!Hero.CurrentMap) {
-        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__EXITING_TO_FARADUR]);
+        if (Hero.PrevMap == FREEHAVEN_MAP) {
+            move_ship(75, 47, 0);
+//            Hero.X = 75;
+//            Hero.PrevX = 75;
+//            Hero.Y = 47;
+//            Hero.PrevY = 47;
+//            Hero.InShip = 1;
+            print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__EXITING_TO_THE_HIGH_SEA]);
+            Game.Wind = 4;
+        } else {
+            print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__EXITING_TO_FARADUR]);
+        }
         Flags.MessageActive = 1;
     }
+    load_map(Hero.CurrentMap);
     if(!Flags.Composite) {
-        scr_palette (MyScreen, DEFAULT_PALETTE, 0);
+        Game.CurrentPalette = DEFAULT_PALETTE;
     }
     if (Flags.Disguised) {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__THE_DISGUISE_WEARS_OFF]);
@@ -1645,18 +1814,27 @@ void display_map() {
     uint8_t DoUpdate = 1;
     uint8_t HeroTile;
 
+    if (!Flags.Composite && !Flags.Monochrome) {
+        scr_palette(MyScreen, Game.CurrentPalette, 0);
+    }
+
     if (Flags.Disguised) {
         HeroTile = Game.DisguiseTile;
     } else {
         HeroTile = HERO_TILE;
     }
 
+//    if (Hero.InShip) {
+//        HeroTile = SHIP_TILE;
+//    }
+
     if (Game.FlashTimer && !Game.DoInvert) {
         DoUpdate = 0;
     }
 
     if (!Game.FlashTimer && Game.DoInvert) {
-        DoUpdate = 0;
+        DoUpdate = 1;
+        invert_viewport();
         invalidate_view();
     }
 
@@ -1671,7 +1849,7 @@ void display_map() {
         }
         ScreenX += 16;
     }
-    if(!Combat.Active && DoUpdate && (viewport[5][4] != HERO_TILE)) {
+    if(!Combat.Active && DoUpdate && (viewport[5][4] != HERO_TILE) && !Hero.InShip) {
         bit_put(ViewportBuffer, Tiles[CurrentTiles[HeroTile]], 80, 64, DRAW_PSET);
     }
 
@@ -1685,6 +1863,10 @@ void display_map() {
 void display_dungeon_map() {
     int CountX, CountY;
     int ScreenX, ScreenY;
+
+    if (!Flags.Composite && !Flags.Monochrome) {
+        scr_palette(MyScreen, Game.CurrentPalette, 0);
+    }
 
     ScreenX = 8;
     for(CountX = 0; CountX < DUNGEON_VIEWPORT_WIDTH; CountX++) {
@@ -1718,11 +1900,43 @@ int get_direction() {
     }
 }
 
+void TargetMove(int Direction) {
+    switch(Direction) {
+        case KEY_UP:
+            if (Combat.TargetY) {
+                Combat.TargetY--;
+            }
+            break;
+        case KEY_DOWN:
+            if (Combat.TargetY < (ARENA_HEIGHT - 1)) {
+                Combat.TargetY++;
+            }
+            break;
+        case KEY_LEFT:
+            if (Combat.TargetX) {
+                Combat.TargetX--;
+            }
+            break;
+        case KEY_RIGHT:
+            if (Combat.TargetX < (ARENA_WIDTH - 1)) {
+                Combat.TargetX++;
+            }
+            break;
+    }
+}
+
 void CheckMoveHero() {
     int Blocked = 0;
     int Direction = get_direction();
+    uint8_t Tile = 0xFF;
+    uint8_t MovedDirection = 0xFF;
 
     if(!Direction) {
+        return;
+    }
+
+    if (Flags.MessageActive) {
+        Flags.MessageActive = 0;
         return;
     }
 
@@ -1738,29 +1952,41 @@ void CheckMoveHero() {
 
     switch(Direction) {
         case KEY_LEFT:
-            if(!TileProperties[viewport[4][4]].Solid) {
+            if(!TileProperties[viewport[4][4]].Solid ||
+             (Hero.InShip && ((viewport[4][4] == WATER_TILE) || (viewport[4][4] == WATER_TILE_ALT)))) {
+                Tile = viewport[4][4];
                 Hero.X--;
+                MovedDirection = 3;
             } else {
                 Blocked = 1;
             }
             break;
         case KEY_RIGHT:
-            if(!TileProperties[viewport[6][4]].Solid) {
+            if(!TileProperties[viewport[6][4]].Solid ||
+             (Hero.InShip && ((viewport[6][4] == WATER_TILE) || (viewport[6][4] == WATER_TILE_ALT)))) {
+                Tile = viewport[6][4];                
                 Hero.X++;
+                MovedDirection = 1;
             } else {
                 Blocked = 1;
             }
             break;
         case KEY_UP:
-            if(!TileProperties[viewport[5][3]].Solid) {
+            if(!TileProperties[viewport[5][3]].Solid ||
+             (Hero.InShip && ((viewport[5][3] == WATER_TILE) || (viewport[5][3] == WATER_TILE_ALT)))) {
+                Tile = viewport[5][3];
                 Hero.Y--;
+                MovedDirection = 0;
             } else {
                 Blocked = 1;
             }
             break;
         case KEY_DOWN:
-            if(!TileProperties[viewport[5][5]].Solid) {
+            if(!TileProperties[viewport[5][5]].Solid ||
+             (Hero.InShip && ((viewport[5][5] == WATER_TILE) || (viewport[5][5] == WATER_TILE_ALT)))) {
+                Tile = viewport[5][5];
                 Hero.Y++;
+                MovedDirection = 2;
             } else {
                 Blocked = 1;
             }
@@ -1774,15 +2000,30 @@ void CheckMoveHero() {
         Game.Turns++;
     }
 
+    if (Hero.InShip && MovedDirection == Game.Wind) {
+        Blocked = 1;
+        Hero.X = Hero.PrevX;
+        Hero.Y = Hero.PrevY;
+    }
+
     if(Blocked) {
         play_sound(BLOCKED_SOUND);
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_CANT_GO_THAT_WAY]);
         Flags.MessageActive = 1;
         SaveKey = 0;
         return;
+    } 
+    
+    if (!Hero.InShip) {
+        play_sound(WALK_SOUND);
+    } else {
+        if ((Tile == WATER_TILE) || (Tile == WATER_TILE_ALT)
+         || (Tile == TOWN_TILE) || (Tile == TOWN_TILE_ALT)) {
+            move_ship(Hero.X, Hero.Y, 1);
+        } else {
+            exit_ship();
+        }
     }
-
-    play_sound(WALK_SOUND);
 
     Flags.Moved = 1;
 
@@ -1808,7 +2049,9 @@ void CheckMoveHero() {
             return;
         }
     }
-    clear_text_window();
+    if (!Flags.MessageActive) {
+        clear_text_window();
+    }
 //    print_line_formatted(8, 152, "X:%02d , Y:%02d", 0, Hero.X, Hero.Y); 
 
 }
@@ -1823,8 +2066,16 @@ void CheckMoveHeroDungeon() {
 
     SaveKey = 0;
 
+    if (Combat.TeleportActive) {
+        TargetMove(Direction);
+        return;
+    }
+
     if(Flags.MessageActive) {
         Flags.MessageActive = 0;
+        if (Flags.DivinationActive) {
+            cancel_divination();
+        }
         clear_text_window();
         return;
     }
@@ -1982,7 +2233,7 @@ uint8_t dungeon_triggers() {
             switch(EnergyType) {
                 case 0: // harmless energy
                     if(!(rand()&3)) {
-                        print_line(MW_X, MW_Y+30, 0, "You see a vision!");
+                        activate_divination();
                     } else {
                         print_line(MW_X, MW_Y+30, 0, "You feel a small tingle.");
                     }
@@ -2058,17 +2309,7 @@ uint8_t dungeon_triggers() {
             Menu.Selection = 0;
             break;
         case DUNGEON_LADDER:
-            print_line(MW_X, MW_Y, 1, "Ascend or descend?");
-            print_line(MW_X, MW_Y+30, 0, ">No Ascend Descend");
-            Menu.Active = 1;
-            Menu.Choices = 3;
-            Menu.MarkerPos[0] = 0;
-            Menu.MarkerPos[1] = 3;
-            Menu.MarkerPos[2] = 10;
-            Menu.Actions[0] = dungeon_cancel;
-            Menu.Actions[1] = dungeon_ascend;
-            Menu.Actions[2] = dungeon_descend;
-            Menu.Selection = 0;
+                do_dungeon_ladder();
             break;
         case DUNGEON_PIT:
             print_line(MW_X, MW_Y+30, 0, "You fall through a pit!");
@@ -2130,6 +2371,20 @@ uint8_t dungeon_triggers() {
     return Ret;
 }
 
+void do_dungeon_ladder() {
+    print_line(MW_X, MW_Y, 1, "Ascend or descend?");
+    print_line(MW_X, MW_Y+30, 0, ">No Ascend Descend");
+    Menu.Active = 1;
+    Menu.Choices = 3;
+    Menu.MarkerPos[0] = 0;
+    Menu.MarkerPos[1] = 3;
+    Menu.MarkerPos[2] = 10;
+    Menu.Actions[0] = dungeon_cancel;
+    Menu.Actions[1] = dungeon_ascend;
+    Menu.Actions[2] = dungeon_descend;
+    Menu.Selection = 0;
+}
+
 void do_dungeon_trap() {
     uint8_t Count;
     
@@ -2174,6 +2429,7 @@ void do_death() {
     Hero.PrevY = 13;
     Hero.X = 23;
     Hero.Y = 9;   
+    Hero.InShip = 0;
     Hero.Gold = 0;
     Hero.HP = Hero.MHP;
     Hero.SP = Hero.MSP;
@@ -2195,11 +2451,46 @@ void dungeon_cancel() {
     Flags.MessageActive = 0;
 }
 
+void dungeon_teleport_failed() {
+    play_sound(CAST_SOUND);
+    print_line(MW_X, MW_Y+30, 0, "Failed!");
+    Flags.MessageActive = 1;
+}
+
+void dungeon_check_ascend() {
+    uint8_t DestTile;
+
+    if (Dungeon.Level == 7) {
+        dungeon_teleport_failed();
+        return;
+    }
+    DestTile = CurrentMap[(Dungeon.Y * DUNGEON_WIDTH) +
+     Dungeon.X + ((Dungeon.Level + 1) * 256)];
+    
+    if (DestTile != DUNGEON_STONE_FLOOR) {
+        dungeon_teleport_failed();
+        return;
+    }
+
+    play_sound(WIND_SOUND);
+    print_line(MW_X, MW_Y+30, 0, "Teleported!");
+    dungeon_ascend();
+}
 
 void dungeon_ascend() {
-    if(Dungeon.Level < 7) {
+    uint8_t DestTile;
+
+    if (Dungeon.Level < 7) {
         Dungeon.Level++;
         draw_stats();
+        if (Dungeon.Level < 7) {
+            DestTile = CurrentMap[(Dungeon.Y * DUNGEON_WIDTH) +
+            Dungeon.X + (Dungeon.Level * 256)];
+            if (DestTile == DUNGEON_LADDER) {
+                do_dungeon_ladder();
+                return;
+            }
+        }
     } else {
         if(Dungeon.Orb) {
             Hero.CurrentMap = CASTLEB_MAP;
@@ -2232,14 +2523,45 @@ void dungeon_ascend() {
     dungeon_cancel();
 }
 
+void dungeon_check_descend() {
+    uint8_t DestTile;
+
+    if (Dungeon.Level == 0) {
+        dungeon_descend();
+        return;
+    }
+    DestTile = CurrentMap[(Dungeon.Y * DUNGEON_WIDTH) +
+     Dungeon.X + ((Dungeon.Level - 1) * 256)];
+    
+    if (DestTile != DUNGEON_STONE_FLOOR) {
+        dungeon_teleport_failed();
+        return;
+    }
+
+    play_sound(WIND_SOUND);
+    print_line(MW_X, MW_Y+30, 0, "Teleported!");
+    dungeon_descend();
+}
+
 void dungeon_descend() {
+    uint8_t DestTile;
+
     if(Dungeon.Level) {
         Dungeon.Level--;
         draw_stats();
+        if (Dungeon.Level) {
+            DestTile = CurrentMap[(Dungeon.Y * DUNGEON_WIDTH) +
+             Dungeon.X + (Dungeon.Level * 256)];
+            if (DestTile == DUNGEON_LADDER) {
+                do_dungeon_ladder();
+                return;
+            }
+        }
     } else {
         exit_dungeon();
+        print_line(MW_X, MW_Y+30, 0, "You return to the surface.");
+        Flags.MessageActive = 1;
     }
-    dungeon_cancel();
 }
 
 void dungeon_drink() {
@@ -2296,9 +2618,34 @@ void exit_dungeon() {
     Flags.InDungeon = 0;
     load_map(Hero.CurrentMap);
     if(!Flags.Composite) {
-        scr_palette (MyScreen, DEFAULT_PALETTE, 0);
+        Game.CurrentPalette = DEFAULT_PALETTE;
     }
     save_game();
+    draw_stats();
+}
+
+void check_change_wind() {
+    if (Hero.CurrentMap && (Game.Wind != 4)) {
+        Game.Wind = 4;
+        print_line_formatted(SW_X, SW_Y+130, 0, "Wind: %s    ", Wind[Game.Wind]);
+        return;
+    }
+
+    if (rand()&31) {
+        return;
+    }
+
+    if (Combat.Active || Flags.InDungeon) {
+        return;
+    }
+
+    if (!(rand()&1)) {
+        Game.Wind = 4;
+    } else {
+        Game.Wind = (rand()&3);
+    }
+
+    print_line_formatted(SW_X, SW_Y+130, 0, "Wind: %s    ", Wind[Game.Wind]);
 }
 
 int check_triggers() {
@@ -2331,116 +2678,90 @@ int check_triggers() {
     return 0;
 }
 
-void load_acadia() {
+void load_town(uint8_t TownX, uint8_t TownY, uint8_t TownMap) {
     Hero.PrevMap = Hero.CurrentMap;
-    Hero.CurrentMap = ACADIA_MAP;
+    Hero.CurrentMap = TownMap;
     Hero.PrevX = Hero.X;
     Hero.PrevY = Hero.Y;
-    Hero.X = 1;
-    Hero.Y = 14;
-    load_map(Hero.CurrentMap);   
-    print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_ACADIA]);
+    Hero.X = TownX;
+    Hero.Y = TownY;
+    Tiles[4] = AltTiles[AltWall[TownMap]];
+    Tiles[5] = AltTiles[AltWallSecret[TownMap]];
+    load_map(TownMap);   
     Flags.MessageActive = 1;
+}
+
+void load_acadia() {
+    print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_ACADIA]);
+    load_town(1, 14, ACADIA_MAP);
 }
 
 void load_castle() {
-    Hero.PrevMap = Hero.CurrentMap;
-    Hero.CurrentMap = CASTLE_MAP;
-    Hero.PrevX = Hero.X;
-    Hero.PrevY = Hero.Y;
-    Hero.X = 24;
-    Hero.Y = 32;   
-    load_map(Hero.CurrentMap);
     print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_CASTLE_AVALINA]);
-    Flags.MessageActive = 1;
+    load_town(24, 32, CASTLE_MAP);
 }
 
+void load_keep_of_shadow() {
+    print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_KEEP_OF_SHADOW]);
+    load_town(23, 33, KEEP_OF_SHADOW_MAP);
+    if (Flags.KeepSide) {
+        Hero.X = 1;
+        Hero.Y = 15;
+        Flags.KeepSide = 0;
+    }
+}
+
+void set_side_flag() {
+    Flags.KeepSide = 1;
+}
+
+void clear_side_flag() {
+    Flags.KeepSide = 0;
+}
+
+
 void load_oak() {
-    Hero.PrevMap = Hero.CurrentMap;
-    Hero.CurrentMap = OAK_MAP;
-    Hero.PrevX = Hero.X;
-    Hero.PrevY = Hero.Y;
-    Hero.X = 1;
-    Hero.Y = 16;   
-    load_map(Hero.CurrentMap);   
     print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_OAK]);
-    Flags.MessageActive = 1;
+    load_town(1, 16, OAK_MAP);
 }
 
 void load_duskgrove() {
-    Hero.PrevMap = Hero.CurrentMap;
-    Hero.CurrentMap = DUSKGROVE_MAP;
-    Hero.PrevX = Hero.X;
-    Hero.PrevY = Hero.Y;
-    Hero.X = 24;
-    Hero.Y = 1;   
-    load_map(Hero.CurrentMap);   
     print_line(MW_X, MW_Y, 0, Messages[MESSAGE__THE_RUINS_OF_DUSKGROVE]);
-    Flags.MessageActive = 1;
+    load_town(24, 1, DUSKGROVE_MAP);
+}
+
+void load_freehaven() {
+    print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_FREEHAVEN]);
+    load_town(2, 18, FREEHAVEN_MAP);
+    move_ship(Hero.X, Hero.Y, 0);
 }
 
 void load_stoneheart() {
-    Hero.PrevMap = Hero.CurrentMap;
-    Hero.CurrentMap = STONEHEART_MAP;
-    Hero.PrevX = Hero.X;
-    Hero.PrevY = Hero.Y;
-    Hero.X = 27;
-    Hero.Y = 32;
-    load_map(Hero.CurrentMap);   
-    if(!Flags.Composite) {
-        scr_palette (MyScreen, DUNGEON_PALETTE, 0);
-    } 
     print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_STONEHEART]);
-    Flags.MessageActive = 1;
+    load_town(27, 32, STONEHEART_MAP);
+    Game.CurrentPalette = DUNGEON_PALETTE;
 }
 
 void load_waters() {
-    Hero.PrevMap = Hero.CurrentMap;
-    Hero.CurrentMap = WATERS_MAP;
-    Hero.PrevX = Hero.X;
-    Hero.PrevY = Hero.Y;
-    Hero.X = 46;
-    Hero.Y = 9;   
-    load_map(Hero.CurrentMap);   
     print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_WATERS]);
-    Flags.MessageActive = 1;
+    load_town(46, 9, WATERS_MAP);
 }
 
 void load_spiretop() {
-    Hero.PrevMap = Hero.CurrentMap;
-    Hero.CurrentMap = SPIRETOP_MAP;
-    Hero.PrevX = Hero.X;
-    Hero.PrevY = Hero.Y;
-    Hero.X = 46;
-    Hero.Y = 17;   
-    load_map(Hero.CurrentMap);   
     print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_SPIRETOP]);
-    Flags.MessageActive = 1;
+    load_town(46, 17, SPIRETOP_MAP);
 }
 
 void load_thanas_hold_east() {
-    Hero.PrevMap = Hero.CurrentMap;
-    Hero.CurrentMap = THANAS_HOLD_MAP;
-    Hero.PrevX = 60;
-    Hero.PrevY = Hero.Y;
-    Hero.X = 41;
-    Hero.Y = 15;   
-    load_map(Hero.CurrentMap);   
     print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_THANAS_HOLD]);
-    Flags.MessageActive = 1;
+    load_town(41, 15, THANAS_HOLD_MAP);
+    Hero.PrevX = 60;
+    Hero.PrevY = 57;
 }
 void load_thanas_hold_west() {
-    Hero.PrevMap = Hero.CurrentMap;
-    Hero.CurrentMap = THANAS_HOLD_MAP;
+    load_town(5, 15, THANAS_HOLD_MAP);
     Hero.PrevX = 56;
-    Hero.PrevY = Hero.Y;
-//    Hero.PrevX = 49;
-//    Hero.PrevY = 28;
-    Hero.X = 5;
-    Hero.Y = 15;   
-    load_map(Hero.CurrentMap);   
-    print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ENTERING_THANAS_HOLD]);
-    Flags.MessageActive = 1;
+    Hero.PrevY = 57;
 }
 
 
@@ -2450,17 +2771,45 @@ void load_guru() {
     Hero.PrevY = Hero.Y;
     Hero.X = 1;
     Hero.Y = 23;   
-    load_castleb();
+    Hero.CurrentMap = CASTLEB_MAP;
+    load_map(Hero.CurrentMap);   
+    Game.CurrentPalette = DUNGEON_PALETTE;   
+}
+
+void load_spirit_cave() {
+    Hero.PrevMap = Hero.CurrentMap;
+    Hero.PrevX = Hero.X;
+    Hero.PrevY = Hero.Y;
+    Hero.X = 31;
+    Hero.Y = 0;   
+    Hero.CurrentMap = CASTLEB_MAP;
+    Tiles[4] = AltTiles[21];
+    load_map(Hero.CurrentMap);   
+    Game.CurrentPalette = MAGICAL_PALETTE;   
 }
 
 void load_refugee_camp() {
-    load_castleb();
+    Hero.CurrentMap = CASTLEB_MAP;
+    load_map(Hero.CurrentMap);   
+    Game.CurrentPalette = DUNGEON_PALETTE;   
 }
 
 void load_duskgrove_up() {
     Hero.CurrentMap = DUSKGROVE_MAP;
     load_map(Hero.CurrentMap);   
-    scr_palette (MyScreen, DEFAULT_PALETTE, 0);   
+    Game.CurrentPalette = DEFAULT_PALETTE;   
+}
+
+void load_wixa_home() {
+    Hero.CurrentMap = CASTLEB_MAP;
+    load_map(Hero.CurrentMap);   
+    Game.CurrentPalette = DUNGEON_PALETTE;   
+}
+
+void load_freehaven_up() {
+    Hero.CurrentMap = FREEHAVEN_MAP;
+    load_map(Hero.CurrentMap);   
+    Game.CurrentPalette = DEFAULT_PALETTE;   
 }
 
 void load_phoenix() {
@@ -2476,14 +2825,14 @@ void load_energy() {
 }
 
 void load_secrets() {
-    Dungeon.X = 1;
-    Dungeon.Y = 1;
+    Dungeon.X = 13;
+    Dungeon.Y = 15;
     load_dungeon(SECRETS_DUNGEON);
 }
 
 void load_passage() {
-    Dungeon.X = 1;
-    Dungeon.Y = 1;
+    Dungeon.X = 0;
+    Dungeon.Y = 0;
     load_dungeon(PASSAGE_DUNGEON);
 }
 
@@ -2501,9 +2850,7 @@ void load_dungeon(int DungeonMap) {
     Dungeon.Number = DungeonMap;
     load_map(DungeonMap);
 
-    if(!Flags.Composite) {
-        scr_palette (MyScreen, DUNGEON_PALETTE, 0);
-    }
+    Game.CurrentPalette = DUNGEON_PALETTE;
 
     do_dungeon_dark();
     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__ITS_DARK]);
@@ -2512,20 +2859,30 @@ void load_dungeon(int DungeonMap) {
 
 void load_castleb() {
     Hero.CurrentMap = CASTLEB_MAP;
+    Tiles[4] = AltTiles[AltWall[CASTLEB_MAP]];
+    Tiles[5] = AltTiles[AltWallSecret[CASTLEB_MAP]];
     load_map(Hero.CurrentMap);   
-    scr_palette (MyScreen, DUNGEON_PALETTE, 0);   
+    Game.CurrentPalette = DUNGEON_PALETTE;   
 }
 
 void load_castle_up() {
     Hero.CurrentMap = CASTLE_MAP;
+    Tiles[4] = AltTiles[AltWall[CASTLE_MAP]];
+    Tiles[5] = AltTiles[AltWallSecret[CASTLE_MAP]];
     load_map(Hero.CurrentMap);   
-    scr_palette (MyScreen, DEFAULT_PALETTE, 0);   
+    Game.CurrentPalette = DEFAULT_PALETTE;   
 }
 
 void load_map(uint8_t MapNum) {
     FILE *CurrentMapFile;
 
     free(CurrentMap);
+
+    if (!Hero.CurrentMap) {
+        Game.Wind = (rand()&3);
+    } else {
+        Game.Wind = 4;
+    }
 
     if(Flags.InDungeon) {
         if(!(CurrentMapFile = fopen(dmap_names[MapNum], "rb"))) {
@@ -2569,8 +2926,47 @@ void load_map(uint8_t MapNum) {
     }
     fclose(CurrentMapFile);
 
+    if ((MapNum == 0) || (MapNum == FREEHAVEN_MAP)) {
+        CurrentMap[(Game.MapWidth * Hero.ShipY) + Hero.ShipX] = SHIP_TILE;
+    }
     Game.PrevTurns = Game.Turns;
     Game.Turns++;
+}
+
+void move_ship(short NewX, short NewY, uint8_t Delete) {
+    if (!Hero.CurrentMap) {
+        if (NewX >= WORLD_WIDTH) {
+            NewX = 0;
+        } else if (NewX < 0) {
+            NewX = WORLD_WIDTH - 1;
+        }
+        if (NewY >= WORLD_HEIGHT) {
+            NewY = 0;
+        } else if (NewY < 0) {
+            NewY = WORLD_HEIGHT - 1;
+        }
+    }
+//    if (Hero.CurrentMap) {
+//        Hero.ShipX = NewX;
+//        Hero.ShipY = NewY;
+//        return;
+//    }
+    if (Delete) {
+        if ((Hero.PrevX == 75) && (Hero.PrevY == 47) && !Hero.CurrentMap) {
+            CurrentMap[(Game.MapWidth * Hero.ShipY) + Hero.ShipX] = TOWN_TILE;
+        } else {
+            CurrentMap[(Game.MapWidth * Hero.ShipY) + Hero.ShipX] = WATER_TILE;
+        }
+    }
+    CurrentMap[(Game.MapWidth * NewY) + NewX] = SHIP_TILE;
+    Hero.ShipX = NewX;
+    Hero.ShipY = NewY;
+    if (Hero.InShip) {
+        Hero.X = NewX;
+        Hero.Y = NewY;
+        Hero.PrevX = NewX;
+        Hero.PrevY = NewY;
+    }
 }
 
 void print_line_formatted(int x, int y, uint8_t Invert, const char *format, ...) {
@@ -2607,11 +3003,31 @@ void print_line(int x, int y, uint8_t Invert, const char *message) {
         }
 }
 
+void activate_divination() {
+    print_line(MW_X, MW_Y+30, 0, "Magical sight activated!");
+    Game.CurrentPalette = MAGICAL_PALETTE;
+    Flags.DivinationActive = 1;
+    CurrentDTiles = (uint8_t *)DTilesDivination;
+    invalidate_view();
+    Flags.MessageActive = 1;
+}
+
+void cancel_divination() {
+    Game.CurrentPalette = DUNGEON_PALETTE;
+    Flags.DivinationActive = 0;
+    CurrentDTiles = (uint8_t *)DTilesVisible;
+    invalidate_view();   
+}
+
 void clear_text_window() {
     int CountY;
 
     for(CountY = MW_Y; CountY < MW_Y + 40; CountY += 8) {
         scr_put(MyScreen, ClearText, MW_X, CountY, DRAW_PSET);
+    }
+
+    if (Flags.DivinationActive) {
+        cancel_divination();
     }
     Flags.MessageActive = 0;
     SaveKey = 0;
@@ -2910,6 +3326,8 @@ void generate_character() {
     Hero.Level = 1;
     Hero.XP = 0;
     Hero.SpellsKnown = RAY_SPELL;
+    Hero.ShipX = 7;
+    Hero.ShipY = 50;
     load_map(Hero.CurrentMap);
 }
 
@@ -2929,6 +3347,38 @@ int validate_name(char *Name) {
     return 0;
 }
 
+void check_save_game() {
+    print_line(MW_X, MW_Y, 0, Messages[STATUS__REST_AND_SAVE_YOUR_GAME]);
+    do_yes_no_menu();
+    Menu.Actions[0] = do_rest_yes;
+    Menu.Actions[1] = do_rest_no;
+}
+
+void do_rest_yes() {
+    Flags.MessageActive = 1;
+    if (Hero.Status == STATUS_POISONED) {
+        play_sound(HIT_SOUND);
+        flash_effect();
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__POISONED]);
+        return;
+    } else if (!Hero.Food) {
+        play_sound(HIT_SOUND);
+        flash_effect();
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__OUT_OF_FOOD]);
+    } else {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__RESTED]);
+        Hero.Food -= 1;
+        Hero.HP = Hero.MHP;
+        Hero.Y++;
+        draw_stats();
+    }
+    save_game();
+}
+
+void do_rest_no() {
+    Hero.Y++;
+}
+
 void save_game() {
     FILE *SaveFile;
 
@@ -2939,6 +3389,8 @@ void save_game() {
     if(!fwrite(&Hero, sizeof(Hero), 1, SaveFile)) {
         oh_shit("Can't save to \"penult.sav\"!");
     }
+
+    print_line(MW_X, MW_Y, 0, "Saving...");
 
     fwrite(Hero.Name, 1, (strlen(Hero.Name) + 1), SaveFile);
 
@@ -2974,7 +3426,14 @@ void load_game() {
     fclose(LoadFile);
     if (Hero.EnergyRitual) {
         TileProperties[FORCE_FIELD_TILE].Solid = 0;
+        TileProperties[FORCE_FIELD_TILE_ALT].Solid = 0;
     }
+    if ((Hero.CurrentMap == STONEHEART_MAP) || (Hero.CurrentMap == CASTLEB_MAP)) {
+        Game.CurrentPalette = DUNGEON_PALETTE;
+    }
+    Game.Wind = 4;
+    Tiles[4] = AltTiles[AltWall[Hero.CurrentMap]];
+    Tiles[5] = AltTiles[AltWallSecret[Hero.CurrentMap]];
 }
 
 void check_update_menu() {
@@ -2986,9 +3445,22 @@ void check_update_menu() {
     if(Combat.Active && Combat.Timer) {
         return;
     }
+
     Direction = get_direction();
+
+    if (Combat.TeleportActive && Direction) {
+        TargetMove(Direction);
+        SaveKey = 0;
+        return;
+    }
+
+    if (Menu.Choices == 1) {
+        return;
+    }
+
     if(Direction) {
         SaveKey = 0;
+
         if((Direction == KEY_LEFT) || (Direction == KEY_RIGHT)) {
 //            print_line(MW_X+(MarkerPos[Menu.Type][Menu.Selection] * 8), MW_Y+30, 0, " ");
             print_line(MW_X+(Menu.MarkerPos[Menu.Selection] * 8), MW_Y+30, 0, " ");
@@ -3200,6 +3672,7 @@ void vendor_function() {
 void do_buy_yes() {
     clear_text_window();
     Menu.Active = 0;
+    Flags.MessageActive = 1;
     if(Hero.Gold < Menu.Value) {
         print_line(MW_X, MW_Y, 1, Messages[STATUS__THE_MERCHANT_SAYS]);  
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_DONT_HAVE_ENOUGH]);
@@ -3277,7 +3750,13 @@ void do_buy_yes() {
             Hero.HealPotions++;
             break;
         case SHIP_VENDOR:
-           Menu.Value = 1000;
+           if ((Hero.Level < 7) && !Hero.FireRitual && !Hero.EnergyRitual) {
+                print_line(MW_X, MW_Y, 1, Messages[STATUS__THE_MERCHANT_SAYS]);  
+                print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__RETURN_WHEN_YOUR_DEEDS_ARE_MORE_NOTEWORTHY]);
+                return;
+           }
+           Hero.ShipOwned = 1;
+           move_ship(37, 26, 1);
            break;
         case SWORD_VENDOR:
             if(Hero.Melee >= 3) {
@@ -3356,12 +3835,236 @@ void check_gain_fire_ritual() {
     SaveKey = 0;
 }
 
+void check_gain_dragon_armor() {
+    const char *TmpLine = Messages[MESSAGE__GIVE_DRAGON_ARMOR];
+
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__JAYLAN_THE_SMITH]);
+    if (Hero.MetAvil) {
+        if (Hero.Armor < ARMOR_DRAGON) {
+            print_pager_line(TmpLine);
+            Menu.Active = 1;
+            Menu.Choices = 1;
+            Menu.MarkerPos[0] = 0;
+            Menu.Selection = 0;
+            Menu.Actions[0] = gain_dragon_armor;
+        } else {
+            print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__ALREADY_HAVE_DRAGON_ARMOR]);
+            Flags.MessageActive = 1;
+        }
+    } else {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__JAYLAN_THE_SMITH_TALK]);  
+        Flags.MessageActive = 1;
+    }
+}
+
+void gain_dragon_armor() {
+    Hero.FireRitual = 1;
+    play_sound(CAST_SOUND);
+    flash_effect();
+    print_line(MW_X, MW_Y+30, 1, "You gain dragon armor!");
+    Hero.Armor = ARMOR_DRAGON;
+    Flags.MessageActive = 1;
+    draw_stats();
+    save_game();
+}
+
+void check_find_fire_acorns() {
+    if (!Hero.NeedAcorns) {
+        return;
+    }
+    print_line(MW_X, MW_Y+30, 1, "You find fire acorns!");
+    Hero.FireAcorns = 1;
+    print_line(MW_X+176, MW_Y+30, 1, ">>");
+    save_game();
+    Game.Pause = 0xFF; 
+}
+
+void check_gain_homing_gem() {
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__WIXA_THE_ALCHEMIST]);
+
+    if (Hero.HomingGem) {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__THANK_YOU_FOR_YOUR_HELP]);
+        Flags.MessageActive = 1;
+        return;
+    }
+
+    if (!Hero.NeedAcorns) {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__WIXA_THE_ALCHEMIST_TALK]);
+        Hero.NeedAcorns = 1;
+        Flags.MessageActive = 1;
+        return;
+    }
+    
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__DID_YOU_BRING_ME_ACORNS]);
+    do_yes_no_menu();
+    Menu.Actions[0] = fire_acorns_yes;
+    Menu.Actions[1] = fire_acorns_no;
+}
+
+void fire_acorns_yes() {
+    const char *TmpLine = Messages[MESSAGE__USE_THIS_ONLY_WHEN_YOUR_PERIL_IS_MOST_DIRE];
+
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__WIXA_THE_ALCHEMIST]);
+
+    if (!Hero.FireAcorns) {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__WHERE]);
+        Flags.MessageActive = 1;
+        return;
+    }
+
+    print_pager_line(TmpLine);
+    Menu.Active = 1;
+    Menu.Choices = 1;
+    Menu.MarkerPos[0] = 0;
+    Menu.Selection = 0;
+    Menu.Actions[0] = gain_homing_gem;
+    Hero.FireAcorns = 0;
+}
+
+void fire_acorns_no() {
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__WIXA_THE_ALCHEMIST]);
+    print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__WHY_NOT]);
+    Flags.MessageActive = 1;
+}
+
+
+void gain_homing_gem() {
+    Hero.HomingGem = 1;
+    play_sound(CAST_SOUND);
+    flash_effect();
+    print_line(MW_X, MW_Y+30, 1, "You gain a homing gem!");
+    Flags.MessageActive = 1;
+    save_game();
+}
+
+void check_dust() {
+    const char *TmpLine = Messages[MESSAGE__SAMUEL_THE_MEDIC_TALK];
+
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__SAMUEL_THE_MEDIC]);
+    if (Hero.DisguiseDust) {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__THANK_YOU_FOR_YOUR_HELP]);
+        Flags.MessageActive = 1;
+        return;
+    }
+    print_line(MW_X, MW_Y+30, 0, ">None One Two Three");
+    print_pager_line(TmpLine);
+    Menu.Active = 1;
+    Menu.Choices = 4;
+    Menu.MarkerPos[0] = 0;
+    Menu.MarkerPos[1] = 5;
+    Menu.MarkerPos[2] = 9;
+    Menu.MarkerPos[3] = 13;
+    Menu.Selection = 0;
+    Menu.Actions[0] = check_gain_dust;
+    Menu.Actions[1] = check_gain_dust;
+    Menu.Actions[2] = check_gain_dust;
+    Menu.Actions[3] = check_gain_dust;
+}
+
+void check_gain_dust() {
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__SAMUEL_THE_MEDIC]);
+
+    if (Hero.HealPotions < Menu.Selection) {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_DONT_HAVE_ENOUGH]);
+        Flags.MessageActive = 1;
+        return;
+    }
+
+    Hero.HealPotions -= Menu.Selection;
+
+    switch(Menu.Selection) {
+        case 0:
+            print_line(MW_X, MW_Y+30, 0, "I see.");
+            break;
+        case 1:
+            print_line(MW_X, MW_Y+30, 0, "Thank you.");
+            break;
+        case 2:
+            print_line(MW_X, MW_Y+30, 0, "Thank you very much.");
+            break;
+        default:
+            print_line(MW_X, MW_Y+30, 0, "Please accept our gift. >>");
+            Menu.Active = 1;
+            Menu.Choices = 1;
+            Menu.MarkerPos[0] = 0;
+            Menu.Selection = 0;
+            Menu.Actions[0] = gain_dust;
+            return;
+    }
+    Flags.MessageActive = 1;
+}
+
+void gain_dust() {
+    print_line(MW_X, MW_Y+30, 0, "You gain disguise dust!");
+    Hero.DisguiseDust = 1;
+    play_sound(CAST_SOUND);
+    flash_effect();
+    Flags.MessageActive = 1;
+    save_game();
+}
+
+void alderney_the_seer() {
+    const char *TmpLine = Messages[MESSAGE__ALDERNEY_THE_SEER_TALK];
+
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__ALDERNEY_THE_SEER]);
+    print_pager_line(TmpLine);
+    Menu.Active = 1;
+    Menu.Choices = 1;
+    Menu.MarkerPos[0] = 0;
+    Menu.Selection = 0;
+    Menu.Actions[0] = alderney_the_seer_2;   
+}
+
+void alderney_the_seer_2() {
+    const char *TmpLine = Messages[MESSAGE__ALDERNEY_THE_SEER_TALK_2];
+
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__ALDERNEY_THE_SEER]);
+    print_pager_line(TmpLine);
+    Flags.MessageActive = 1;    
+}
+
+void avil_talk() {
+    const char *TmpLine = Messages[MESSAGE__AVIL_THE_WARRIOR_TALK];
+
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__AVIL_THE_WARRIOR]);
+    print_pager_line(TmpLine);
+    Hero.MetAvil = 1;
+    Flags.MessageActive = 1;    
+}
+
+void password_square_function() {
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__YOU_SAY]);
+    if (Hero.KnowPassword) {
+        print_line(MW_X, MW_Y+30, 0, "New Liege! >>");
+    } else {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__OPEN_SESAME]);
+    }
+    Menu.Active = 1;
+    Menu.Choices = 1;
+    Menu.MarkerPos[0] = 0;
+    Menu.Selection = 0;
+    Menu.Actions[0] = password_result;   
+}
+
+void password_result() {
+    if (Hero.KnowPassword) {
+        Hero.X += 2;
+        print_line(MW_X, MW_Y+30, 0, "Teleported!");
+        flash_effect();
+        play_sound(CAST_SOUND);
+    } else {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
+    }
+    Flags.MessageActive = 1;
+}
+
 void fire_ritual_function() {
     if (Hero.FireRitual) {
         print_line(MW_X, MW_Y+30, 1, "You already learned it.");  
     } else {
         Hero.FireRitual = 1;
         play_sound(CAST_SOUND);
+        flash_effect();
         print_line(MW_X, MW_Y+30, 1, "You learn the fire ritual!");
     }
 //    flash_effect();
@@ -3369,7 +4072,6 @@ void fire_ritual_function() {
     Hero.X = 46;
     Hero.Y = 8;
     load_map(Hero.CurrentMap);
-    Menu.Active = 0;
     Flags.MessageActive = 1;
     save_game();
 }
@@ -3393,7 +4095,9 @@ void energy_ritual_function() {
     } else {
         Hero.EnergyRitual = 1;
         TileProperties[FORCE_FIELD_TILE].Solid = 0;
+        TileProperties[FORCE_FIELD_TILE_ALT].Solid = 0;
         play_sound(CAST_SOUND);
+        flash_effect();
         print_line(MW_X, MW_Y+30, 1, "You learn the energy ritual!");
     }
 //    flash_effect();
@@ -3578,6 +4282,20 @@ void print_pager_line(const char *Message) {
     }
 }
 
+void tragut_function() {
+    const char *TmpLine;
+
+    if (Flags.Disguised) {
+        print_line(MW_X, MW_Y, 1, Messages[STATUS__THE_OGRE_SAYS]);
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__GO_AWAY]);
+    } else {
+        print_line(MW_X, MW_Y, 1, Messages[STATUS__DESERTER_TRAGUT]);
+        TmpLine = Messages[MESSAGE__DESERTER_TRAGUT_TALK];
+        print_pager_line(TmpLine);
+    }
+    Flags.MessageActive = 1;
+}
+
 void do_use() {
     int Length, Count;
     int LinePos = 1;
@@ -3693,7 +4411,7 @@ void do_cast() {
         SpellPos++;
     }
     
-    if(Hero.SpellsKnown&HOP_SPELL) {
+    if(Hero.SpellsKnown&TELEPORT_SPELL) {
         Length = strlen(SpellName[4]);
         strncpy(SpellMenuText+LinePos, SpellName[4], Length);
         LinePos += Length;
@@ -3779,7 +4497,6 @@ void do_cure_potion() {
 }
 
 void do_disguise_dust() {
-    Hero.DisguiseDust = 0;
     play_sound(CAST_SOUND);
     switch (Hero.CurrentMap) {
         case STONEHEART_MAP:
@@ -3794,9 +4511,17 @@ void do_disguise_dust() {
             Flags.Disguised = 1;
             Game.DisguiseTile = GOBLIN_TILE_NUMBER;
             break;
+        case CASTLEB_MAP:
+        case KEEP_OF_SHADOW_MAP:
+            print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOT_HERE]);
+            Flags.MessageActive = 1;
+            return;
         default:
             print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
     }
+
+    Hero.DisguiseDust = 0;
+
     if (Flags.Disguised) {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_CHANGE_FORM]);
     }
@@ -3808,22 +4533,25 @@ void do_homing_gem() {
     Flags.Disguised = 0;
     Hero.HomingGem = 0;
     play_sound(WIND_SOUND);
-    scr_palette(MyScreen, DEFAULT_PALETTE, 0);
     Hero.X = 5;
     Hero.Y = 12;
     Hero.PrevMap = WORLD_MAP;
     Hero.PrevX = 48;
     Hero.PrevY = 15;
     Hero.CurrentMap = ACADIA_MAP;
+    Tiles[4] = AltTiles[AltWall[ACADIA_MAP]];
+    Tiles[5] = AltTiles[AltWallSecret[ACADIA_MAP]];
     print_line(MW_X, MW_Y+30, 0, "Teleported!");
+    flash_effect();
     Flags.MessageActive = 1;
     Combat.Active = 0;
     if (Flags.InDungeon) {
         exit_dungeon();
-    } else {
-        load_map(Hero.CurrentMap);   
-        save_game();
-    }
+    } 
+    load_map(Hero.CurrentMap);
+    save_game();
+    Game.CurrentPalette = DEFAULT_PALETTE;
+    Flags.MessageActive = 1;
 }
 
 void do_loot() {
@@ -3837,6 +4565,12 @@ void do_loot() {
         } else {
             print_line(MW_X, MW_Y+30, 0, "Nothing to loot!");
         }
+        Flags.MessageActive = 1;
+        return;
+    }
+
+    if (!Dungeon.Light) {
+        print_line(MW_X, MW_Y+30, 0, "It's too dark to loot!");
         Flags.MessageActive = 1;
         return;
     }
@@ -3859,6 +4593,8 @@ void do_loot_yes() {
     if (gold) {
         print_line_formatted(MW_X, MW_Y+20, 0, "You find %d gold!", gold);
     }
+
+    Hero.Gold += gold;
     
     if (rand()&1) {
         do_dungeon_trap();
@@ -3913,19 +4649,23 @@ void clear_view() {
 }
 
 void end_combat() {
-    uint8_t AdjustedPower, Count;
+    uint8_t Count;
     uint8_t PrevXP = Hero.XP;
+    short AdjustedPower;
     char *ArenaMap;
+    
     Combat.Active = 0;
     Combat.Victory = 0;
+
     
     if (Hero.HP == 0) {
         do_death();
     } else {
         if (Flags.InDungeon) {
             ArenaMap = (char *)Arena[DUNGEON_ARENA];
-            scr_palette(MyScreen, DUNGEON_PALETTE, 0);
+            Game.CurrentPalette = DUNGEON_PALETTE;
             clear_view();
+            display_map();
             for (Count = 0; Count < 2; Count++) {
                 if(Dungeon.Pillar[Count]) {
                     ArenaMap[Dungeon.Pillar[Count]] = DIRT_TILE;
@@ -3985,7 +4725,9 @@ void load_arena(int CurrentArena) {
         print_line(MW_X, MW_Y+30, 0, Messages[STATUS__VICTORY]);
         play_music(VICTORY_MUSIC);
         Combat.Timer = 15;
-        Combat.Gold = find_gold(Combat.EnemyPower);
+        if (!Hero.InShip) {
+            Combat.Gold = find_gold(Combat.EnemyPower);
+        }
         return;
     }
 
@@ -4020,12 +4762,7 @@ void load_arena(int CurrentArena) {
             viewport[ArenaX][ArenaY] = CurrentTiles[ArenaMap[ArenaYTW + ArenaX]];
         }
     }
-    if((Combat.State == 1) && !Combat.Timer) {
-        CurrentTile = CurrentTiles[66];
-    } else {
-        CurrentTile = CurrentTiles[65];
-    }
-    viewport[Combat.HeroX][Combat.HeroY] = CurrentTile;
+
     if(Hero.DragonHP) {
         if((Combat.State == 2) && !Combat.Timer) {
             CurrentTile = CurrentTiles[61];
@@ -4040,6 +4777,18 @@ void load_arena(int CurrentArena) {
         }
     }
 
+    if((Combat.State == 1) && !Combat.Timer) {
+        CurrentTile = CurrentTiles[66];
+    } else {
+        CurrentTile = CurrentTiles[65];
+    }
+
+    if (Combat.TeleportActive) {
+        viewport[Combat.TargetX][Combat.TargetY] = TARGET_TILE;
+    } else {
+        viewport[Combat.HeroX][Combat.HeroY] = CurrentTile;
+    }
+
     if(Combat.MissileActive) {
         viewport[Combat.MissileX][Combat.MissileY] = 67;
     }
@@ -4050,6 +4799,11 @@ uint8_t find_gold(uint8_t GoldLevel) {
     uint8_t gold = 0;
 
     gold = (rand() & gold_range[GoldLevel]) + (GoldLevel * 4);
+
+    if (gold < 50) {
+        gold += 10;
+    }
+
     if(gold > 99) {
         gold = 99;
     }
@@ -4066,9 +4820,15 @@ void start_combat() {
     char CurrentTile = CurrentMap[(Game.MapWidth * Hero.Y) + Hero.X];
     char *ArenaMap;
 
+    if (Hero.InShip && (rand()&1)) {
+        return;
+    }
+    
     if (CurrentTile == LAVA_TILE && !Hero.FireRitual) {
         return;
     }
+
+    Combat.TeleportActive = 0;
 
     if (Flags.InDungeon) {
         Combat.Arena = DUNGEON_ARENA;
@@ -4088,7 +4848,7 @@ void start_combat() {
                 Dungeon.Pillar[Count] = 0;
             }
         }
-        scr_palette(MyScreen, DUNGEON_COMBAT_PALETTE, 0);
+        Game.CurrentPalette = DUNGEON_COMBAT_PALETTE;
         clear_dungeon_screen();
         clear_view();
     } else {
@@ -4103,7 +4863,11 @@ void start_combat() {
                 Combat.Arena = HEAVY_FOREST_ARENA;
                 break;
             case BRIDGE_TILE:
-                Combat.Arena = BRIDGE_ARENA;
+                if (Hero.Y == 57) {
+                    Combat.Arena = LAVA_BRIDGE_ARENA;
+                } else {
+                    Combat.Arena = BRIDGE_ARENA;
+                }
                 break;
             case DIRT_TILE:
             case CIRCLE_TILE:
@@ -4114,6 +4878,9 @@ void start_combat() {
                 break;
             case LAVA_TILE:
                 Combat.Arena = LAVA_ARENA;
+                break;
+            case SHIP_TILE:
+                Combat.Arena = WATER_ARENA;
                 break;
             default:
                 return;
@@ -4131,24 +4898,47 @@ void start_combat() {
     Combat.DragonGrappled = 0;
 
     viewport[5][4] = 0;
-    if (Combat.Arena == BRIDGE_ARENA) {
+    if ((Combat.Arena == BRIDGE_ARENA) || (Combat.Arena == LAVA_BRIDGE_ARENA)) {
         Combat.EnemyNumber = TROLL_ENEMY_NUMBER;
     } else if (Combat.Arena == LAVA_ARENA) {
         Combat.EnemyNumber = SALAMANDER_ENEMY_NUMBER;
     } else if (Combat.Arena == DUNGEON_ARENA) {
         Combat.EnemyNumber = Dungeon.Number + Dungeon.Level + DUNGEON_MONSTER_OFFSET + (rand()&3);
+    } else if (Combat.Arena == WATER_ARENA) {
+        Tiles[4] = AltTiles[20];
+        TmpRand = (rand()&3);
+        if (TmpRand == 3) {
+            Combat.EnemyNumber = PIRATE_ENEMY_NUMBER;
+            Combat.Arena = SHIP_SHIP_ARENA;
+        } else {
+            Combat.EnemyNumber = SEA_SERPENT_ENEMY_NUMBER + TmpRand;
+        }
     } else {
-        Combat.EnemyNumber = (rand() % 4) + Hero.Level;
+        Combat.EnemyNumber = (rand()&3) + Hero.Level;
     }
     Combat.EnemyTraits = EnemyTraits[Combat.EnemyNumber];
     Combat.EnemyTile = EnemyToTile[Combat.EnemyNumber];
     Combat.EnemyPower = EnemyPower[Combat.EnemyNumber];
     Combat.EnemyAC = Combat.EnemyPower + 8;
+    if (Combat.Arena == LAVA_BRIDGE_ARENA) {
+        Combat.EnemyPower += 4;
+        Combat.EnemyTraits |= ENEMY_STRONG;
+    }
     if (Combat.Arena == DUNGEON_ARENA) {
         Combat.HeroX = 4;
         Combat.HeroY = 6;
         Combat.DragonX = 6;
         Combat.DragonY = 6;
+    } else if (Combat.Arena == WATER_ARENA) {
+        Combat.HeroX = 3;
+        Combat.HeroY = 4;
+        Combat.DragonX = 6;
+        Combat.DragonY = 4;
+    } else if (Combat.Arena == SHIP_SHIP_ARENA) {
+        Combat.HeroX = 3;
+        Combat.HeroY = 7;
+        Combat.DragonX = 6;
+        Combat.DragonY = 7;
     } else {
         Combat.HeroX = 3;
         Combat.HeroY = 7;
@@ -4164,8 +4954,14 @@ void start_combat() {
         if (Combat.Arena == DUNGEON_ARENA) {
             Combat.EnemyX[Count] = DungeonStartX[Count];
             Combat.EnemyY[Count] = DungeonStartY[Count];
+        } else if (Combat.Arena == WATER_ARENA) {
+            Combat.EnemyX[Count] = WaterStartX[Count];
+            Combat.EnemyY[Count] = WaterStartY[Count];
+        } else if (Combat.Arena == SHIP_SHIP_ARENA) {
+            Combat.EnemyX[Count] = PirateStartX[Count];
+            Combat.EnemyY[Count] = PirateStartY[Count];
         } else {
-            if (Combat.Arena == BRIDGE_ARENA) {
+            if ((Combat.Arena == BRIDGE_ARENA) || (Combat.Arena == LAVA_BRIDGE_ARENA)) {
                 Combat.EnemyX[Count] = TrollStartX[Count];
             } else {
                 Combat.EnemyX[Count] = EnemyStartX[Count];
@@ -4390,10 +5186,14 @@ void update_missile() {
             // Enemy missile hits player/dragon
             if(TargetCreature == 1) {
                 if(Combat.HitRoll >= ((Hero.Armor * 2) + 6)) {
-                    damage_hero(Combat.MissileDamage);
+                    if ((Combat.EnemyTraits&ENEMY_FIRE) && Hero.FireRitual) {
+                        print_line(MW_X, MW_Y+30, 0, "You are hit! Fire doesn't affect you!");
+                    } else {
+                        damage_hero(Combat.MissileDamage);
+                        play_sound(HIT_SOUND);
+                    }
                     Combat.MissileActive = 0;
                     Combat.Timer = 8;
-                    play_sound(HIT_SOUND);
                 } else {
                     clear_text_window();
                     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__MISSED]);
@@ -4573,7 +5373,7 @@ void damage_dragon(int Damage) {
 void do_combat_move(int Direction) {
     int Blocked = 0;
     int NewX, NewY;
-    
+
     if (Combat.EnemyTraits&ENEMY_GRAPPLE) {
         if ((Combat.State == 1) && (Combat.HeroGrappled)) {
             print_line(MW_X, MW_Y+30, 0, "You are grappled!");
@@ -4733,10 +5533,14 @@ int TileCreature(int CombatX, int CombatY) {
 
     ArenaTile = ArenaMap[(CombatY * ARENA_WIDTH) + CombatX];
     switch (ArenaTile) {
-        case NOTHING_TILE:
         case WATER_TILE:
+            if (Combat.MissileActive) {
+                break;
+            }
+        case NOTHING_TILE:
         case STONE_WALL_TILE:
         case ROCKY_WALL_TILE:
+        case INNER_WALL_TILE:
             return 0xFF;
     }
     return 0;
@@ -4764,10 +5568,14 @@ int space_free(int CombatX, int CombatY) {
     }
     ArenaTile = ArenaMap[(CombatY * ARENA_WIDTH) + CombatX];
     switch (ArenaTile) {
-        case NOTHING_TILE:
         case WATER_TILE:
+            if (Hero.InShip && Combat.State > 2) {
+                break;
+            }
+        case NOTHING_TILE:
         case STONE_WALL_TILE:
         case ROCKY_WALL_TILE:
+        case INNER_WALL_TILE:
             return 0;
     }
     return 1;
@@ -5218,12 +6026,18 @@ void do_enemy_turn(int Enemy) {
     advance_combat_state();
 }
 
-void do_cast_ray() {
-    int Direction;
+void do_cast_missile(uint8_t Zap) {
+    int Direction, SP;
 
     Menu.Active = 0;
 
-    if(!deduct_spell_points(5)) {
+    if (Zap) {
+        SP = 10;
+    } else {
+        SP = 5;
+    }
+
+    if(!deduct_spell_points(SP)) {
         return;
     }
     
@@ -5252,8 +6066,15 @@ void do_cast_ray() {
     Combat.MissileY = Combat.HeroY;
     Combat.MissileType = 1;
     Combat.HitRoll = 127;
-    Combat.MissileDamage = ((Hero.Int / 5) / 2) + 1;
-//    advance_combat_state();
+    if (Zap) {
+        Combat.MissileDamage = (Hero.Int / 5) + 2;
+    } else {
+        Combat.MissileDamage = ((Hero.Int / 5) / 2) + 1;
+    }
+}
+
+void do_cast_ray() {
+    do_cast_missile(0);
 }
 
 void do_cast_swap() {
@@ -5310,7 +6131,11 @@ void do_cast_sun() {
                 CurrentDTiles = (uint8_t *)DTilesVisible;
                 invalidate_view();
             } else {
-                print_line(MW_X, MW_Y+30, 0, "The dungeon gets brighter!");
+                if (Hero.Divination) {
+                    activate_divination();
+                } else {
+                    print_line(MW_X, MW_Y+30, 0, "The dungeon gets brighter!");
+                }
             }
             if(Dungeon.Light > 191) {
                 Dungeon.Light = 255;
@@ -5343,30 +6168,32 @@ void do_cast_heal() {
         if(check_new_spell()) {
             return;
         }
-        play_sound(CAST_SOUND);
         flash_effect();
-        if (Hero.HP < Hero.MHP) {
-            print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__HEALED]);
-            Hero.HP += HP;
-            if (Hero.HP > Hero.MHP) {
-                Hero.HP = Hero.MHP;
-            }
-            draw_stats();
-        } else { 
-            print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
-        }
-        Menu.Active = 0;
-        Flags.MessageActive = 1;
-        return;
+    } else {
+        Combat.Timer = 8;
+        advance_combat_state();
     }
+
+    //     play_sound(CAST_SOUND);
+    //     if (Hero.HP < Hero.MHP) {
+    //         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__HEALED]);
+    //         Hero.HP += HP;
+    //         if (Hero.HP > Hero.MHP) {
+    //             Hero.HP = Hero.MHP;
+    //         }
+    //         draw_stats();
+    //     } else { 
+    //         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
+    //     }
+    //     Menu.Active = 0;
+    //     Flags.MessageActive = 1;
+    //     return;
+    // }
 
     if(Hero.HP == Hero.MHP) {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
+        play_sound(CAST_SOUND);
         draw_stats();
-        if(Combat.Active) {
-            Combat.Timer = 8;
-            advance_combat_state();
-        }
         return;
     }
     Hero.HP += (Hero.Int / 5) + (Hero.Level * 2);
@@ -5375,6 +6202,7 @@ void do_cast_heal() {
     }
 
     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__HEALED]);
+    play_sound(HEAL_SOUND);
     draw_stats();
     if(Combat.Active) {
         Combat.Timer = 8;
@@ -5382,7 +6210,9 @@ void do_cast_heal() {
     }
 }
 
-void do_cast_hop() {
+void do_cast_teleport() {
+    uint8_t NewX = 0;
+    uint8_t NewY = 0;
     Menu.Active = 0;
 
     if(!deduct_spell_points(10)) {
@@ -5390,47 +6220,98 @@ void do_cast_hop() {
     }
     
     if(!Combat.Active) {
+        if (Hero.CurrentMap && !Flags.InDungeon) {
+            flash_effect();
+            play_sound(CAST_SOUND);
+            return;
+        }
+        if (Flags.InDungeon) {
+            do_dungeon_ladder();
+            Menu.Actions[1] = dungeon_check_ascend;
+            Menu.Actions[2] = dungeon_check_descend;
+            return;
+        }
+        flash_effect();
         if(check_new_spell()) {
             return;
         }
+        Flags.MessageActive = 1;
+        switch(Hero.X) {
+            case 53:    // Mountains circle
+                if(Hero.Y == 21) {
+                    NewX = 44;
+                    NewY = 52;
+                }
+                break;
+            case 44:    // Southern outside circle
+                if(Hero.Y == 52) {
+                    NewX = 28;
+                    NewY = 55;
+                }
+                break;
+            case 34:    // Dwarven mountains circle
+                if(Hero.Y == 9) {
+                    NewX = 53;
+                    NewY = 21;
+                }
+                break;
+            case 28:    // Southern inside circle
+                if(Hero.Y == 55) {
+                    NewX = 34;
+                    NewY = 9;
+                }
+                break;
+            case 54:    // Isle of Mystery circle
+                if(Hero.Y == 57) {
+                    NewX = 7;
+                    NewY = 58;
+                    if (CurrentMap[(Game.MapWidth * NewY) + NewX] == SHIP_TILE) {
+                        Hero.ShipOwned = 1; // Just in case
+                        Hero.InShip = 1;
+                        Game.Wind = 4;
+                        if (Hero.SP < 10) {
+                            Hero.SP = 10; // to teleport back
+                        }
+                    }
+                }
+                break;
+            case 7:    // Water circle
+                if(Hero.Y == 58) {
+                    NewX = 54;
+                    NewY = 57;
+                    Hero.InShip = 0;
+                }
+                break;
+        }
+
+        if (NewX) {
+            print_line(MW_X, MW_Y+30, 0, "Teleported!");
+            play_sound(WIND_SOUND);
+            Hero.X = NewX;
+            Hero.Y = NewY;
+            Hero.PrevX = NewX;
+            Hero.PrevY = NewY;
+        } else {
+            print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
+            play_sound(CAST_SOUND);
+        }
+    } else {
+        Combat.TeleportActive = 1;
+        play_sound(CAST_SOUND);
+        print_line(MW_X, MW_Y, 1, "Teleport to where?");
+        Combat.TargetX = Combat.HeroX;
+        Combat.TargetY = Combat.HeroY;
+        Menu.Active = 1;
+        Menu.Choices = 1;
+        Menu.MarkerPos[0] = 0;
+        Menu.Selection = 0;
+        Menu.Actions[0] = combat_teleport;
+        SaveKey = 0;
     }
 }
 
 void do_cast_zap() {
-    int Direction;
-
-    Menu.Active = 0;
-
-    if(!deduct_spell_points(10)) {
-        return;
-    }
-
-    if(!Combat.Active) {
-        if(check_new_spell()) {
-            return;
-        }
-        play_sound(CAST_SOUND);
-        flash_effect();
-        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
-        Menu.Active = 0;
-        return;
-    }
-
-    Direction = which_direction();
-    if(!Direction) {
-        return;
-    }
-    Combat.MissileActive = 1;
-    Combat.MissileDirection = Direction;
-    Combat.MissileOrigin = 0;   // player/dragon
-    Combat.HitRoll = (rand() & 15) + (Hero.Dex / 5) + (Hero.Level / 2);
-    play_sound(CAST_SOUND);
-    Combat.MissileX = Combat.HeroX;
-    Combat.MissileY = Combat.HeroY;
-    Combat.MissileType = 1;
-    Combat.HitRoll = 127;
-    Combat.MissileDamage = (Hero.Int / 5) + 2;
-    advance_combat_state();
+    do_cast_missile(1);
 }
 
 int deduct_spell_points(int Points) {
@@ -5474,16 +6355,24 @@ int check_new_spell() {
                 SpellMask = HEAL_SPELL;
             }
             break;
-        case 28:    // Hop spell
+        case 28:    // Teleport spell
             if(Hero.Y == 55) {
                 SpellLearned = 5;
-                SpellMask = HOP_SPELL;
+                SpellMask = TELEPORT_SPELL;
             }
             break;
         case 54:    // Zap spell
             if(Hero.Y == 57) {
                 SpellLearned = 6;
                 SpellMask = ZAP_SPELL;
+            }
+        case 7:    // Water circle
+            if((Hero.Y == 58) && !Hero.Divination) {
+                Hero.Divination = 1;
+                print_line(MW_X, MW_Y+30, 0, "You learn Divination!");
+                flash_effect();
+                save_game();
+                return 0xFF;
             }
             break;
     }
@@ -5495,6 +6384,20 @@ int check_new_spell() {
     flash_effect();
     save_game();
     return SpellLearned;
+}
+
+void combat_teleport() {
+    if (space_free(Combat.TargetX, Combat.TargetY)) {
+        play_sound(WIND_SOUND);
+        print_line(MW_X, MW_Y+30, 0, "Teleported!");
+        Combat.HeroX = Combat.TargetX;
+        Combat.HeroY = Combat.TargetY;
+    } else {
+        print_line(MW_X, MW_Y+30, 0, "Failed!");
+    }
+    Combat.TeleportActive = 0;
+    Combat.Timer = 8;
+    advance_combat_state();
 }
 
 void CheckEncountersAndStatus() {
@@ -5510,6 +6413,15 @@ void CheckEncountersAndStatus() {
             return;
         }
     } else {
+        if (!Hero.InShip && (CurrentTile == SHIP_TILE)) {
+            Hero.InShip = 1;
+            print_line(MW_X, MW_Y+30, 0, "You board the ship.");
+            Hero.PrevX = Hero.X;
+            Hero.PrevY = Hero.Y;
+            display_map();
+            Flags.MessageActive = 1;
+            return;
+        }
         if (check_triggers()) {
             return;
         }
@@ -5621,6 +6533,15 @@ void CheckEncountersAndStatus() {
     }
 }
 
+void exit_ship() {
+    Hero.InShip = 0;
+    if (!Hero.CurrentMap) {
+        save_game();
+    }
+    print_line(MW_X, MW_Y+30, 0, "You exit the ship.");
+    Flags.MessageActive = 1;
+}
+
 void do_poison() {
     Hero.HealPotions = 7;
     Hero.CurePotions = 7;
@@ -5657,9 +6578,10 @@ int main(int argc, char *argv[]) {
     } else {
         if(Flags.Composite) {
             Mode = 4;
-            CurrentPalette = COMPOSITE_PALETTE;
+            Game.CurrentPalette = COMPOSITE_PALETTE;
         } else {
             Mode = 5;
+            Game.CurrentPalette = DEFAULT_PALETTE;
         }
     }
 
@@ -5697,6 +6619,9 @@ int main(int argc, char *argv[]) {
 
 //    generate_character();
     load_game();
+
+//    Hero.Gold = 1000;
+//    Hero.X -= 2;
 
 //    Hero.HomingGem = 1;
 
@@ -5746,28 +6671,31 @@ int main(int argc, char *argv[]) {
                     }
                 }
                 if(SaveKey == KEY_P) {
-                    CurrentPalette++;
-                    if(CurrentPalette > 5) {
-                        CurrentPalette = 0;
+                    Game.CurrentPalette++;
+                    if(Game.CurrentPalette > 5) {
+                        Game.CurrentPalette = 0;
                     }
-                    scr_palette (MyScreen, CurrentPalette, 0);
                     SaveKey = 0;
                 }
                 if(!(CurrentFrame&0x15)) {
                     if(!(CurrentFrame&0x31)) {
                         CurrentTiles = tile_mapping;
-                        if (Dungeon.Light) {
-                            CurrentDTiles = (uint8_t *)DTilesVisible;
-                        } else {
-                            CurrentDTiles = (uint8_t *)DTilesDark;
+                        if (Flags.InDungeon && !Flags.DivinationActive) {
+                            if (Dungeon.Light) {
+                                CurrentDTiles = (uint8_t *)DTilesVisible;
+                            } else {
+                                CurrentDTiles = (uint8_t *)DTilesDark;
+                            }
                         }
                         Flags.Flipped = 1;
                     } else {
                         CurrentTiles = tile_mapping_alt;
-                        if (Dungeon.Light) {
-                            CurrentDTiles = (uint8_t *)DTilesVisibleAlt;
-                        } else {
-                            CurrentDTiles = (uint8_t *)DTilesDarkAlt;
+                        if (Flags.InDungeon && !Flags.DivinationActive) {
+                            if (Dungeon.Light) {
+                                CurrentDTiles = (uint8_t *)DTilesVisibleAlt;
+                            } else {
+                                CurrentDTiles = (uint8_t *)DTilesDarkAlt;
+                            }
                         }
                         Flags.Flipped = 1;
                     }
@@ -5778,6 +6706,9 @@ int main(int argc, char *argv[]) {
                     } else {
                         CheckMoveHero();
                     }
+                }
+                if (!Hero.CurrentMap) {
+                    check_change_wind();
                 }
                 break;
             case 1:
@@ -5821,7 +6752,7 @@ int main(int argc, char *argv[]) {
             case 2:
                 if(!Combat.Active && !Flags.InDungeon) {
                     do_vision();
-                } else if(!Combat.Active && Flags.InDungeon) {
+                } else if(!Combat.Active && Flags.InDungeon && !Flags.DivinationActive) {
                     do_dungeon_vision();
                 }
                 break;
@@ -5841,4 +6772,27 @@ int main(int argc, char *argv[]) {
 
     cleanup();
     return 0;
+}
+
+void check_spirit_hammer() {
+    const char *TmpLine;
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__FORGEGURU_RISWYNN]);
+
+    if (Hero.Melee < 5) {
+        if (!Hero.SpiritStone) {
+            TmpLine = Messages[MESSAGE__FORGEGURU_RISWYNN_TALK];
+        } else {
+            TmpLine = Messages[MESSAGE__GIVE_SPIRIT_HAMMER];
+            play_sound(CAST_SOUND);
+            flash_effect();
+            Hero.Melee = 5;
+            Hero.Ranged = 4;
+            draw_stats();
+            save_game();
+        }
+        print_pager_line(TmpLine);
+    } else {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__ALREADY_HAVE_SPIRIT_HAMMER]);
+    }
+    Flags.MessageActive = 1;
 }

@@ -44,8 +44,46 @@ const char *SpellName[] = {
     "Swap",
     "Sun",
     "Heal",
-    "Arcane Hop",
+    "Teleport",
     "Zap"
+};
+
+const char *Wind[] = {
+    "North",
+    "East",
+    "South",
+    "West",
+    "Calm"
+};
+
+const char AltWall[] = {
+    {0},
+    {2},
+    {0},
+    {4},
+    {6},
+    {7},
+    {16},
+    {9},
+    {11},
+    {13},
+    {15},
+    {18}
+};
+
+const char AltWallSecret[] = {
+    {1},
+    {3},
+    {1},
+    {5},
+    {1},
+    {8},
+    {17},
+    {10},
+    {12},
+    {14},
+    {1},
+    {19}
 };
 
 const char EnemyToTile[] = {
@@ -166,11 +204,11 @@ const char enemy_damage[] = {
 
 
 const char EnemyStartX[] = {
-    1, 4, 6, 9
+    4, 6, 1, 9
 };
 
 const char EnemyStartY[] = {
-    1, 2, 2, 1
+    2, 2, 1, 1
 };
 
 const char TrollStartX[] = {
@@ -183,6 +221,22 @@ const char DungeonStartX[] = {
 
 const char DungeonStartY[] = {
     2, 2, 2, 2
+};
+
+const char WaterStartX[] = {
+    2, 7, 4, 5
+};
+
+const char WaterStartY[] = {
+    1, 1, 8, 8
+};
+
+const char PirateStartX[] = {
+    4, 5, 2, 7
+};
+
+const char PirateStartY[] = {
+    2, 2, 1, 1
 };
 
 const char EnemyHPBase[] = {
@@ -347,6 +401,19 @@ const char bridge_arena[9][11] = {
     {3,18,22,22,22,22,22,22,22,18,3}
 };
 
+const char lava_bridge_arena[9][11] = {
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2}
+};
+
+
 const char sand_arena[9][11] = {
     {8,8,7,7,7,7,7,7,7,8,8},
     {8,8,7,7,7,7,7,7,7,7,8},
@@ -360,15 +427,15 @@ const char sand_arena[9][11] = {
 };
 
 const char ship_arena[9][11] = {
-    {22,70,22,22,22,22,22,22,22,70,22},
-    {22,22,22,22,22,22,22,22,22,22,22},
-    {22,22,22,22,22,22,22,22,22,22,22},
-    {18,18,18,18,22,22,22,18,18,18,18},
-    {3,3,3,3,22,22,22,3,3,3,3},
-    {8,8,8,8,8,8,8,8,8,8,8},
-    {8,8,8,8,8,8,8,8,8,8,8},
-    {8,8,8,8,8,8,8,8,8,8,8},
-    {8,8,8,8,8,8,8,8,8,8,8}
+    { 4, 4, 4,89,89,89,89, 4, 4, 4, 3},
+    { 4,89,89,89,89,89,89,89,89,89, 4},
+    { 4,89,89,89,89,89,89,89,89,89, 4},
+    { 4, 4, 4,89,89,89,89, 4, 4, 4, 3},
+    { 3, 3, 3, 6, 6, 6, 6, 6, 3, 3, 3},
+    { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+    { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+    { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8},
+    { 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8}
 };
 
 const char city_arena[9][11] = {
@@ -408,27 +475,27 @@ const char castle_arena[9][11] = {
 };
 
 const char water_arena[9][11] = {
-    {3,3,3,3,3,3,3,3,3,3,3},
-    {3,3,3,3,3,3,3,3,3,3,3},
-    {3,3,3,3,3,3,3,3,3,3,3},
-    {18,18,18,22,22,22,22,22,18,18,18},
-    {22,22,22,22,22,22,22,22,22,22,22},
-    {18,18,18,22,22,22,22,22,18,18,18},
-    {3,3,3,3,3,3,3,3,3,3,3},
-    {3,3,3,3,3,3,3,3,3,3,3},
-    {3,3,3,3,3,3,3,3,3,3,3}
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 4, 4, 4,89,89,89,89, 4, 4, 4, 3},
+    { 4,89,89,89,89,89,89,89,89,89, 4},
+    { 4,89,89,89,89,89,89,89,89,89, 4},
+    { 4, 4, 4,89,89,89,89, 4, 4, 4, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+    { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
 };
 
 const char ship_ship_arena[9][11] = {
-    {18,18,18,22,22,22,22,22,18,18,18},
-    {22,22,22,22,22,22,22,22,22,22,22},
-    {22,22,22,22,22,22,22,22,22,22,22},
-    {18,18,18,22,22,22,22,22,18,18,18},
-    {3,3,3,6,6,6,6,6,3,3,3},
-    {18,18,18,22,22,22,22,22,18,18,18},
-    {22,22,22,22,22,22,22,22,22,22,22},
-    {22,22,22,22,22,22,22,22,22,22,22},
-    {18,18,18,22,22,22,22,22,18,18,18}
+    { 4, 4, 4,89,89,89,89, 4, 4, 4, 3},
+    { 4,89,89,89,89,89,89,89,89,89, 4},
+    { 4,89,89,89,89,89,89,89,89,89, 4},
+    { 4, 4, 4,89,89,89,89, 4, 4, 4, 3},
+    { 3, 3, 3, 6, 6, 6, 6, 3, 3, 3, 3},
+    { 4, 4, 4,89,89,89,89, 4, 4, 4, 3},
+    { 4,89,89,89,89,89,89,89,89,89, 4},
+    { 4,89,89,89,89,89,89,89,89,89, 4},
+    { 4, 4, 4,89,89,89,89, 4, 4, 4, 3},
 };
 
 const char dungeon_arena[9][11] = {
@@ -455,7 +522,8 @@ const char *Arena[] = {
     {castle_arena},
     {water_arena},
     {ship_ship_arena},
-    {dungeon_arena}
+    {dungeon_arena},
+    {lava_bridge_arena}
 };
 
 
@@ -1436,7 +1504,7 @@ const char *Messages[] = {
     "Talk Cast Use Stats",
     "Swapped! Grapple Broken!",
     "Not enough spell points!",
-    "Nothing much happens",
+    "Nothing much happens.",
     "Party healed!",
     "Cured!",
     "Which direction?",
@@ -1536,7 +1604,7 @@ const char *Messages[] = {
     "We want to help, but we can't leave this valley.",
     "The rift must be healed, or Faradur is doomed.",
     "Hi! Welcome to Spiretop: hidden city of heroes.",
-    "Thana was one of us until her power-lust led her to seek dark magic. She opened a rift to shadow, and trapped us here. You must penetrate her lair on the island to the East.",
+    "Thana was one of us until her power-lust led her to seek dark magic. She opened a rift to shadow, >>",
     "If you can find a way to leave, tell Jaylan that I sent you.",
     "Leave me alone, human.",
     "I should have stayed in Freehaven.",
@@ -1556,8 +1624,8 @@ const char *Messages[] = {
     "This city is dangerous without disguise dust.",
     "I picked the wrong hill to mine.",
     "Goblins no have to hide no more once Thana takes over.",
-    "'Open sesame!'",
-    "'Go away, force field!'",
+    "\"Open sesame!\" >>",
+    "\"Go away, force field!\"",
     "Fool! You can't harm me or the force field.",
     "To dispel magic, recite:",
     "You must travel to Oak to find healing potions.",
@@ -1573,8 +1641,8 @@ const char *Messages[] = {
     "You risk killing us all if you use your magic here.",
     "Fulk was the wisest of all sages. Seek him at Cave of the Dead.",
     "Thank you. Come again!",
-    "Use this only when your peril",
-    "is most dire.",
+    "Use this only when your peril is most dire.",
+    "and trapped us here. You must penetrate her lair on the island to the east of here.",
     "Avil sent you? You may have my greatest work.",
     "You have enough already.",
     "Go away!",

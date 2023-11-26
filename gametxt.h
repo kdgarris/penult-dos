@@ -26,10 +26,17 @@ extern const char EnemyStartY[];
 extern const char TrollStartX[];
 extern const char DungeonStartX[];
 extern const char DungeonStartY[];
+extern const char WaterStartX[];
+extern const char WaterStartY[];
+extern const char PirateStartX[];
+extern const char PirateStartY[];
 extern const char EnemyTraits[];
 extern const char gold_range[];
 extern const char enemy_damage[];
 extern const char *SpellName[];
+extern const char *Wind[];
+extern const char AltWall[];
+extern const char AltWallSecret[];
 
 #define ENEMY_RANGED 0x80
 #define ENEMY_POISON 0x40
@@ -44,7 +51,7 @@ extern const char *SpellName[];
 #define SWAP_SPELL      0x02
 #define SUN_SPELL       0x04
 #define HEAL_SPELL      0x08
-#define HOP_SPELL       0x10
+#define TELEPORT_SPELL       0x10
 #define ZAP_SPELL       0x20
 
 
@@ -90,6 +97,8 @@ extern const char *SpellName[];
 #define TROLL_ENEMY_NUMBER 0
 #define SALAMANDER_ENEMY_NUMBER 17
 #define SLIME_ENEMY_NUMBER 30
+#define PIRATE_ENEMY_NUMBER 16
+#define SEA_SERPENT_ENEMY_NUMBER 23
 #define GOBLIN_TILE_NUMBER 63
 #define SHADOW_ORB_TILE_NUMBER 71
 #define OGRE_TILE_NUMBER 69
@@ -100,7 +109,7 @@ extern const char *SpellName[];
 #define NIGHT_WISP_TILE_NUMBER 91
 #define GLOOM_VIPER_TILE_NUMBER 92
 #define UNSEELIE_TILE_NUMBER 63
-#define TITAN_TILE_NUMBER 73
+#define TITAN_TILE_NUMBER 108
 #define PIRATE_TILE_NUMBER 83
 #define SALAMANDER_TILE_NUMBER 84
 #define DEMON_GUARD_TILE_NUMBER 85
@@ -440,8 +449,8 @@ extern const char *SpellName[];
 #define MESSAGE__THANA_SECONDARY_DIALOG 308
 #define MESSAGE__FIND_FULK 309
 #define MESSAGE__THANK_YOU_COME_AGAIN 310
-#define MESSAGE__USE_THIS_ONLY_WHEN_YOUR 311
-#define MESSAGE__PERIL_IS_MOST_DIRE 312
+#define MESSAGE__USE_THIS_ONLY_WHEN_YOUR_PERIL_IS_MOST_DIRE 311
+#define MESSAGE__ALDERNEY_THE_SEER_TALK_2 312
 #define MESSAGE__GIVE_DRAGON_ARMOR 313
 #define MESSAGE__YOU_HAVE_ENOUGH_ALREADY 314
 #define MESSAGE__GO_AWAY 315
