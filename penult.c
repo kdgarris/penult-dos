@@ -427,15 +427,15 @@ const uint8_t DTilesVisibleAlt[] = {
 
 
 void (*DungeonMenuActions[])() = {
-    do_cast, do_loot, do_use
+    do_cast, do_loot, do_use, do_inventory, do_pass
 };
 
 void (*OutdoorMenuActions[])() = {
-    do_cast, do_use, do_stats
+    do_cast, do_use, do_inventory, do_pass
 };
 
 void (*TownMenuActions[])() = {
-    do_talk, do_cast, do_use, do_stats
+    do_talk, do_cast, do_use, do_inventory
 };
 
 void (*VendorMenuActions[])() = {
@@ -471,7 +471,9 @@ void (*Actions[])() = {
      check_gain_dragon_armor, check_gain_homing_gem,
      check_gain_energy_ritual, advanced_trainer_check,
      tragut_function, check_dust, alderney_the_seer,
-     avil_talk, password_square_function
+     avil_talk, password_square_function, circle_control_function,
+     hermit_talk, fulk_talk, evil_place_function, thana_talk,
+     stoneheart_talk
 };
 
 
@@ -563,6 +565,10 @@ const Trigger acadia5[] = {
     {10, &check_save_game}
 };
 
+const Trigger spiretop5[] = {
+    {10, &check_save_game}
+};
+
 const Trigger castle40[] = {
     {6, &load_castleb}
 };
@@ -574,6 +580,10 @@ const Trigger castleb40[] = {
 const Trigger castleb1[] = {
     {23, &leave_town},
     {32, &load_freehaven_up}
+};
+
+const Trigger castleb2[] = {
+    {12, &check_find_spirit_stone}
 };
 
 const Trigger castleb31[] = {
@@ -594,6 +604,22 @@ const Trigger duskgrove45[] = {
 
 const Trigger freehaven1[] = {
     {32, &load_wixa_home}
+};
+
+const Trigger keep_of_shadow7[] = {
+    {6, &start_combat}
+};
+
+const Trigger keep_of_shadow10[] = {
+    {25, &start_combat}
+};
+
+const Trigger keep_of_shadow37[] = {
+    {6, &start_combat}
+};
+
+const Trigger keep_of_shadow40[] = {
+    {25, &start_combat}
 };
 
 const TList world_triggers[] = {
@@ -650,6 +676,7 @@ const TList freehaven_triggers[] = {
 
 const TList castleb_triggers[] = {
     {1, castleb1, 2},
+    {2, castleb2, 1},
     {31, castleb31, 1},
     {40, castleb40, 1},
     {45, castleb45, 1},
@@ -662,6 +689,7 @@ const TList duskgrove_triggers[] = {
 };
 
 const TList spiretop_triggers[] = {
+    {5, spiretop5, 1},
     {0, NULL, 0}
 };
 
@@ -670,6 +698,10 @@ const TList thanas_hold_triggers[] = {
 };
 
 const TList keep_of_shadow_triggers[] = {
+    {7, keep_of_shadow7, 1},
+    {10, keep_of_shadow10, 1},
+    {37, keep_of_shadow37, 1},
+    {40, keep_of_shadow40, 1},
     {0, NULL, 0}
 };
 
@@ -815,7 +847,6 @@ Bitmap *Tiles[NUM_TILES];
 Bitmap *DTiles[NUM_DTILES];
 Bitmap *AltTiles[NUM_ALTTILES];
 Bitmap *ViewportBuffer;
-Bitmap *ClearText;
 
 struct {
     unsigned short FireRitual : 1;
@@ -879,14 +910,18 @@ struct {
    unsigned int JoystickPresent : 1;
    unsigned int Monochrome : 1;
    unsigned int Composite : 1;
+   unsigned int Fast : 1;
+   unsigned int FastDelayed : 1;
    unsigned int MessageActive : 1;
    unsigned int InDungeon : 1;
    unsigned int Flipped : 1;
    unsigned int Moved : 1;
+   unsigned int PrevMoved : 1;
    unsigned int WeaponCorroded : 1;
    unsigned int Disguised : 1;
    unsigned int DivinationActive : 1;
    unsigned int KeepSide : 1;
+   unsigned int MantraSpoken : 1;
 } Flags;
 
 struct {
@@ -899,6 +934,11 @@ struct {
     uint8_t DisguiseTile;
     uint8_t CurrentPalette;
     uint8_t Wind;
+    unsigned int TmpTicks;
+    uint8_t F1;
+    uint8_t F2;
+    uint8_t F3;
+    uint8_t F4;
     unsigned long long Turns, PrevTurns;
 } Game;
 
@@ -913,6 +953,7 @@ struct {
     uint8_t Timer;
     uint8_t Arena;
     uint8_t EnemyNumber;
+    char EnemyName[13];
     uint8_t EnemyTile;
     uint8_t EnemyPower;
     uint8_t EnemyTraits;
@@ -1334,7 +1375,7 @@ void load_display_gui() {
     bit_destroy(ScreenBuffer);
 }
 
-void draw_stats() {
+void draw_stats(uint8_t FullDraw) {
     uint8_t LevelH = 0, StatusH = 0, FoodH = 0;
 
     if (Hero.XP > 127) {
@@ -1349,29 +1390,83 @@ void draw_stats() {
         FoodH = 1;
     }
 
-
-    print_line_formatted(SW_X, SW_Y, 0,    "%s (%c)", Hero.Name, Gender[Hero.Gender][0]);
-    print_line_formatted(SW_X, SW_Y+10, 0,  "Strength:    %2d", Hero.Str);
-    print_line_formatted(SW_X, SW_Y+20, 0, "Dexterity:   %2d", Hero.Dex);
-    print_line_formatted(SW_X, SW_Y+30, 0, "Intelligence:%2d", Hero.Int);
-    print_line_formatted(SW_X, SW_Y+40, 0, "Hit Pts:  %02d/%02d", Hero.HP, Hero.MHP);
-    print_line_formatted(SW_X, SW_Y+50, 0, "Spell Pts:%02d/%02d", Hero.SP, Hero.MSP);
-    print_line_formatted(SW_X, SW_Y+60, 0, "Armor:%9s", Armor[Hero.Armor]);
-    print_line_formatted(SW_X, SW_Y+70, 0, "Melee:%9s", Melee[Hero.Melee]);
-    print_line_formatted(SW_X, SW_Y+80, 0, "Ranged:%8s", Ranged[Hero.Ranged]);
-    print_line_formatted(SW_X, SW_Y+90, LevelH, "Level:       %2d", Hero.Level);
-    print_line_formatted(SW_X, SW_Y+100, 0, "Gold:      %4d", Hero.Gold);
-    print_line_formatted(SW_X, SW_Y+110, FoodH, "Food:        %2d", Hero.Food);
-    print_line_formatted(SW_X, SW_Y+120, StatusH, "Status:%8s", Status[Hero.Status]);
-    if(Combat.Active) {
-        print_line_formatted(SW_X, SW_Y+130, 0, "Dragon HP:%02d  ", Hero.DragonHP);
-    } else {
+    if (FullDraw) {
         if (Flags.InDungeon) {
-            print_line_formatted(SW_X, SW_Y+130, 0, "Dungeon Lvl: %d", Dungeon.Level + 1);
+            if (Dungeon.Orb) {
+                print_line_formatted(SW_X, SW_Y, 1, "%-11s(ORB)", DungeonName[Dungeon.Number]);
+            } else {
+                print_line_formatted(SW_X, SW_Y, 1, "%-15s", DungeonName[Dungeon.Number]);
+            }
         } else {
-            print_line_formatted(SW_X, SW_Y+130, 0, "Wind: %s    ", Wind[Game.Wind]);
+            print_line_formatted(SW_X, SW_Y, 0,    "%-11s (%c)", Hero.Name, Gender[Hero.Gender][0]);
+        }
+        print_line_formatted(SW_X, SW_Y+10, 0,  "Strength:    %2d", Hero.Str);
+        print_line_formatted(SW_X, SW_Y+20, 0, "Dexterity:   %2d", Hero.Dex);
+        print_line_formatted(SW_X, SW_Y+30, 0, "Intelligence:%2d", Hero.Int);
+        print_line_formatted(SW_X, SW_Y+40, 0, "Hit Pts:  %02d/%02d", Hero.HP, Hero.MHP);
+        print_line_formatted(SW_X, SW_Y+50, 0, "Spell Pts:%02d/%02d", Hero.SP, Hero.MSP);
+        print_line_formatted(SW_X, SW_Y+60, 0, "Armor:%9s", Armor[Hero.Armor]);
+        print_line_formatted(SW_X, SW_Y+70, 0, "Melee:%9s", Melee[Hero.Melee]);
+        print_line_formatted(SW_X, SW_Y+80, 0, "Ranged:%8s", Ranged[Hero.Ranged]);
+        print_line_formatted(SW_X, SW_Y+90, LevelH, "Level:       %2d", Hero.Level);
+        print_line_formatted(SW_X, SW_Y+100, 0, "Gold:      %4d", Hero.Gold);
+        print_line_formatted(SW_X, SW_Y+110, FoodH, "Food:        %2d", Hero.Food);
+        print_line_formatted(SW_X, SW_Y+120, StatusH, "Status:%8s", Status[Hero.Status]);
+        if(Combat.Active) {
+            print_line_formatted(SW_X, SW_Y+130, 0, "Dragon HP:%02d  ", Hero.DragonHP);
+        } else {
+            if (Flags.InDungeon) {
+                print_line_formatted(SW_X, SW_Y+130, 0, "Dungeon Lvl: %d", Dungeon.Level + 1);
+            } else {
+                print_line_formatted(SW_X, SW_Y+130, 0, "Wind: %s    ", Wind[Game.Wind]);
+            }
+        }
+    } else {
+//        if (Flags.InDungeon) {
+//            print_line_formatted(SW_X, SW_Y, 1, "%-15s", DungeonName[Dungeon.Number]);
+//        } else {
+//            print_line_formatted(SW_X, SW_Y, 0,    "%-11s (%c)", Hero.Name, Gender[Hero.Gender][0]);
+//        }
+        print_line_formatted(SW_X+104, SW_Y+10, 0,  "%2d", Hero.Str);
+        print_line_formatted(SW_X+104, SW_Y+20, 0, "%2d", Hero.Dex);
+        print_line_formatted(SW_X+104, SW_Y+30, 0, "%2d", Hero.Int);
+        print_line_formatted(SW_X+80, SW_Y+40, 0, "%02d/%02d", Hero.HP, Hero.MHP);
+        print_line_formatted(SW_X+80, SW_Y+50, 0, "%02d/%02d", Hero.SP, Hero.MSP);
+        print_line_formatted(SW_X+48, SW_Y+60, 0, "%9s", Armor[Hero.Armor]);
+        print_line_formatted(SW_X+48, SW_Y+70, 0, "%9s", Melee[Hero.Melee]);
+        print_line_formatted(SW_X+56, SW_Y+80, 0, "%8s", Ranged[Hero.Ranged]);
+        print_line_formatted(SW_X+104, SW_Y+90, LevelH, "%2d", Hero.Level);
+        print_line_formatted(SW_X+88, SW_Y+100, 0, "%4d", Hero.Gold);
+        print_line_formatted(SW_X+104, SW_Y+110, FoodH, "%2d", Hero.Food);
+        print_line_formatted(SW_X+56, SW_Y+120, StatusH, "%8s", Status[Hero.Status]);
+        if(Combat.Active) {
+            print_line_formatted(SW_X+80, SW_Y+130, 0, "%02d  ", Hero.DragonHP);
+        } else {
+            if (Flags.InDungeon) {
+                print_line_formatted(SW_X+104, SW_Y+130, 0, "%d", Dungeon.Level + 1);
+            } else {
+                print_line_formatted(SW_X+48, SW_Y+130, 0, "%s    ", Wind[Game.Wind]);
+            }
         }
     }
+}
+
+void draw_sp() {
+    print_line_formatted(SW_X+80, SW_Y+50, 0, "%02d", Hero.SP);
+}
+
+void draw_hp() {
+    print_line_formatted(SW_X+80, SW_Y+40, 0, "%02d", Hero.HP);
+}
+
+void draw_food() {
+    uint8_t FoodH = 0;
+
+    if (!Hero.Food) {
+        FoodH = 1;
+    }
+
+    print_line_formatted(SW_X+104, SW_Y+110, FoodH, "%2d", Hero.Food);
 }
 
 void load_tiles() {
@@ -1480,6 +1575,11 @@ void update_town_map_at(int8_t MapX, int8_t MapY) {
         }
         ScreenY += 16;
     }
+    if (Flags.Disguised) {
+        viewport[5][4] = Game.DisguiseTile;
+    } else {
+        viewport[5][4] = HERO_TILE;
+    }
 }
 
 void update_dungeon_map_at(int8_t MapX, int8_t MapY) {
@@ -1548,6 +1648,12 @@ void update_world_map_at(int8_t MapX, int8_t MapY) {
             ScreenX += 16;
         }
         ScreenY += 16;
+    }
+    
+    if (Flags.Disguised) {
+        viewport[5][4] = Game.DisguiseTile;
+    } else {
+        viewport[5][4] = HERO_TILE;
     }
 }
 
@@ -1808,55 +1914,118 @@ void do_dungeon_vision() {
     }
 }
 
-void display_map() {
-    int CountX, CountY;
-    int ScreenX, ScreenY;
-    uint8_t DoUpdate = 1;
-    uint8_t HeroTile;
+// void display_map() {
+//     int CountX, CountY;
+//     int ScreenX, ScreenY;
+//     uint8_t DoUpdate = 1;
+//     uint8_t HeroTile;
+
+//     if (!Flags.Composite && !Flags.Monochrome) {
+//         scr_palette(MyScreen, Game.CurrentPalette, 0);
+//     }
+
+//     if (Flags.Disguised) {
+//         HeroTile = Game.DisguiseTile;
+//     } else {
+//         HeroTile = HERO_TILE;
+//     }
+
+// //    if (Hero.InShip) {
+// //        HeroTile = SHIP_TILE;
+// //    }
+
+//     if (Game.FlashTimer && !Game.DoInvert) {
+//         DoUpdate = 0;
+//     }
+
+//     if (!Game.FlashTimer && Game.DoInvert) {
+//         DoUpdate = 1;
+//         invert_viewport();
+//         invalidate_view();
+//     }
+
+//     ScreenX = 0;
+//     for(CountX = 0; CountX < VIEWPORT_WIDTH; CountX++) {
+//         ScreenY = 0;
+//         for(CountY = 0; CountY < VIEWPORT_HEIGHT; CountY++) {
+//             if(viewport_prev[CountX][CountY] != viewport[CountX][CountY] && DoUpdate) {
+//                 bit_put(ViewportBuffer, Tiles[viewport[CountX][CountY]], ScreenX, ScreenY, DRAW_PSET);
+//             }
+//             ScreenY += 16;
+//         }
+//         ScreenX += 16;
+//     }
+//     if(!Combat.Active && DoUpdate && (viewport[5][4] != HERO_TILE) && !Hero.InShip) {
+//         bit_put(ViewportBuffer, Tiles[CurrentTiles[HeroTile]], 80, 64, DRAW_PSET);
+//     }
+
+//     if (Game.DoInvert) {
+//         invert_viewport();
+//     }
+
+//     scr_put(MyScreen, ViewportBuffer, 4, 4, DRAW_PSET);
+// }
+
+void display_map_alt() {
+    uint8_t CountX, CountY, CountHeight;
+    char *Dest = ViewportBuffer->pixels;
+
 
     if (!Flags.Composite && !Flags.Monochrome) {
         scr_palette(MyScreen, Game.CurrentPalette, 0);
     }
-
-    if (Flags.Disguised) {
-        HeroTile = Game.DisguiseTile;
-    } else {
-        HeroTile = HERO_TILE;
-    }
-
-//    if (Hero.InShip) {
-//        HeroTile = SHIP_TILE;
-//    }
-
-    if (Game.FlashTimer && !Game.DoInvert) {
-        DoUpdate = 0;
-    }
-
-    if (!Game.FlashTimer && Game.DoInvert) {
-        DoUpdate = 1;
-        invert_viewport();
-        invalidate_view();
-    }
-
-    ScreenX = 0;
-    for(CountX = 0; CountX < VIEWPORT_WIDTH; CountX++) {
-        ScreenY = 0;
-        for(CountY = 0; CountY < VIEWPORT_HEIGHT; CountY++) {
-            if(viewport_prev[CountX][CountY] != viewport[CountX][CountY] && DoUpdate) {
-                bit_put(ViewportBuffer, Tiles[viewport[CountX][CountY]], ScreenX, ScreenY, DRAW_PSET);
+    for(CountY = 0; CountY < VIEWPORT_HEIGHT; CountY++) {
+        for(CountX = 0; CountX < VIEWPORT_WIDTH; CountX++) {
+            if(viewport_prev[CountX][CountY] != viewport[CountX][CountY]) {
+                _fmemcpy (Dest, Tiles[viewport[CountX][CountY]]->pixels, 4);
+                _fmemcpy (Dest+44, (Tiles[viewport[CountX][CountY]]->pixels) + 4, 4);
+                _fmemcpy (Dest+88, (Tiles[viewport[CountX][CountY]]->pixels) + 8, 4);
+                _fmemcpy (Dest+132, (Tiles[viewport[CountX][CountY]]->pixels) + 12, 4);
+                _fmemcpy (Dest+176, (Tiles[viewport[CountX][CountY]]->pixels) + 16, 4);
+                _fmemcpy (Dest+220, (Tiles[viewport[CountX][CountY]]->pixels) + 20, 4);
+                _fmemcpy (Dest+264, (Tiles[viewport[CountX][CountY]]->pixels) + 24, 4);
+                _fmemcpy (Dest+308, (Tiles[viewport[CountX][CountY]]->pixels) + 28, 4);
+                _fmemcpy (Dest+352, (Tiles[viewport[CountX][CountY]]->pixels) + 32, 4);
+                _fmemcpy (Dest+396, (Tiles[viewport[CountX][CountY]]->pixels) + 36, 4);
+                _fmemcpy (Dest+440, (Tiles[viewport[CountX][CountY]]->pixels) + 40, 4);
+                _fmemcpy (Dest+484, (Tiles[viewport[CountX][CountY]]->pixels) + 44, 4);
+                _fmemcpy (Dest+528, (Tiles[viewport[CountX][CountY]]->pixels) + 48, 4);
+                _fmemcpy (Dest+572, (Tiles[viewport[CountX][CountY]]->pixels) + 52, 4);
+                _fmemcpy (Dest+616, (Tiles[viewport[CountX][CountY]]->pixels) + 56, 4);
+                _fmemcpy (Dest+660, (Tiles[viewport[CountX][CountY]]->pixels) + 60, 4);
             }
-            ScreenY += 16;
+            Dest += 4;
         }
-        ScreenX += 16;
+        Dest += 660;
+        // initialize source pointers for each row, then increment
+        // for (CountHeight = 0; CountHeight < 16; CountHeight++) {
+        //     _fmemcpy (Dest, Tiles[viewport[0][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[1][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[2][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[3][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[4][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[5][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[6][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[7][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[8][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[9][CountY]]->pixels, 4);
+        //     Dest += 4;
+        //     _fmemcpy (Dest, Tiles[viewport[10][CountY]]->pixels, 4);
+        //     Dest += 4;
+        // }
     }
-    if(!Combat.Active && DoUpdate && (viewport[5][4] != HERO_TILE) && !Hero.InShip) {
-        bit_put(ViewportBuffer, Tiles[CurrentTiles[HeroTile]], 80, 64, DRAW_PSET);
-    }
-
-    if (Game.DoInvert) {
+    if (Game.FlashTimer) {
         invert_viewport();
     }
-
     scr_put(MyScreen, ViewportBuffer, 4, 4, DRAW_PSET);
 }
 
@@ -2000,10 +2169,16 @@ void CheckMoveHero() {
         Game.Turns++;
     }
 
-    if (Hero.InShip && MovedDirection == Game.Wind) {
-        Blocked = 1;
-        Hero.X = Hero.PrevX;
-        Hero.Y = Hero.PrevY;
+    if (Hero.InShip && (MovedDirection == Game.Wind) &&
+     (Tile == WATER_TILE)) {
+        if (Game.Turns&3) {
+            Hero.X = Hero.PrevX;
+            Hero.Y = Hero.PrevY;
+            print_line(MW_X, MW_Y+30, 0, "Slow progress!");
+            Flags.MessageActive = 1;
+            SaveKey = 0;
+            return;
+        }
     }
 
     if(Blocked) {
@@ -2153,7 +2328,7 @@ void do_pass() {
     Game.PrevTurns = Game.Turns;
     Game.Turns++;
     if (Combat.Active) {
-        Combat.Timer = 8;
+        Combat.Timer = 4;
         advance_combat_state();
     } else {
         Flags.Moved = 1;
@@ -2224,6 +2399,7 @@ uint8_t dungeon_triggers() {
                     break;
             }
             print_line(MW_X, MW_Y+30, 0, "Find the dungeon exit.");
+            draw_stats(1);
             Flags.MessageActive = 1;
             break;
         case DUNGEON_TRAP:
@@ -2242,7 +2418,7 @@ uint8_t dungeon_triggers() {
                 case 1: // replentish magic energy
                     print_line(MW_X, MW_Y+30, 0, "You feel energized!");
                     Hero.SP = Hero.MSP;
-                    draw_stats();
+                    draw_sp();
                     break;
                 case 2: // light energy
                     if(!Dungeon.Light) {
@@ -2261,7 +2437,7 @@ uint8_t dungeon_triggers() {
                 case 3: // drain energy
                     print_line(MW_X, MW_Y+30, 0, "You feel drained.");
                     Hero.SP = 0;
-                    draw_stats();
+                    draw_sp();
                     break;
             }
             play_sound(ENERGY_SOUND);
@@ -2319,7 +2495,7 @@ uint8_t dungeon_triggers() {
             play_sound(HIT_SOUND);
             Flags.MessageActive = 1;
             Dungeon.Level--;
-            draw_stats();
+            draw_stats(0);
             break;
         case DUNGEON_DOOR:
         case DUNGEON_FAKE_WALL:
@@ -2406,14 +2582,15 @@ void do_dungeon_trap() {
             if(Count >= Hero.HP) {
                 Hero.HP = 0;
                 print_line(MW_X+200, MW_Y+30, 0, "You die!");
-                do_death();
+                Hero.Status = STATUS_DEAD;
+                Game.Pause = 10;
+                draw_stats(0);
                 return;
             }
             Hero.HP -= Count;
-            draw_stats();
         }
         play_sound(HIT_SOUND);
-        draw_stats();
+        draw_stats(0);
     } else {
         print_line(MW_X, MW_Y+30, 0, "A trap! But you evade it.");
         play_sound(MISS_SOUND);
@@ -2437,7 +2614,6 @@ void do_death() {
     load_map(Hero.CurrentMap);
     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_HAVE_BEEN_RESTORED]);
     Flags.MessageActive = 1;
-    draw_stats();
     if (Flags.InDungeon) {
         exit_dungeon();
     } else {
@@ -2482,7 +2658,7 @@ void dungeon_ascend() {
 
     if (Dungeon.Level < 7) {
         Dungeon.Level++;
-        draw_stats();
+        draw_stats(0);
         if (Dungeon.Level < 7) {
             DestTile = CurrentMap[(Dungeon.Y * DUNGEON_WIDTH) +
             Dungeon.X + (Dungeon.Level * 256)];
@@ -2548,7 +2724,7 @@ void dungeon_descend() {
 
     if(Dungeon.Level) {
         Dungeon.Level--;
-        draw_stats();
+        draw_stats(0);
         if (Dungeon.Level) {
             DestTile = CurrentMap[(Dungeon.Y * DUNGEON_WIDTH) +
              Dungeon.X + (Dungeon.Level * 256)];
@@ -2574,19 +2750,19 @@ void dungeon_drink() {
         case 1: // Healing water
             print_line(MW_X, MW_Y+30, 0, "You feel fully healed!");
             Hero.HP = Hero.MHP;
-            draw_stats();
+            draw_hp();
             play_sound(HEAL_SOUND);
             break;
         case 2: // Curing water
             print_line(MW_X, MW_Y+30, 0, "You feel purified!");
             Hero.Status = STATUS_GOOD;
-            draw_stats();
+            draw_stats(0);
             play_sound(HEAL_SOUND);
             break;
         case 3: // Poisoned water
             print_line(MW_X, MW_Y+30, 0, "The water is poisoned!");
             Hero.Status = STATUS_POISONED;
-            draw_stats();
+            draw_stats(0);
             play_sound(HIT_SOUND);
             break;
     }
@@ -2614,20 +2790,20 @@ void clear_dungeon_screen() {
 }
 
 void exit_dungeon() {
-    clear_dungeon_screen();
+    clear_view();
+    display_map_alt();
     Flags.InDungeon = 0;
     load_map(Hero.CurrentMap);
     if(!Flags.Composite) {
         Game.CurrentPalette = DEFAULT_PALETTE;
     }
     save_game();
-    draw_stats();
 }
 
 void check_change_wind() {
     if (Hero.CurrentMap && (Game.Wind != 4)) {
         Game.Wind = 4;
-        print_line_formatted(SW_X, SW_Y+130, 0, "Wind: %s    ", Wind[Game.Wind]);
+        print_line_formatted(SW_X+48, SW_Y+130, 0, "%s    ", Wind[Game.Wind]);
         return;
     }
 
@@ -2645,7 +2821,7 @@ void check_change_wind() {
         Game.Wind = (rand()&3);
     }
 
-    print_line_formatted(SW_X, SW_Y+130, 0, "Wind: %s    ", Wind[Game.Wind]);
+    print_line_formatted(SW_X+48, SW_Y+130, 0, "%s    ", Wind[Game.Wind]);
 }
 
 int check_triggers() {
@@ -2841,7 +3017,9 @@ void load_dungeon(int DungeonMap) {
 
     clear_view();
     invalidate_view();
-    display_map();
+    clear_stat_window();
+    display_map_alt();
+    save_game();
     Flags.InDungeon = 1;
     Flags.WeaponCorroded = 0;
     Dungeon.Level = 0;
@@ -2898,6 +3076,7 @@ void load_map(uint8_t MapNum) {
         }
 
         fclose(CurrentMapFile);
+        draw_stats(1);
         return;
     }
 
@@ -2931,6 +3110,8 @@ void load_map(uint8_t MapNum) {
     }
     Game.PrevTurns = Game.Turns;
     Game.Turns++;
+    clear_stat_window();
+    draw_stats(1);
 }
 
 void move_ship(short NewX, short NewY, uint8_t Delete) {
@@ -3004,12 +3185,12 @@ void print_line(int x, int y, uint8_t Invert, const char *message) {
 }
 
 void activate_divination() {
-    print_line(MW_X, MW_Y+30, 0, "Magical sight activated!");
+    print_line(MW_X, MW_Y+30, 0, "Magical sight activated! >>");
     Game.CurrentPalette = MAGICAL_PALETTE;
     Flags.DivinationActive = 1;
     CurrentDTiles = (uint8_t *)DTilesDivination;
     invalidate_view();
-    Flags.MessageActive = 1;
+    Game.Pause = 0xFF;
 }
 
 void cancel_divination() {
@@ -3020,17 +3201,21 @@ void cancel_divination() {
 }
 
 void clear_text_window() {
-    int CountY;
-
-    for(CountY = MW_Y; CountY < MW_Y + 40; CountY += 8) {
-        scr_put(MyScreen, ClearText, MW_X, CountY, DRAW_PSET);
-    }
-
+    scr_ink (MyScreen, 0);
+    scr_box (MyScreen, MW_X, MW_Y, MESSAGE_WINDOW_WIDTH, MESSAGE_WINDOW_HEIGHT);
+ 
     if (Flags.DivinationActive) {
         cancel_divination();
     }
     Flags.MessageActive = 0;
     SaveKey = 0;
+}
+
+void clear_stat_window() {
+    int CountY;
+
+    scr_ink (MyScreen, 0);
+    scr_box (MyScreen, SW_X, SW_Y, STATUS_WINDOW_WIDTH, STATUS_WINDOW_HEIGHT);
 }
 
 
@@ -3369,9 +3554,10 @@ void do_rest_yes() {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__RESTED]);
         Hero.Food -= 1;
         Hero.HP = Hero.MHP;
-        Hero.Y++;
-        draw_stats();
+        Hero.SP = Hero.MSP;
+        draw_stats(0);
     }
+    Hero.Y++;
     save_game();
 }
 
@@ -3432,8 +3618,6 @@ void load_game() {
         Game.CurrentPalette = DUNGEON_PALETTE;
     }
     Game.Wind = 4;
-    Tiles[4] = AltTiles[AltWall[Hero.CurrentMap]];
-    Tiles[5] = AltTiles[AltWallSecret[Hero.CurrentMap]];
 }
 
 void check_update_menu() {
@@ -3592,7 +3776,7 @@ void queen_talk() {
             flash_effect();
             print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_ARE_NOW_GREATER]);
             Hero.XP -= 128;
-            draw_stats();
+            draw_stats(0);
         }
     } else {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__GO_AND_EXPERIENCE_MORE]);
@@ -3819,7 +4003,7 @@ void do_buy_yes() {
     clear_text_window();
     print_line(MW_X, MW_Y, 1, Messages[STATUS__THE_MERCHANT_SAYS]);  
     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__THANK_YOU_COME_AGAIN]);
-    draw_stats();
+    draw_stats(0);
 }
 
 void check_gain_fire_ritual() {
@@ -3832,7 +4016,6 @@ void check_gain_fire_ritual() {
     Menu.MarkerPos[0] = 0;
     Menu.Selection = 0;
     Menu.Actions[0] = fire_ritual_function;
-    SaveKey = 0;
 }
 
 void check_gain_dragon_armor() {
@@ -3864,20 +4047,31 @@ void gain_dragon_armor() {
     print_line(MW_X, MW_Y+30, 1, "You gain dragon armor!");
     Hero.Armor = ARMOR_DRAGON;
     Flags.MessageActive = 1;
-    draw_stats();
+    draw_stats(0);
     save_game();
 }
 
 void check_find_fire_acorns() {
-    if (!Hero.NeedAcorns) {
+    if (!Hero.NeedAcorns || Hero.FireAcorns) {
         return;
     }
-    print_line(MW_X, MW_Y+30, 1, "You find fire acorns!");
+    print_line(MW_X, MW_Y+30, 1, "You find fire acorns! >>");
     Hero.FireAcorns = 1;
-    print_line(MW_X+176, MW_Y+30, 1, ">>");
     save_game();
-    Game.Pause = 0xFF; 
+    Flags.MessageActive = 1; 
 }
+
+void check_find_spirit_stone() {
+    if (!Hero.NeedSpiritStone || Hero.SpiritStone) {
+        return;
+    }
+    print_line(MW_X, MW_Y+30, 1, "You find a spirit stone! >>");
+    Hero.SpiritStone = 1;
+    save_game();
+    Flags.MessageActive = 1; 
+}
+
+
 
 void check_gain_homing_gem() {
     print_line(MW_X, MW_Y, 1, Messages[STATUS__WIXA_THE_ALCHEMIST]);
@@ -4058,6 +4252,101 @@ void password_result() {
     Flags.MessageActive = 1;
 }
 
+void circle_control_function() {
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__YOU_SAY]);
+    if (Hero.KnowMantra) {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__ANMARBOKFILOT]);
+    } else {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__GO_AWAY_FORCE_FIELD]);
+    }
+    Menu.Active = 1;
+    Menu.Choices = 1;
+    Menu.MarkerPos[0] = 0;
+    Menu.Selection = 0;
+    Menu.Actions[0] = circle_control_result;   
+}
+
+void circle_control_result() {
+    if (Hero.KnowMantra) {
+        print_line(MW_X, MW_Y+30, 0, "The force field is deactivated!");
+        flash_effect();
+        play_sound(CAST_SOUND);
+        Flags.MantraSpoken = 1;
+    } else {
+        print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
+    }
+    Flags.MessageActive = 1;
+}
+
+void hermit_talk() {
+    const char *TmpLine;
+
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__MYSTERIOUS_HERMIT]);
+    if(Hero.SpellsKnown&TELEPORT_SPELL) {
+        TmpLine = Messages[MESSAGE__FIND_FULK];
+    } else {
+        TmpLine = Messages[MESSAGE__MYSTERIOUS_HERMIT_TALK];
+    }
+
+    print_pager_line(TmpLine);
+    Flags.MessageActive = 1;
+}
+
+void fulk_talk() {
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__FULK_THE_DEPARTED]);
+    print_line(MW_X, MW_Y+20, 0, Messages[MESSAGE__FULK_THE_DEPARTED]);
+    print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__ANMARBOKFILOT]);
+    Hero.KnowMantra = 1;
+    Flags.MessageActive = 1;
+}
+
+void evil_place_function() {
+    const char *TmpLine = Messages[NPCText[Game.NPC]];
+
+    if ((Game.NPC == PROSPECTOR_DIVANA) || (Game.NPC == HILDA_THE_EXPLORER)
+     || (Game.NPC == UMFREY_THE_SPY) || (Game.NPC == MAGE_MARY_ANN)) {
+        if (Flags.Disguised) {
+            print_line(MW_X, MW_Y, 1, Messages[STATUS__THE_PRISONER_SAYS]);
+            TmpLine = Messages[MESSAGE__GO_AWAY];
+        } else {
+            print_line(MW_X, MW_Y, 1, Messages[NPCName[Game.NPC]]);
+            TmpLine = Messages[NPCText[Game.NPC]];
+        }
+        print_pager_line(TmpLine);
+        Flags.MessageActive = 1;
+        return;
+    }
+    
+    if (!Flags.Disguised) {
+        if (Hero.CurrentMap == DUSKGROVE_MAP) {
+            print_line(MW_X, MW_Y, 1, Messages[STATUS__THE_OGRE_SAYS]);
+        } else {
+            print_line(MW_X, MW_Y, 1, Messages[STATUS__THE_CREATURE_SAYS]);
+        }
+        TmpLine = Messages[MESSAGE__A_HUMAN_ATTACK];
+    } else {
+        print_line(MW_X, MW_Y, 1, Messages[NPCName[Game.NPC]]);
+        TmpLine = Messages[NPCText[Game.NPC]];
+    }
+
+    print_pager_line(TmpLine);
+    Flags.MessageActive = 1;
+}
+
+void thana_talk() {
+    const char *TmpLine;
+
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__THANA_THE_USURPER]);
+    if (Flags.MantraSpoken) {
+        TmpLine = Messages[MESSAGE__THANA_SECONDARY_DIALOG];
+    } else {
+        TmpLine = Messages[MESSAGE__FOOL_YOU_CANT_HARM_ME];
+    }
+
+    print_pager_line(TmpLine);
+    Flags.MessageActive = 1;
+}
+
 void fire_ritual_function() {
     if (Hero.FireRitual) {
         print_line(MW_X, MW_Y+30, 1, "You already learned it.");  
@@ -4166,7 +4455,7 @@ void advanced_trainer_yes() {
     Hero.HP = Hero.MHP;
     Hero.SP = Hero.MSP;
     Hero.XP -= 128;
-    draw_stats();
+    draw_stats(0);
     save_game();
 }
 
@@ -4198,7 +4487,10 @@ void do_bartender_yes() {
     Hero.Gold -= 5;
     TmpLine = Messages[NPCText[Game.NPC]];
     print_pager_line(TmpLine);
-    draw_stats();
+    if (Hero.CurrentMap == THANAS_HOLD_MAP) {
+        Hero.KnowPassword = 1;
+    }
+    draw_stats(0);
 }
 
 void do_bartender_no() {
@@ -4293,6 +4585,24 @@ void tragut_function() {
         TmpLine = Messages[MESSAGE__DESERTER_TRAGUT_TALK];
         print_pager_line(TmpLine);
     }
+    Flags.MessageActive = 1;
+}
+
+void stoneheart_talk() {
+    const char *TmpLine;
+
+    print_line(MW_X, MW_Y, 1, Messages[NPCName[Game.NPC]]);
+
+    if (Flags.Disguised) {
+        if (Game.NPC == CLAN_CHIEF_TRAVOK) {
+            TmpLine = Messages[MESSAGE__GRUNT_BOKUR_TALK];
+        } else {
+            TmpLine = Messages[MESSAGE__SPIRIT_STONE_CLUE];
+        }
+    } else {
+        TmpLine = Messages[NPCText[Game.NPC]];
+    }
+    print_pager_line(TmpLine);
     Flags.MessageActive = 1;
 }
 
@@ -4454,8 +4764,40 @@ void do_yes_no_menu() {
     Menu.Selection = 0;
 }
 
-void do_stats() {
-    oh_shit("do_stats");
+void do_inventory() {
+    clear_stat_window();
+    Game.Pause = 0xFF;
+    print_line_formatted(SW_X, SW_Y, 1,    "%-11s (%c)", Hero.Name, Gender[Hero.Gender][0]);
+    print_line_formatted(SW_X, SW_Y+10, 0, "Armor:%9s", Armor[Hero.Armor]);
+    print_line_formatted(SW_X, SW_Y+20, 0, "Melee:%9s", Melee[Hero.Melee]);
+    print_line_formatted(SW_X, SW_Y+30, 0, "Ranged:%8s", Ranged[Hero.Ranged]);
+    if (Hero.HealPotions) {
+        print_line_formatted(SW_X, SW_Y+40, 0, "Heal Potions: %d", Hero.HealPotions);
+    }
+    if (Hero.CurePotions) {
+        print_line_formatted(SW_X, SW_Y+50, 0, "Cure Potions: %d", Hero.CurePotions);
+    }
+    if (Hero.FireAcorns) {
+        print_line(SW_X, SW_Y+60, 0, "Fire Acorns");
+    }
+    if (Hero.SpiritStone) {
+        print_line(SW_X, SW_Y+70, 0, "Spirit Stone");
+    }
+    if (Hero.HomingGem) {
+        print_line(SW_X, SW_Y+80, 0, "Homing Gem");
+    }
+    if (Hero.DisguiseDust) {
+        print_line(SW_X, SW_Y+90, 0, "Disguise Dust");
+    }
+    if (Hero.FireRitual || Hero.EnergyRitual) {
+        print_line(SW_X, SW_Y+110, 1, "You Know:");
+        if (Hero.FireRitual) {
+            print_line(SW_X, SW_Y+120, 0, "Fire Ritual");
+        }
+        if (Hero.EnergyRitual) {
+            print_line(SW_X, SW_Y+130, 0, "Energy Ritual");
+        }
+    }
 }
 
 void do_heal_potion() {
@@ -4465,12 +4807,12 @@ void do_heal_potion() {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__HEALED]);
         play_sound(HEAL_SOUND);
         Hero.HP = Hero.MHP;
-        draw_stats();
+        draw_hp();
     }
 
     Hero.HealPotions--;
     if (Combat.Active) {
-        Combat.Timer = 8;
+        Combat.Timer = 6;
         advance_combat_state();
     } else {
         Flags.MessageActive = 1;
@@ -4484,12 +4826,12 @@ void do_cure_potion() {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__CURED]);
         play_sound(HEAL_SOUND);
         Hero.Status = STATUS_GOOD;
-        draw_stats();
+        draw_stats(0);
     }
 
     Hero.CurePotions--;
     if (Combat.Active) {
-        Combat.Timer = 8;
+        Combat.Timer = 6;
         advance_combat_state();
     } else {
         Flags.MessageActive = 1;
@@ -4602,9 +4944,8 @@ void do_loot_yes() {
         if (gold) {
             play_sound(HEAL_SOUND);
         }
+        draw_stats(0);
     }
-
-    draw_stats();
     Flags.MessageActive = 1;
 }
 
@@ -4613,14 +4954,22 @@ void do_loot_no() {
 }
 
 void flash_effect() {
-    if (Flags.InDungeon) {
-        return;
-    }
+//    if (Flags.InDungeon) {
+//        return;
+//    }
     if(!Game.FlashTimer) {
         Game.FlashTimer = 8;
         Game.DoInvert = 1;
         play_sound(CAST_SOUND);
     } else {
+        if (Flags.Fast) {
+            if (!Flags.FastDelayed) {
+                Flags.FastDelayed = 1;
+                return;
+            } else {
+                Flags.FastDelayed = 0;
+            }
+        }
         Game.FlashTimer--;
         if(!Game.FlashTimer) {
             Game.DoInvert = 1;
@@ -4663,9 +5012,9 @@ void end_combat() {
     } else {
         if (Flags.InDungeon) {
             ArenaMap = (char *)Arena[DUNGEON_ARENA];
-            Game.CurrentPalette = DUNGEON_PALETTE;
             clear_view();
-            display_map();
+            display_map_alt();
+            Game.CurrentPalette = DUNGEON_PALETTE;
             for (Count = 0; Count < 2; Count++) {
                 if(Dungeon.Pillar[Count]) {
                     ArenaMap[Dungeon.Pillar[Count]] = DIRT_TILE;
@@ -4693,7 +5042,8 @@ void end_combat() {
         viewport_prev[Combat.DragonX][Combat.DragonY] = 0xFF;
     }
     Flags.Disguised = 0;
-    draw_stats();
+    clear_stat_window();
+    draw_stats(1);
 }
 
 void load_arena(int CurrentArena) {
@@ -4830,7 +5180,11 @@ void start_combat() {
 
     Combat.TeleportActive = 0;
 
-    if (Flags.InDungeon) {
+    if (Hero.CurrentMap == KEEP_OF_SHADOW_MAP) {
+        Combat.Arena = CASTLE_ARENA;
+    } else if ((Hero.CurrentMap == DUSKGROVE_MAP) || (Hero.CurrentMap == THANAS_HOLD_MAP)) {
+        Combat.Arena = CITY_ARENA;
+    } else if (Flags.InDungeon) {
         Combat.Arena = DUNGEON_ARENA;
         ArenaMap = (char *)Arena[DUNGEON_ARENA];
         for (Count = 0; Count < 2; Count++) {
@@ -4848,9 +5202,7 @@ void start_combat() {
                 Dungeon.Pillar[Count] = 0;
             }
         }
-        Game.CurrentPalette = DUNGEON_COMBAT_PALETTE;
         clear_dungeon_screen();
-        clear_view();
     } else {
         switch(CurrentTile) {
             case GRASS_TILE:
@@ -4887,6 +5239,13 @@ void start_combat() {
         }
     }
 
+    clear_view();
+    display_map_alt();
+    clear_text_window();
+    clear_stat_window();
+    if (Flags.InDungeon) {
+        Game.CurrentPalette = DUNGEON_COMBAT_PALETTE;
+    }
     play_music(COMBAT_START_MUSIC);
     Combat.Active = 1;
     Combat.Victory = 0;
@@ -4900,6 +5259,24 @@ void start_combat() {
     viewport[5][4] = 0;
     if ((Combat.Arena == BRIDGE_ARENA) || (Combat.Arena == LAVA_BRIDGE_ARENA)) {
         Combat.EnemyNumber = TROLL_ENEMY_NUMBER;
+    } else if (Combat.Arena == CASTLE_ARENA) {
+        if ((Hero.X < 11) && (Hero.Y > 24)) {
+            Combat.EnemyNumber = EARTH_SHADE_ENEMY_NUMBER;
+        } else if ((Hero.X < 11) && (Hero.Y < 7)) {
+            Combat.EnemyNumber = WATER_SHADE_ENEMY_NUMBER;
+        } else if ((Hero.X > 36) && (Hero.Y < 7)) {
+            Combat.EnemyNumber = FIRE_SHADE_ENEMY_NUMBER;
+        } else if ((Hero.X > 36) && (Hero.Y > 24)) {
+            Combat.EnemyNumber = AIR_SHADE_ENEMY_NUMBER;
+        } else {
+            Combat.EnemyNumber = DEMON_GUARD_ENEMY_NUMBER;
+        }
+    } else if (Combat.Arena == CITY_ARENA) {
+        if (Hero.CurrentMap == THANAS_HOLD_MAP) {
+            Combat.EnemyNumber = DEMON_GUARD_ENEMY_NUMBER;
+        } else {
+            Combat.EnemyNumber = OGRE_ENEMY_NUMBER;
+        }
     } else if (Combat.Arena == LAVA_ARENA) {
         Combat.EnemyNumber = SALAMANDER_ENEMY_NUMBER;
     } else if (Combat.Arena == DUNGEON_ARENA) {
@@ -4916,8 +5293,15 @@ void start_combat() {
     } else {
         Combat.EnemyNumber = (rand()&3) + Hero.Level;
     }
+    if (Flags.InDungeon && !Dungeon.Light) {
+        strncpy(Combat.EnemyName, "unseen foe", 12);
+        Combat.EnemyTile = DIRT_TILE;
+    } else {
+        strncpy(Combat.EnemyName, MonsterName[Combat.EnemyNumber], 12);
+        Combat.EnemyTile = EnemyToTile[Combat.EnemyNumber];
+    }
+    Combat.EnemyName[12] = '\0';
     Combat.EnemyTraits = EnemyTraits[Combat.EnemyNumber];
-    Combat.EnemyTile = EnemyToTile[Combat.EnemyNumber];
     Combat.EnemyPower = EnemyPower[Combat.EnemyNumber];
     Combat.EnemyAC = Combat.EnemyPower + 8;
     if (Combat.Arena == LAVA_BRIDGE_ARENA) {
@@ -4969,9 +5353,9 @@ void start_combat() {
             Combat.EnemyY[Count] = EnemyStartY[Count];
         }
     }
-    clear_text_window();
+    draw_stats(1);
     print_line(MW_X, MW_Y, 1, "Combat Begins!");
-    print_line_formatted(MW_X, MW_Y+30, 0, "You encounter %ss.", MonsterName[Combat.EnemyNumber]);
+    print_line_formatted(MW_X, MW_Y+30, 0, "You encounter %ss.", Combat.EnemyName);
 }
 
 void do_attack() {
@@ -5018,7 +5402,7 @@ void do_attack() {
     if((AttX < 0) || (AttX >= ARENA_WIDTH) || (AttY < 0) || (AttY >= ARENA_HEIGHT)) {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NO_ONE_IS_HERE]);
         play_sound(MISS_SOUND);
-        Combat.Timer = 8;
+        Combat.Timer = 6;
         advance_combat_state();
         return;
     }
@@ -5034,32 +5418,32 @@ void do_attack() {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NO_ONE_IS_HERE]);
         play_sound(MISS_SOUND);
         advance_combat_state();
-        Combat.Timer = 8;
+        Combat.Timer = 6;
         return;
     }
 
     HitRoll = (rand() & 15) + (Hero.Str / 5) + (Hero.Level / 2);
     if(HitRoll >= Combat.EnemyAC) {
-        print_line_formatted(MW_X, MW_Y+30, 0, "The %s is hit!", MonsterName[Combat.EnemyNumber]);
+        print_line_formatted(MW_X, MW_Y+30, 0, "The %s is hit!", Combat.EnemyName);
         play_sound(HIT_SOUND);
         if ((Combat.EnemyNumber == 30) && (Combat.State == 1)) { // slime
             if (Hero.Melee && (Hero.Melee < 5)) {
                 if (Flags.WeaponCorroded) {
                     print_line_formatted(MW_X, MW_Y+20, 1, "Your %s dissolves!", Melee[Hero.Melee]);
                     Hero.Melee = 0;
-                    draw_stats();
+                    draw_stats(0);
                 } else {
                     print_line_formatted(MW_X, MW_Y+20, 1, "Your %s is corroded!", Melee[Hero.Melee]);
                     Flags.WeaponCorroded = 1;
                 }
-                Combat.Timer = 8;
+                Combat.Timer = 10;
             }
         }
     } else {
         print_line(MW_X, MW_Y+30, 0, "Missed.");
         play_sound(MISS_SOUND);
         advance_combat_state();
-        Combat.Timer = 8;
+        Combat.Timer = 5;
         return;
     }
 
@@ -5078,7 +5462,7 @@ void do_attack() {
 }
 
 void damage_enemy(int Enemy, int Damage) {
-    int Pos = (strlen(MonsterName[Combat.EnemyNumber]) + 13) * 8;
+    int Pos = (strlen(Combat.EnemyName) + 13) * 8;
     uint8_t GrappleBroken = 0;
     
     if (!Damage) {
@@ -5128,7 +5512,7 @@ void do_ranged() {
     if(!Hero.Ranged && Combat.State == 1) {
         clear_text_window();
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NO_RANGED_WEAPON]);
-        Combat.Timer = 8;
+        Combat.Timer = 6;
         return;
     }
 
@@ -5178,7 +5562,7 @@ void update_missile() {
                 play_sound(MISS_SOUND);
             }
             Combat.MissileActive = 0;
-            Combat.Timer = 8;
+            Combat.Timer = 5;
             advance_combat_state();
         return;
         }
@@ -5193,12 +5577,12 @@ void update_missile() {
                         play_sound(HIT_SOUND);
                     }
                     Combat.MissileActive = 0;
-                    Combat.Timer = 8;
+                    Combat.Timer = 6;
                 } else {
                     clear_text_window();
                     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__MISSED]);
                     Combat.MissileActive = 0;
-                    Combat.Timer = 8;
+                    Combat.Timer = 6;
                     play_sound(MISS_SOUND);
                 }
 
@@ -5208,15 +5592,14 @@ void update_missile() {
                 if(Combat.HitRoll >= ((Hero.Level) + 6)) {
                     damage_dragon(Combat.MissileDamage);
                     Combat.MissileActive = 0;
-                    Combat.Timer = 8;
                     play_sound(HIT_SOUND);
                 } else {
                     clear_text_window();
                     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__MISSED]);
                     Combat.MissileActive = 0;
-                    Combat.Timer = 8;
                     play_sound(MISS_SOUND);
                 }
+                Combat.Timer = 6;
                 advance_combat_state();
                 return;
             } // else enemy shot passes through enemy
@@ -5225,7 +5608,7 @@ void update_missile() {
             // player/dragon missile hits monster
             if(TargetCreature > 2) {
                 if(Combat.HitRoll >= Combat.EnemyAC) {
-                    print_line_formatted(MW_X, MW_Y+30, 0, "The %s is hit!", MonsterName[Combat.EnemyNumber]);
+                    print_line_formatted(MW_X, MW_Y+30, 0, "The %s is hit!", Combat.EnemyName);
                     play_sound(HIT_SOUND);
                     if ((Combat.EnemyTraits&ENEMY_INCORPORAL) && Combat.MissileType == 0) {
                         Combat.MissileDamage = 0;
@@ -5237,7 +5620,7 @@ void update_missile() {
                     print_line(MW_X, MW_Y+30, 0, "Missed.");
                     play_sound(MISS_SOUND);
                     advance_combat_state();
-                    Combat.Timer = 8;
+                    Combat.Timer = 6;
                     Combat.MissileActive = 0;
                     return;
                 }
@@ -5281,7 +5664,7 @@ void update_missile() {
             play_sound(MISS_SOUND);
         }
         Combat.MissileActive = 0;
-        Combat.Timer = 8;
+        Combat.Timer = 6;
         advance_combat_state();
     }
 }
@@ -5324,8 +5707,9 @@ void damage_hero(int Damage) {
         Combat.Timer += 20;
         Hero.HP = 0;
         Combat.State = 0xFF;
+        Hero.Status = STATUS_DEAD;
     }
-    draw_stats();
+    draw_stats(0);
 }
 
 void damage_dragon(int Damage) {
@@ -5363,7 +5747,7 @@ void damage_dragon(int Damage) {
         Combat.Timer += 10;
         Hero.DragonHP = 0;
     }
-    draw_stats();
+    draw_stats(0);
 }
 
 //void do_combat_use() {
@@ -5377,12 +5761,12 @@ void do_combat_move(int Direction) {
     if (Combat.EnemyTraits&ENEMY_GRAPPLE) {
         if ((Combat.State == 1) && (Combat.HeroGrappled)) {
             print_line(MW_X, MW_Y+30, 0, "You are grappled!");
-            Combat.Timer = 8;
+            Combat.Timer = 10;
             advance_combat_state();
             return;
         } else if ((Combat.State == 2) && (Combat.DragonGrappled)) {
             print_line(MW_X, MW_Y+30, 0, "Dragon is grappled!");
-            Combat.Timer = 8;
+            Combat.Timer = 10;
             advance_combat_state();
             return;
         }
@@ -5422,7 +5806,7 @@ void do_combat_move(int Direction) {
     if(Blocked) {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_CANT_GO_THAT_WAY]);
         play_sound(BLOCKED_SOUND);
-        Combat.Timer = 8;
+        Combat.Timer = 5;
         advance_combat_state();
         return;
     }
@@ -5439,7 +5823,7 @@ void do_combat_move(int Direction) {
     Game.PrevTurns = Game.Turns;
     Game.Turns++;
     advance_combat_state();
-    Combat.Timer = 8;
+    Combat.Timer = 4;
 }
 
 
@@ -5449,8 +5833,7 @@ void do_dragon_heal() {
     clear_text_window();
     if(Combat.HealUsed) {
         print_line(MW_X, MW_Y, 0, Messages[MESSAGE__ALREADY_HEALED]);
-        Combat.Timer = 8;
-        draw_stats();
+        Combat.Timer = 10;
         advance_combat_state();
         return;
     }
@@ -5459,7 +5842,7 @@ void do_dragon_heal() {
 
     if((Hero.HP == Hero.MHP) && (Hero.DragonHP == Hero.MHP)) {
         print_line(MW_X, MW_Y, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
-        Combat.Timer = 8;
+        Combat.Timer = 10;
         advance_combat_state();
         return;
     }
@@ -5476,8 +5859,8 @@ void do_dragon_heal() {
 
     play_sound(HEAL_SOUND);
     print_line(MW_X, MW_Y, 0, Messages[MESSAGE__PARTY_HEALED]);
-    Combat.Timer = 8;
-    draw_stats();
+    Combat.Timer = 6;
+    draw_stats(0);
     advance_combat_state();
 }
 
@@ -5496,10 +5879,6 @@ void advance_combat_state() {
     Combat.State++;
     if(Combat.State > 6) {
         Combat.State = 1;
-        if(Hero.SP < Hero.MSP) {
-            Hero.SP++;
-            draw_stats();
-        }
     }
     if((Combat.State == 2) && !Hero.DragonHP) {
         Combat.State++;
@@ -5512,6 +5891,10 @@ void advance_combat_state() {
                 break;
             }
         }
+    }
+    if((Combat.State == 1) && (Hero.SP < Hero.MSP)) {
+        Hero.SP++;
+        draw_sp();
     }
 }
 
@@ -5620,7 +6003,7 @@ void do_enemy_turn(int Enemy) {
 
     clear_text_window();
     print_line_formatted(MW_X, MW_Y, 1, "%s (%d):",
-     MonsterName[Combat.EnemyNumber], Enemy + 1);
+     Combat.EnemyName, Enemy + 1);
     
     // Monster respawn
     if ((Combat.EnemyTraits&ENEMY_RESPAWN) && !(rand()&7)) {
@@ -5687,7 +6070,7 @@ void do_enemy_turn(int Enemy) {
             play_sound(WIND_SOUND);
             Combat.EnemyX[Enemy] = TempX;
             Combat.EnemyY[Enemy] = TempY;
-            Combat.Timer = 8;
+            Combat.Timer = 6;
             advance_combat_state();
             return;
         }
@@ -5742,18 +6125,18 @@ void do_enemy_turn(int Enemy) {
         if((((rand()&15) + Combat.EnemyPower) >= ((Hero.Armor * 2) + 6))
          || (Combat.HeroGrappled && (Combat.HeroGrappleEnemy == Enemy))) {
             Damage = (rand()&enemy_damage[Combat.EnemyPower]) + Combat.EnemyPower;
-            if(EnemyTraits[Combat.EnemyNumber]&ENEMY_STRONG) {
+            if(Combat.EnemyTraits&ENEMY_STRONG) {
                 Damage += 2;
             }
-            if(EnemyTraits[Combat.EnemyNumber]&ENEMY_GRAPPLE) {
+            if(Combat.EnemyTraits&ENEMY_GRAPPLE) {
                 Damage += 256;  // sentinel for grappled check
             }
             damage_hero(Damage);
-            Combat.Timer = 8;
+            Combat.Timer = 6;
             play_sound(HIT_SOUND);
         } else {
             print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__MISSED]);
-            Combat.Timer = 8;
+            Combat.Timer = 6;
             play_sound(MISS_SOUND);
         }
         advance_combat_state();
@@ -5764,18 +6147,18 @@ void do_enemy_turn(int Enemy) {
         if((((rand()&15) + Combat.EnemyPower) >= (Hero.Level + 6))
          || (Combat.DragonGrappled && (Combat.DragonGrappleEnemy == Enemy))) {
             Damage = (rand()&enemy_damage[Combat.EnemyPower]) + Combat.EnemyPower;
-            if(EnemyTraits[Combat.EnemyNumber]&ENEMY_STRONG) {
+            if(Combat.EnemyTraits&ENEMY_STRONG) {
                 Damage += 2;
             }
-            if(EnemyTraits[Combat.EnemyNumber]&ENEMY_GRAPPLE) {
+            if(Combat.EnemyTraits&ENEMY_GRAPPLE) {
                 Damage += 256;  // sentinel for grappled check
             }
             damage_dragon(Damage);
-            Combat.Timer = 8;
+            Combat.Timer = 6;
             play_sound(HIT_SOUND);
         } else {
             print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__MISSED]);
-            Combat.Timer = 8;
+            Combat.Timer = 6;
             play_sound(MISS_SOUND);
         }
         advance_combat_state();
@@ -6008,7 +6391,7 @@ void do_enemy_turn(int Enemy) {
                     Combat.EnemyX[Enemy] = NewX;
                     Combat.EnemyY[Enemy] = NewY;
                     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__MOVED]);
-                    Combat.Timer = 5;
+                    Combat.Timer = 4;
                     advance_combat_state();
                     return;
                 }
@@ -6022,7 +6405,7 @@ void do_enemy_turn(int Enemy) {
     }
 
     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__PASS]);
-    Combat.Timer = 5;
+    Combat.Timer = 4;
     advance_combat_state();
 }
 
@@ -6106,7 +6489,7 @@ void do_cast_swap() {
     Combat.HeroY = Combat.DragonY;
     Combat.DragonX = TmpPosX;
     Combat.DragonY = TmpPosY;
-    Combat.Timer = 8;
+    Combat.Timer = 10;
     advance_combat_state();
 }
 
@@ -6147,6 +6530,21 @@ void do_cast_sun() {
         }
     }
 
+    if (Flags.InDungeon && !Dungeon.Light && Combat.Active) {
+        strncpy(Combat.EnemyName, MonsterName[Combat.EnemyNumber], 12);
+        Combat.EnemyTile = EnemyToTile[Combat.EnemyNumber];
+        if (Combat.EnemyNumber == ICE_DEVIL_ENEMY_NUMBER) {
+            print_line_formatted(MW_X, MW_Y+30, 0, "You see %ss! (sorta)", Combat.EnemyName);
+        } else {
+            print_line_formatted(MW_X, MW_Y+30, 0, "You see %ss!", Combat.EnemyName);
+        }
+        Dungeon.Light = 64;
+        Combat.Timer = 10;
+        advance_combat_state();
+        return;
+    }
+
+
     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
     Menu.Active = 0;
     Flags.MessageActive = 1;
@@ -6170,7 +6568,7 @@ void do_cast_heal() {
         }
         flash_effect();
     } else {
-        Combat.Timer = 8;
+        Combat.Timer = 6;
         advance_combat_state();
     }
 
@@ -6181,7 +6579,7 @@ void do_cast_heal() {
     //         if (Hero.HP > Hero.MHP) {
     //             Hero.HP = Hero.MHP;
     //         }
-    //         draw_stats();
+    //         draw_stats(0);
     //     } else { 
     //         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
     //     }
@@ -6193,7 +6591,6 @@ void do_cast_heal() {
     if(Hero.HP == Hero.MHP) {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
         play_sound(CAST_SOUND);
-        draw_stats();
         return;
     }
     Hero.HP += (Hero.Int / 5) + (Hero.Level * 2);
@@ -6203,9 +6600,9 @@ void do_cast_heal() {
 
     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__HEALED]);
     play_sound(HEAL_SOUND);
-    draw_stats();
+    draw_hp();
     if(Combat.Active) {
-        Combat.Timer = 8;
+        Combat.Timer = 6;
         advance_combat_state();
     }
 }
@@ -6327,7 +6724,7 @@ int deduct_spell_points(int Points) {
     }
 
     Hero.SP -= Points;
-    draw_stats();
+    draw_sp();
     return 1;
 }
 
@@ -6396,7 +6793,7 @@ void combat_teleport() {
         print_line(MW_X, MW_Y+30, 0, "Failed!");
     }
     Combat.TeleportActive = 0;
-    Combat.Timer = 8;
+    Combat.Timer = 10;
     advance_combat_state();
 }
 
@@ -6404,7 +6801,7 @@ void CheckEncountersAndStatus() {
     uint8_t CurrentTile = CurrentMap[(Game.MapWidth * Hero.Y) + Hero.X];
     Flags.Moved = 0;
 
-    if (Game.Pause || Flags.MessageActive) {
+    if (Game.Pause || Flags.MessageActive || Menu.Active) {
         return;
     }
 
@@ -6413,17 +6810,34 @@ void CheckEncountersAndStatus() {
             return;
         }
     } else {
+        if ((Hero.SP < Hero.MSP) && (CurrentTile == FORCE_FIELD_TILE)) {
+            Hero.SP = Hero.MSP;
+            draw_sp();
+        }
         if (!Hero.InShip && (CurrentTile == SHIP_TILE)) {
             Hero.InShip = 1;
             print_line(MW_X, MW_Y+30, 0, "You board the ship.");
             Hero.PrevX = Hero.X;
             Hero.PrevY = Hero.Y;
-            display_map();
+            display_map_alt();
             Flags.MessageActive = 1;
             return;
         }
         if (check_triggers()) {
             return;
+        }
+        if (((Hero.CurrentMap == DUSKGROVE_MAP) ||
+         (Hero.CurrentMap == THANAS_HOLD_MAP) ||
+         (Hero.CurrentMap == KEEP_OF_SHADOW_MAP)) &&
+         !Flags.Disguised) {
+            if (!((Hero.X + Hero.Y)&7)) {
+                start_combat();
+                return;
+            } else if ((!((Hero.X + Hero.Y)&7)) &&
+             (Hero.CurrentMap == KEEP_OF_SHADOW_MAP)) {
+                start_combat();
+                return;
+            }
         }
     }
 
@@ -6445,22 +6859,24 @@ void CheckEncountersAndStatus() {
             Hero.HP -= 20;
             print_line(MW_X, MW_Y+30, 0, "Lava!");
             print_line(MW_X+48, MW_Y+30, 1, ">>");
-            draw_stats();
+            draw_hp();
             Game.Pause = 0xFF;
         } else {
             print_line(MW_X, MW_Y+30, 0, "Lava! You die!");
             Hero.HP = 0;
+            Hero.Status = STATUS_DEAD;
             Game.Pause = 10;
-            draw_stats();
+            draw_stats(0);
         }
         return;
     }
 
     if (Hero.SP < Hero.MSP) {
         Hero.SP++;
+        draw_sp();
     }
 
-    if ((Game.Turns&7) != 4) {
+    if (Game.Turns&3) {
         return;
     }
 
@@ -6468,35 +6884,32 @@ void CheckEncountersAndStatus() {
     // is a message. If not, check for outdoor/dungeon
     // encounter.
 
-    if (Game.Turns&16) {
+    if (!(Game.Turns&15)) {
         if ((Hero.Status) == STATUS_GOOD && Hero.Food && (Hero.HP < Hero.MHP)) {
             Hero.HP++;
+            draw_hp();
+        } else if (Hero.Status == STATUS_POISONED) {
+            play_sound(HIT_SOUND);
+            flash_effect();
+            
+            if (Hero.HP > 2) {
+                Hero.HP -= 2;
+                print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__POISONED]);
+                print_line(MW_X+80, MW_Y+30, 1, ">>");
+                Game.Pause = 0xFF;
+            } else {
+                Hero.HP = 0;
+                print_line_formatted(MW_X, MW_Y+30, 0, "%s You die!", Messages[MESSAGE__POISONED]);
+                Game.Pause = 10;
+                Hero.Status = STATUS_DEAD;
+            }
+            draw_stats(0);
+            return;
         }
     }
 
-    if (Hero.Status == STATUS_POISONED) {
-        play_sound(HIT_SOUND);
-        flash_effect();
-        
-        if (Hero.HP > 2) {
-            Hero.HP -= 2;
-            print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__POISONED]);
-            print_line(MW_X+80, MW_Y+30, 1, ">>");
-            Game.Pause = 0xFF;
-        } else {
-            Hero.HP = 0;
-            print_line_formatted(MW_X, MW_Y+30, 0, "%s You die!", Messages[MESSAGE__POISONED]);
-            Game.Pause = 10;
-        }
 
-        if (Hero.Food && (Game.Turns&32)) {
-            Hero.Food--;
-        }
-        draw_stats();
-        return;
-    }
-
-    if (Game.Turns&32) {
+    if (!(Game.Turns&15)) {
         if (Hero.Food) {
             Hero.Food--;
         } else {
@@ -6511,23 +6924,20 @@ void CheckEncountersAndStatus() {
                 Hero.HP = 0;
                 print_line_formatted(MW_X, MW_Y+30, 0, "%s You die!", Messages[MESSAGE__OUT_OF_FOOD]);
                 Game.Pause = 10;
+                Hero.Status = STATUS_DEAD;
             }
 
-            draw_stats();
+            draw_stats(0);
             return;
         }
     }
     
-    if (Menu.Active || (rand()&3)) {
-        return;
-    }
-
     if (Flags.InDungeon) {
-        if(rand()&3) {
+        if (!(rand()&7)) {
             start_combat();
         }
     } else {
-        if(rand()&1) {
+        if (!(rand()&15)) {
             start_combat();
         }
     }
@@ -6557,6 +6967,7 @@ int main(int argc, char *argv[]) {
     FILE *CurrentFontFile;
     int CurrentFrame = 3;
     time_t t;
+    char Buf[BUFSIZ];
 
     srand((unsigned) time(&t));
     prev_int_1c = _dos_getvect( 0x1c );
@@ -6600,10 +7011,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    ClearText = bit_create(304, 8);
-    bit_ink(ClearText, 0);
-    bit_box(ClearText, 0, 0, 304, 8);
-    bit_ink(ClearText, 3);
+    // ClearStat = bit_create(120, 8);
+    // bit_ink(ClearStat, 0);
+    // bit_box(ClearStat, 0, 0, 120, 8);
+    // bit_ink(ClearStat, 3);
 
     if(!(CurrentFontFile = fopen("default.fnt", "rb"))) {
         oh_shit("Can't open \"default.fnt\"");
@@ -6634,6 +7045,8 @@ int main(int argc, char *argv[]) {
     load_map(Hero.CurrentMap);
 
     load_tiles();
+    Tiles[4] = AltTiles[AltWall[Hero.CurrentMap]];
+    Tiles[5] = AltTiles[AltWallSecret[Hero.CurrentMap]];
     ViewportBuffer = bit_create(176, 144);
     if(!Hero.CurrentMap) {
         update_world_map_at(Hero.X - 5, Hero.Y - 4);
@@ -6644,12 +7057,19 @@ int main(int argc, char *argv[]) {
 
     invalidate_view();
 
-    display_map();
-
-    draw_stats();
+    PrevTicks = ClockTicks;
+    display_map_alt();
+    if (abs(ClockTicks - PrevTicks) < 3) {
+        Flags.Fast = 1;
+    }
 
     while(SaveKey != KEY_Q) {
-        while(abs(ClockTicks-PrevTicks) < 2) {
+        while(ClockTicks == PrevTicks) {
+        }
+        if (Flags.Fast) {
+            PrevTicks = ClockTicks;
+            while(ClockTicks == PrevTicks) {
+            }
         }
         PrevTicks = ClockTicks;
         CurrentFrame++;
@@ -6663,6 +7083,7 @@ int main(int argc, char *argv[]) {
 
         switch(CurrentFrame&0x3) {
             case 0:
+                Game.TmpTicks = ClockTicks;
                 LogicalTicks++;
                 if (Game.Pause && Game.Pause != 0xFF) {
                     Game.Pause--;
@@ -6707,11 +7128,13 @@ int main(int argc, char *argv[]) {
                         CheckMoveHero();
                     }
                 }
-                if (!Hero.CurrentMap) {
+                if (!Hero.CurrentMap && !Game.Pause) {
                     check_change_wind();
                 }
+                Game.F1 = abs(ClockTicks - Game.TmpTicks);
                 break;
             case 1:
+                Game.TmpTicks = ClockTicks;
                 if(!Combat.Active) {
                     if(!Game.FlashTimer && !Game.Pause) {
                         if(Flags.InDungeon) {
@@ -6724,10 +7147,6 @@ int main(int argc, char *argv[]) {
                             }
                         }
                     }
-                } else {
-                    if(!Game.FlashTimer) {
-                        load_arena(Combat.Arena);
-                    }
                 }
                 if(Menu.Active && !Game.FlashTimer) {
                     check_update_menu();
@@ -6736,6 +7155,8 @@ int main(int argc, char *argv[]) {
                     if (Game.Pause == 0xFF) {
                         Game.Pause = 0;
                         clear_text_window();
+                        clear_stat_window();
+                        draw_stats(1);
                         break;
                     }
                     if(!Menu.Active) {
@@ -6748,24 +7169,40 @@ int main(int argc, char *argv[]) {
                         activate_menu_item();
                     }
                 }
+                Game.F2 = abs(ClockTicks - Game.TmpTicks);
                 break;
             case 2:
-                if(!Combat.Active && !Flags.InDungeon) {
-                    do_vision();
-                } else if(!Combat.Active && Flags.InDungeon && !Flags.DivinationActive) {
-                    do_dungeon_vision();
+                Game.TmpTicks = ClockTicks;
+                if(!Combat.Active) {
+                    if (!Flags.InDungeon) {
+                        do_vision();
+                    } else if (!Flags.DivinationActive) {
+                        do_dungeon_vision();
+                    }
+                } else {
+                    if(!Game.FlashTimer) {
+                        load_arena(Combat.Arena);
+                    }
                 }
+                // if (Flags.PrevMoved && !Flags.Moved) {
+                //     Flags.PrevMoved = 0;
+                //     draw_stats(0);
+                // }
+                Game.F3 = abs(ClockTicks - Game.TmpTicks);
                 break;
             case 3:
+                Game.TmpTicks = ClockTicks;
                 if(Flags.InDungeon && !Combat.Active) {
                     display_dungeon_map();
                 } else {
-                    display_map();
+                    display_map_alt();
                 }
                 if(Flags.Moved && !Combat.Active) {
                     CheckEncountersAndStatus();
-                    draw_stats();
+//                    Flags.PrevMoved = 1;
                 }
+                Game.F4 = abs(ClockTicks - Game.TmpTicks);
+//                print_line_formatted(MW_X, MW_Y, 0, "%2d %2d %2d %2d", Game.F1, Game.F2, Game.F3, Game.F4);
                 break;
         }
     }
@@ -6781,14 +7218,14 @@ void check_spirit_hammer() {
     if (Hero.Melee < 5) {
         if (!Hero.SpiritStone) {
             TmpLine = Messages[MESSAGE__FORGEGURU_RISWYNN_TALK];
+            Hero.NeedSpiritStone = 1;
         } else {
             TmpLine = Messages[MESSAGE__GIVE_SPIRIT_HAMMER];
-            play_sound(CAST_SOUND);
-            flash_effect();
-            Hero.Melee = 5;
-            Hero.Ranged = 4;
-            draw_stats();
-            save_game();
+            Menu.Active = 1;
+            Menu.Choices = 1;
+            Menu.MarkerPos[0] = 0;
+            Menu.Selection = 0;
+            Menu.Actions[0] = fire_ritual_function;
         }
         print_pager_line(TmpLine);
     } else {
@@ -6796,3 +7233,19 @@ void check_spirit_hammer() {
     }
     Flags.MessageActive = 1;
 }
+
+void give_spirit_hammer() {
+    print_line(MW_X, MW_Y+30, 0, "You gain the Spirit Hammer!");
+    play_sound(CAST_SOUND);
+    flash_effect();
+    Hero.Melee = 5;
+    Hero.Ranged = 4;
+    Hero.SpiritStone = 0;
+    Hero.NeedSpiritStone = 0;
+    draw_stats(0);
+    save_game();
+    Flags.MessageActive = 1;
+}
+
+
+

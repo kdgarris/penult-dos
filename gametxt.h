@@ -1,6 +1,9 @@
 #ifndef GAMETXT_H
 #define GAMETXT_H
 
+#define __CGALIB__
+
+
 extern const char *Messages[];
 extern const char *DungeonMessages[];
 extern const char *Armor[];
@@ -35,6 +38,7 @@ extern const char gold_range[];
 extern const char enemy_damage[];
 extern const char *SpellName[];
 extern const char *Wind[];
+extern const char *DungeonName[];
 extern const char AltWall[];
 extern const char AltWallSecret[];
 
@@ -99,9 +103,11 @@ extern const char AltWallSecret[];
 #define SLIME_ENEMY_NUMBER 30
 #define PIRATE_ENEMY_NUMBER 16
 #define SEA_SERPENT_ENEMY_NUMBER 23
+#define DEMON_GUARD_ENEMY_NUMBER 18
 #define GOBLIN_TILE_NUMBER 63
 #define SHADOW_ORB_TILE_NUMBER 71
 #define OGRE_TILE_NUMBER 69
+#define OGRE_ENEMY_NUMBER 6
 #define HEAD_TILE_NUMBER 72
 #define GIANT_TILE_NUMBER 73
 #define DEATH_BUG_TILE_NUMBER 62
@@ -114,9 +120,13 @@ extern const char AltWallSecret[];
 #define SALAMANDER_TILE_NUMBER 84
 #define DEMON_GUARD_TILE_NUMBER 85
 #define EARTH_SHADE_TILE_NUMBER 88
+#define EARTH_SHADE_ENEMY_NUMBER 19
 #define WATER_SHADE_TILE_NUMBER 87
+#define WATER_SHADE_ENEMY_NUMBER 20
 #define FIRE_SHADE_TILE_NUMBER 86
+#define FIRE_SHADE_ENEMY_NUMBER 21
 #define AIR_SHADE_TILE_NUMBER 22
+#define AIR_SHADE_ENEMY_NUMBER 22
 #define SEA_SERPENT_TILE_NUMBER 92
 #define WATER_WIGHT_TILE_NUMBER 93
 #define GIANT_SQUID_TILE_NUMBER 94
@@ -130,6 +140,7 @@ extern const char AltWallSecret[];
 #define GHOST_TILE_NUMBER 93
 #define MUMMY_TILE_NUMBER 104
 #define ICE_DEVIL_TILE_NUMBER 17
+#define ICE_DEVIL_ENEMY_NUMBER 35
 #define AMOEBA_TILE_NUMBER 105
 #define DEMON_TILE_NUMBER 85
 #define LICH_TILE_NUMBER 106
@@ -678,5 +689,6 @@ extern const char AltWallSecret[];
 #define FULK_FUNCTION               17
 #define EVIL_PLACE_FUNCTION         18
 #define THANA_FUNCTION              19
+#define DWARF_DISGUISE_FUNCTION     20
 
 #endif  // GAMETXT_H

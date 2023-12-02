@@ -28,6 +28,8 @@
 #define MESSAGE_WINDOW_HEIGHT 40
 #define SW_X 188
 #define SW_Y 6
+#define STATUS_WINDOW_WIDTH 120
+#define STATUS_WINDOW_HEIGHT 140
 
 #define WORLD_MAP          0
 #define CASTLE_MAP         1
@@ -89,14 +91,18 @@ int check_button_press();
 void oh_shit(char *error_message);
 void parse_option(char Opt);
 void load_display_gui();
-void draw_stats();
+void draw_stats(uint8_t FullDraw);
+void draw_sp();
+void draw_hp();
+void draw_food();
 void load_tiles();
 void update_world_map_at(int8_t MapX, int8_t MapY);
 void update_town_map_at(int8_t MapX, int8_t MapY);
 void update_dungeon_map_at(int8_t MapX, int8_t MapY);
 void do_vision();
 void do_dungeon_vision();
-void display_map();
+// void display_map();
+void display_map_alt();
 void display_dungeon_map();
 int get_direction();
 void CheckMoveHero();
@@ -156,6 +162,7 @@ void print_line(int x, int y, uint8_t Invert, const char *message);
 void activate_divination();
 void cancel_divination();
 void clear_text_window();
+void clear_stat_window();
 void generate_character();
 void draw_name_letter();
 int validate_name(char *Name);
@@ -176,10 +183,12 @@ void do_bartender_no();
 void vendor_function();
 void bartender_function();
 void tragut_function();
+void stoneheart_talk();
 void check_gain_fire_ritual();
 void check_gain_dragon_armor();
 void gain_dragon_armor();
 void check_find_fire_acorns();
+void check_find_spirit_stone();
 void check_gain_homing_gem();
 void fire_acorns_yes();
 void fire_acorns_no();
@@ -192,6 +201,12 @@ void alderney_the_seer_2();
 void avil_talk();
 void password_square_function();
 void password_result();
+void circle_control_function();
+void circle_control_result();
+void hermit_talk();
+void fulk_talk();
+void evil_place_function();
+void thana_talk();
 void fire_ritual_function();
 void check_gain_energy_ritual();
 void energy_ritual_function();
@@ -203,7 +218,7 @@ void do_dungeon_dark();
 void do_talk();
 void do_use();
 void do_cast();
-void do_stats();
+void do_inventory();
 void do_heal_potion();
 void do_cure_potion();
 void do_disguise_dust();
@@ -251,6 +266,7 @@ void CheckEncountersAndStatus();
 void exit_ship();
 void do_poison();
 void check_spirit_hammer();
+void give_spirit_hammer();
 
 typedef struct {
    uint8_t Y;

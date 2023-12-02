@@ -1,30 +1,145 @@
-Open Watcom Make Version 1.9
-Portions Copyright (c) 1988-2002 Sybase, Inc. All Rights Reserved.
-Source code is available under the Sybase Open Watcom Public License.
-See http://www.openwatcom.org/ for details.
-	wcc -I=..\cgalib\inc -I=..\keylib\inc -ms gametxt.c
-Open Watcom C16 Optimizing Compiler Version 1.9
-Portions Copyright (c) 1984-2002 Sybase, Inc. All Rights Reserved.
-Source code is available under the Sybase Open Watcom Public License.
-See http://www.openwatcom.org/ for details.
-gametxt.c(793): Error! E1175: Too many initializers
-gametxt.c(797): Error! E1175: Too many initializers
-gametxt.c(798): Error! E1175: Too many initializers
-gametxt.c(799): Error! E1175: Too many initializers
-gametxt.c(800): Error! E1175: Too many initializers
-gametxt.c(801): Error! E1175: Too many initializers
-gametxt.c(802): Error! E1175: Too many initializers
-gametxt.c(803): Error! E1175: Too many initializers
-gametxt.c(804): Error! E1175: Too many initializers
-gametxt.c(805): Error! E1175: Too many initializers
-gametxt.c(806): Error! E1175: Too many initializers
-gametxt.c(807): Error! E1175: Too many initializers
-gametxt.c(808): Error! E1175: Too many initializers
-gametxt.c(809): Error! E1175: Too many initializers
-gametxt.c(810): Error! E1175: Too many initializers
-gametxt.c(811): Error! E1175: Too many initializers
-gametxt.c(812): Error! E1175: Too many initializers
-gametxt.c(813): Error! E1175: Too many initializers
-gametxt.c(814): Error! E1175: Too many initializers
-gametxt.c(815): Error! E1175: Too many initializers
-gametxt.c(816): Error! E1147: Too many errors: compilation aborted
+heal potion cure potion gem dust
+
+
+    Menu.Active = 1;
+    Menu.Selection = 0;
+    Menu.Type = ITEM_MENU;
+    print_line(MW_X, MW_Y, 1, Messages[status__items]);
+
+
+
+    SpellMenuText[0] = '>';
+    if(Hero.SpellsKnown&RAY_SPELL) {
+        Length = strlen(SpellName[0]);
+        strncpy(SpellMenuText+LinePos, SpellName[0], Length);
+        LinePos += Length;
+        SpellMenuText[LinePos] = ' ';
+        LinePos++;
+        Menu.SpellOrder[SpellPos] = 0;
+        SpellPos++;
+    }
+
+
+
+    LinePos--;
+    ItemMenuText[LinePos] = '\0';
+    print_line(MW_X, MW_Y+30, 0, ItemMenuText);
+    Menu.Choices = SpellPos;
+    Menu.MarkerPos[0] = 0;
+
+
+    for(Count = 1; Count < SpellPos; Count++) {
+        Menu.MarkerPos[Count] = strlen(SpellName[Menu.SpellOrder[Count - 1]]) + Menu.MarkerPos[Count - 1] + 1;
+        Menu.Actions[Count] = MenuActions[Menu.Type][Menu.SpellOrder[Count]];
+    }
+
+
+    Menu.Active = 1;
+    Menu.Choices = 1;
+    Menu.MarkerPos[0] = 0;
+    Menu.Selection = 0;
+    Menu.Actions[0] = fire_ritual_function;
+
+
+    const char *TmpLine;
+
+    print_line(MW_X, MW_Y, 1, Messages[NPCName[Game.NPC]]);
+    TmpLine = Messages[NPCText[Game.NPC]];
+    print_pager_line(TmpLine);
+    Flags.MessageActive = 1;
+    
+human 46
+elf 48
+dwarf 48
+gnome 49
+hobbit 47
+
+fighter dwarf
+
+
+water enemies:
+
+2,1
+7,1
+4,8
+5,8
+
+pirates:
+4,2
+5,2
+2,1
+7,1
+
+hero: 3,7
+dragon: 6,7
+
+    const char *TmpLine;
+
+            print_line(MW_X, MW_Y, 1, Messages[NPCName[Game.NPC]]);
+
+            print_line(MW_X, MW_Y, 1, Messages[NPCName[Game.NPC]]);
+            TmpLine = Messages[NPCText[Game.NPC]];
+            print_pager_line(TmpLine);
+
+
+    uint8_t DestTile;
+
+
+            DestTile = CurrentMap[(Dungeon.Y * DUNGEON_WIDTH) +
+             Dungeon.X + (Dungeon.Level * 256)];
+             
+USE_THIS_ONLY_WHEN_YOURPERIL_IS_MOST_DIRE
+
+
+
+const char lava_bridge_arena[9][11] = {
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2},
+    {2,95,89,89,89,89,89,89,89,95,2}
+};
+
+
+15,21
+75,47
+48,34
+
+10,7,37,40
+
+        if ((Hero.X < 11) && (Hero.Y > 24))
+
+            play_sound(CAST_SOUND);
+            flash_effect();
+            Hero.Melee = 5;
+            Hero.Ranged = 4;
+            draw_stats();
+            save_game();
+Dungeon of the Phoenix 
+Dungeon:Enchantment
+clan_elder_thorina
+clan_chief_travok
+
+
+ ☺☻♥♦♣♠•◘○◙♂♀♪♫☼►◄↕‼¶§▬↨↑↓→←∟↔▲▼ !"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~⌂ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥₧ƒáíóúñÑªº¿⌐¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■
+
+
+  ☺ │
+▄▀█▀╪
+ ▐▀▌ 
+
+  ■ ▌
+▄▀█▀▀
+▄█▀█▄
+
+     #
+     #
+ #####
+# #
+ ###
+## ##
+

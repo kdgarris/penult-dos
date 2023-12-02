@@ -16,7 +16,7 @@ const char *Melee[] = {
     "Axe",
     "Sword",
     "M. Sword",
-    "S. Hammer"
+    "S.Hammer"
 };
 
 const char *Ranged[] = {
@@ -54,6 +54,13 @@ const char *Wind[] = {
     "South",
     "West",
     "Calm"
+};
+
+const char *DungeonName[] = {
+    "Phoenix",
+    "Enchantment",
+    "Secrets",
+    "Passage",
 };
 
 const char AltWall[] = {
@@ -274,21 +281,21 @@ const char MenuPrompt[] = {
 };
 
 const char MenuChoices[] = {
-    3,
+    4,
     4,
     2,
     5,
     4,
     0,
-    3
+    5
 };
 
-const char OutdoorMenuPos[] = {0, 5, 9};
+const char OutdoorMenuPos[] = {0, 5, 9, 19};
 const char TownMenuPos[] = {0, 5, 10, 14};
 const char YesNoMenuPos[] = {0, 4};
 const char HeroCombatMenuPos[] = {0, 7, 14, 19, 23};
 const char DragonMenuPos[] = {0, 5, 12, 17};
-const char DungeonMenuPos[] = {0, 5, 10};
+const char DungeonMenuPos[] = {0, 5, 10, 14, 24};
 
 const char *MarkerPos[] = {
     OutdoorMenuPos,
@@ -1031,6 +1038,9 @@ const char CastleBNPC[][3] = {
     {36, 31, MAZINNA_THE_HERMIT},
     {2, 30, WIXA_THE_ALCHEMIST},
     {46, 11, BAXTON_THE_WIZARD},
+    {46, 13, BAXTON_THE_WIZARD},
+    {45, 12, BAXTON_THE_WIZARD},
+    {47, 12, BAXTON_THE_WIZARD},
     {31, 25, MAGE_MAXIMILIAN},
     {30, 26, MAGE_MAXIMILIAN},
     {35, 25, BARNABY_THE_PIRATE},
@@ -1161,7 +1171,7 @@ const char NPCFunction[] = {
     {VENDOR_FUNCTION},          // HEALER
     {MYSTERIOUS_HERMIT_FUNCTION},   // MYSTERIOUS_HERMIT
     {DEFAULT_FUNCTION},    // BAERN_THE_SMITH
-    {DEFAULT_FUNCTION},    // CLAN_CHIEF_TRAVOK
+    {DWARF_DISGUISE_FUNCTION},    // CLAN_CHIEF_TRAVOK
     {BARTENDER_FUNCTION},  // STONEHEART_BARTENDER
     {DEFAULT_FUNCTION},    // AMBER_THE_JUVENILE
     {DEFAULT_FUNCTION},    // VISTRA_THE_SMITH
@@ -1241,7 +1251,7 @@ const char NPCFunction[] = {
     {DEFAULT_FUNCTION},    // ELDER_SAPPHIRE
     {ALDERNEY_FUNCTION},   // ALDERNEY_THE_SEER
     {AVIL_FUNCTION},       // AVIL_THE_WARRIOR
-    {DEFAULT_FUNCTION},    // CLAN_ELDER_THORINA
+    {DWARF_DISGUISE_FUNCTION},    // CLAN_ELDER_THORINA
     {DEFAULT_FUNCTION},    // BARNABY_THE_PIRATE
     {DEFAULT_FUNCTION},    // AUDREY_THE_CONVICT
     {DEFAULT_FUNCTION},    // JOHN_THE_INSURGENT
@@ -1494,14 +1504,14 @@ const char *Messages[] = {
     "Entering the ruins of Duskgrove.",
     "Go and experience more.",
     "You can't go that way.",
-    "Cast Loot Use",
+    "Cast Loot Use Inventory Pass",
     "Cast Loot Use Ascend",
     "Cast Loot Use Descend",
     "Cast Loot Use Ascend Descend",
-    "Cast Use Stats",
+    "Cast Use Inventory Pass",
     "Attack Ranged Cast Use Pass",
     "Bite Breath Heal Pass",
-    "Talk Cast Use Stats",
+    "Talk Cast Use Inventory",
     "Swapped! Grapple Broken!",
     "Not enough spell points!",
     "Nothing much happens.",
@@ -1582,9 +1592,9 @@ const char *Messages[] = {
     "I'm stranded here until the Incursions are over.",
     "I need more fire acorns!",
     "Most impressive! I will teach you what I know.",
-    "I regret my crimes. I can impart my magic knowledge if you want.",
-    "I was once the greatest warrior of the dwarves. I can teach you to be a more effective warrior.",
-    "I've traveled the lands for ages before settling here. I'm fleet of foot, and know many skills.",
+    "I regret my crimes, but I can impart my knowledge of magic upon you if you wish. >>",
+    "I was once the greatest warrior of the dwarves. I can teach you to be a more effective warrior. >>",
+    "I've traveled the lands for ages before settling here. I'm fleet of foot, and know many skills. >>",
     "Did you see a human?",
     "Praise to Thana, grunt!",
     "Are you ready for the invasion, grunt?",
@@ -1625,14 +1635,14 @@ const char *Messages[] = {
     "I picked the wrong hill to mine.",
     "Goblins no have to hide no more once Thana takes over.",
     "\"Open sesame!\" >>",
-    "\"Go away, force field!\"",
+    "\"Go away, force field!\" >>",
     "Fool! You can't harm me or the force field.",
     "To dispel magic, recite:",
     "You must travel to Oak to find healing potions.",
     "I can't believe that Thana turned on us!",
     "You will need magic to explore the nearby dungeon.",
     "They have better armor in Freehaven.",
-    "With this gift, you may never be found unarmed.",
+    "With this gift, you may never be found unarmed. >>",
     "Thank you for your help.",
     "Safe journeys, Hero.",
     "You are now greater!",
@@ -1649,7 +1659,7 @@ const char *Messages[] = {
     "You have no need of it.",
     "Wield your hammer with honor.",
     "Why not?",
-    "'An-Mar-Bok-Fi-Lot!'",
+    "\"An-Mar-Bok-Fi-Lot!\"",
     "Go find the other trainers!",
     "You don't have enough.",
     "Where?",
