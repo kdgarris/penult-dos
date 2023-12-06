@@ -826,7 +826,7 @@ static uint8_t tile_mapping_alt[] = {114, 163, 113, 125, 4, 5, 6, 7, 8, 9, 10, 1
     49, 115, 117, 116, 120, 118, 119, 122, 57, 124, 121, 128, 134, 136, 130, 131, 133,
     135, 67, 132, 137, 70, 138, 139, 140, 74, 75, 76, 77, 78, 79, 80, 81, 123,
     127, 141, 142, 143, 144, 145, 89, 90, 146, 147, 148, 149, 95, 126, 150, 151, 152,
-    153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163
+    153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 164
 };
 
 uint8_t viewport[VIEWPORT_WIDTH][VIEWPORT_HEIGHT];
@@ -930,7 +930,7 @@ struct {
     uint8_t MapWidth;
     uint8_t MapHeight;
     uint8_t Pause;
-    uint8_t DoInvert;
+    uint8_t ViewportInverted;
     uint8_t DisguiseTile;
     uint8_t CurrentPalette;
     uint8_t Wind;
@@ -1393,7 +1393,7 @@ void draw_stats(uint8_t FullDraw) {
     if (FullDraw) {
         if (Flags.InDungeon) {
             if (Dungeon.Orb) {
-                print_line_formatted(SW_X, SW_Y, 1, "%-11s(ORB)", DungeonName[Dungeon.Number]);
+                print_line_formatted(SW_X, SW_Y, 1, "%-10s(ORB)", DungeonName[Dungeon.Number]);
             } else {
                 print_line_formatted(SW_X, SW_Y, 1, "%-15s", DungeonName[Dungeon.Number]);
             }
@@ -1575,10 +1575,14 @@ void update_town_map_at(int8_t MapX, int8_t MapY) {
         }
         ScreenY += 16;
     }
-    if (Flags.Disguised) {
-        viewport[5][4] = Game.DisguiseTile;
+    if (Hero.InShip) {
+        viewport[5][4] = SHIP_TILE;
     } else {
-        viewport[5][4] = HERO_TILE;
+        if (Flags.Disguised) {
+            viewport[5][4] = Game.DisguiseTile;
+        } else {
+            viewport[5][4] = HERO_TILE;
+        }
     }
 }
 
@@ -1650,10 +1654,14 @@ void update_world_map_at(int8_t MapX, int8_t MapY) {
         ScreenY += 16;
     }
     
-    if (Flags.Disguised) {
-        viewport[5][4] = Game.DisguiseTile;
+    if (Hero.InShip) {
+        viewport[5][4] = SHIP_TILE;
     } else {
-        viewport[5][4] = HERO_TILE;
+        if (Flags.Disguised) {
+            viewport[5][4] = Game.DisguiseTile;
+        } else {
+            viewport[5][4] = HERO_TILE;
+        }
     }
 }
 
@@ -1934,11 +1942,11 @@ void do_dungeon_vision() {
 // //        HeroTile = SHIP_TILE;
 // //    }
 
-//     if (Game.FlashTimer && !Game.DoInvert) {
+//     if (Game.FlashTimer && !Game.ViewportInverted) {
 //         DoUpdate = 0;
 //     }
 
-//     if (!Game.FlashTimer && Game.DoInvert) {
+//     if (!Game.FlashTimer && Game.ViewportInverted) {
 //         DoUpdate = 1;
 //         invert_viewport();
 //         invalidate_view();
@@ -1959,7 +1967,7 @@ void do_dungeon_vision() {
 //         bit_put(ViewportBuffer, Tiles[CurrentTiles[HeroTile]], 80, 64, DRAW_PSET);
 //     }
 
-//     if (Game.DoInvert) {
+//     if (Game.ViewportInverted) {
 //         invert_viewport();
 //     }
 
@@ -1970,13 +1978,24 @@ void display_map_alt() {
     uint8_t CountX, CountY, CountHeight;
     char *Dest = ViewportBuffer->pixels;
 
+    if (Game.FlashTimer && Game.ViewportInverted) {
+        return;
+    }
+
+//    if (Game.FlashTimer && !Game.ViewportInverted) {
+//        invalidate_view();
+    if (!Game.FlashTimer && Game.ViewportInverted) {
+        invalidate_view();
+        Game.ViewportInverted = 0;
+    }
+
 
     if (!Flags.Composite && !Flags.Monochrome) {
         scr_palette(MyScreen, Game.CurrentPalette, 0);
     }
     for(CountY = 0; CountY < VIEWPORT_HEIGHT; CountY++) {
         for(CountX = 0; CountX < VIEWPORT_WIDTH; CountX++) {
-            if(viewport_prev[CountX][CountY] != viewport[CountX][CountY]) {
+            if((viewport_prev[CountX][CountY] != viewport[CountX][CountY])) {
                 _fmemcpy (Dest, Tiles[viewport[CountX][CountY]]->pixels, 4);
                 _fmemcpy (Dest+44, (Tiles[viewport[CountX][CountY]]->pixels) + 4, 4);
                 _fmemcpy (Dest+88, (Tiles[viewport[CountX][CountY]]->pixels) + 8, 4);
@@ -1997,34 +2016,10 @@ void display_map_alt() {
             Dest += 4;
         }
         Dest += 660;
-        // initialize source pointers for each row, then increment
-        // for (CountHeight = 0; CountHeight < 16; CountHeight++) {
-        //     _fmemcpy (Dest, Tiles[viewport[0][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[1][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[2][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[3][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[4][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[5][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[6][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[7][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[8][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[9][CountY]]->pixels, 4);
-        //     Dest += 4;
-        //     _fmemcpy (Dest, Tiles[viewport[10][CountY]]->pixels, 4);
-        //     Dest += 4;
-        // }
     }
-    if (Game.FlashTimer) {
+    if (Game.FlashTimer && !Game.ViewportInverted) {
         invert_viewport();
+        Game.ViewportInverted = 1;
     }
     scr_put(MyScreen, ViewportBuffer, 4, 4, DRAW_PSET);
 }
@@ -2043,16 +2038,20 @@ void display_dungeon_map() {
         for(CountY = 0; CountY < DUNGEON_VIEWPORT_HEIGHT; CountY++) {
             if((viewport_prev[CountX][CountY] != viewport[CountX][CountY])
              ||(Flags.Flipped && DTilesFlippable[viewport[CountX][CountY]])) {
-                bit_put(ViewportBuffer, DTiles[CurrentDTiles[viewport[CountX][CountY]]], ScreenX, ScreenY, DRAW_PSET);
+                if ((CountX == 2) && (CountY == 2)) {
+                    bit_put(ViewportBuffer, DTiles[DHERO_TILE], ScreenX, ScreenY, DRAW_PSET);
+                } else {
+                    bit_put(ViewportBuffer, DTiles[CurrentDTiles[viewport[CountX][CountY]]], ScreenX, ScreenY, DRAW_PSET);
+                }
             }
             ScreenY += 28;
         }
         ScreenX += 32;
     }
     Flags.Flipped = 0;
-    if(!Combat.Active && (CurrentDTiles[viewport[2][2]] != DHERO_TILE)) {
-        bit_put(ViewportBuffer, DTiles[DHERO_TILE], 72, 56, DRAW_PSET);
-    }
+//    if(!Combat.Active && (CurrentDTiles[viewport[2][2]] != DHERO_TILE)) {
+//        bit_put(ViewportBuffer, DTiles[DHERO_TILE], 72, 56, DRAW_PSET);
+//    }
     scr_put(MyScreen, ViewportBuffer, 4, 4, DRAW_PSET);
 }
 
@@ -2790,8 +2789,18 @@ void clear_dungeon_screen() {
 }
 
 void exit_dungeon() {
-    clear_view();
-    display_map_alt();
+    uint8_t Count;
+    char *ArenaMap = (char *)Arena[DUNGEON_ARENA];
+
+
+    for (Count = 0; Count < 2; Count++) {
+        if(Dungeon.Pillar[Count]) {
+            ArenaMap[Dungeon.Pillar[Count]] = DIRT_TILE;
+        }
+    }
+
+    clear_view2();
+//    display_map_alt();
     Flags.InDungeon = 0;
     load_map(Hero.CurrentMap);
     if(!Flags.Composite) {
@@ -3015,10 +3024,12 @@ void load_passage() {
 void load_dungeon(int DungeonMap) {
     int CountX, CountY;
 
-    clear_view();
-    invalidate_view();
+    clear_view2();
+//    invalidate_view();
     clear_stat_window();
-    display_map_alt();
+//    display_map_alt();
+    bit_ink(ViewportBuffer, 0);
+    bit_box (ViewportBuffer, 0, 0, 176, 144);
     save_game();
     Flags.InDungeon = 1;
     Flags.WeaponCorroded = 0;
@@ -3513,7 +3524,11 @@ void generate_character() {
     Hero.SpellsKnown = RAY_SPELL;
     Hero.ShipX = 7;
     Hero.ShipY = 50;
+    scr_ink (MyScreen, 0);
+    scr_box (MyScreen, 0, 0, 320, 200);
+    intro_text();
     load_map(Hero.CurrentMap);
+    save_game();
 }
 
 int validate_name(char *Name) {
@@ -3585,14 +3600,14 @@ void save_game() {
     Flags.MessageActive = 1;
 }
 
-void load_game() {
+uint8_t load_game() {
     FILE *LoadFile;
     char TmpName[9];
     int CurrentChar;
     uint8_t Count;
 
     if((LoadFile = fopen("penult.sav","rb")) == NULL) {
-        oh_shit("Can't open \"penult.sav\" for reading!");        
+        return 0;        
     }
 
     if(!fread(&Hero, sizeof(Hero), 1, LoadFile)) {
@@ -3618,6 +3633,7 @@ void load_game() {
         Game.CurrentPalette = DUNGEON_PALETTE;
     }
     Game.Wind = 4;
+    return 1;
 }
 
 void check_update_menu() {
@@ -3774,6 +3790,7 @@ void queen_talk() {
             Hero.Dex++;
             Hero.Int++;
             flash_effect();
+            play_sound(CAST_SOUND);
             print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_ARE_NOW_GREATER]);
             Hero.XP -= 128;
             draw_stats(0);
@@ -4003,7 +4020,7 @@ void do_buy_yes() {
     clear_text_window();
     print_line(MW_X, MW_Y, 1, Messages[STATUS__THE_MERCHANT_SAYS]);  
     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__THANK_YOU_COME_AGAIN]);
-    draw_stats(0);
+    draw_stats(1);
 }
 
 void check_gain_fire_ritual() {
@@ -4959,21 +4976,9 @@ void flash_effect() {
 //    }
     if(!Game.FlashTimer) {
         Game.FlashTimer = 8;
-        Game.DoInvert = 1;
-        play_sound(CAST_SOUND);
+        Game.ViewportInverted = 0;
     } else {
-        if (Flags.Fast) {
-            if (!Flags.FastDelayed) {
-                Flags.FastDelayed = 1;
-                return;
-            } else {
-                Flags.FastDelayed = 0;
-            }
-        }
         Game.FlashTimer--;
-        if(!Game.FlashTimer) {
-            Game.DoInvert = 1;
-        }
     }
 }
 
@@ -4987,14 +4992,27 @@ void invalidate_view() {
     }
 }
 
-void clear_view() {
+// void clear_view() {
+//     uint8_t CountX, CountY;
+
+//     for(CountX = 0; CountX < VIEWPORT_WIDTH; CountX++) {
+//         for(CountY = 0; CountY < VIEWPORT_HEIGHT; CountY++) {
+//             viewport[CountX][CountY] = NOTHING_TILE;
+//         }
+//     }
+// }
+
+void clear_view2() {
     uint8_t CountX, CountY;
 
+    invalidate_view();
     for(CountX = 0; CountX < VIEWPORT_WIDTH; CountX++) {
         for(CountY = 0; CountY < VIEWPORT_HEIGHT; CountY++) {
             viewport[CountX][CountY] = NOTHING_TILE;
         }
     }
+    scr_ink(MyScreen, 0);
+    scr_box (MyScreen, 4, 4, 176, 144);
 }
 
 void end_combat() {
@@ -5012,8 +5030,8 @@ void end_combat() {
     } else {
         if (Flags.InDungeon) {
             ArenaMap = (char *)Arena[DUNGEON_ARENA];
-            clear_view();
-            display_map_alt();
+            clear_view2();
+//            display_map_alt();
             Game.CurrentPalette = DUNGEON_PALETTE;
             for (Count = 0; Count < 2; Count++) {
                 if(Dungeon.Pillar[Count]) {
@@ -5025,6 +5043,16 @@ void end_combat() {
         if(Combat.Gold) {
             print_line_formatted(MW_X, MW_Y+30, 0, "You find %d gold!", Combat.Gold);
             Hero.Gold += Combat.Gold;
+            Flags.MessageActive = 1;
+        } else if (Combat.Arena == SHIP_ARENA) {
+            print_line_formatted(MW_X, MW_Y+30, 0, "You capture a ship!");
+            Hero.ShipOwned = 1;
+            Hero.InShip = 1;
+            Hero.X = Hero.ShipX;
+            Hero.Y = Hero.ShipY; 
+            Hero.PrevX = Hero.X;
+            Hero.PrevY = Hero.Y;
+            display_map_alt();
             Flags.MessageActive = 1;
         }
 
@@ -5075,7 +5103,7 @@ void load_arena(int CurrentArena) {
         print_line(MW_X, MW_Y+30, 0, Messages[STATUS__VICTORY]);
         play_music(VICTORY_MUSIC);
         Combat.Timer = 15;
-        if (!Hero.InShip) {
+        if (!Hero.InShip && (Combat.Arena != SHIP_ARENA)) {
             Combat.Gold = find_gold(Combat.EnemyPower);
         }
         return;
@@ -5232,15 +5260,19 @@ void start_combat() {
                 Combat.Arena = LAVA_ARENA;
                 break;
             case SHIP_TILE:
-                Combat.Arena = WATER_ARENA;
+                if (Hero.ShipOwned) {
+                    Combat.Arena = WATER_ARENA;
+                } else {
+                    Combat.Arena = SHIP_ARENA;
+                }
                 break;
             default:
                 return;
         }
     }
 
-    clear_view();
-    display_map_alt();
+    clear_view2();
+//    display_map_alt();
     clear_text_window();
     clear_stat_window();
     if (Flags.InDungeon) {
@@ -5290,6 +5322,9 @@ void start_combat() {
         } else {
             Combat.EnemyNumber = SEA_SERPENT_ENEMY_NUMBER + TmpRand;
         }
+    } else if (Combat.Arena == SHIP_ARENA) {
+        Tiles[4] = AltTiles[20];
+        Combat.EnemyNumber = PIRATE_ENEMY_NUMBER;
     } else {
         Combat.EnemyNumber = (rand()&3) + Hero.Level;
     }
@@ -5341,7 +5376,8 @@ void start_combat() {
         } else if (Combat.Arena == WATER_ARENA) {
             Combat.EnemyX[Count] = WaterStartX[Count];
             Combat.EnemyY[Count] = WaterStartY[Count];
-        } else if (Combat.Arena == SHIP_SHIP_ARENA) {
+        } else if ((Combat.Arena == SHIP_SHIP_ARENA) ||
+         (Combat.Arena == SHIP_SHIP_ARENA)) {
             Combat.EnemyX[Count] = PirateStartX[Count];
             Combat.EnemyY[Count] = PirateStartY[Count];
         } else {
@@ -5966,7 +6002,6 @@ int space_free(int CombatX, int CombatY) {
 
 void invert_viewport() {
     char *ViewportBits = ViewportBuffer->pixels;
-    Game.DoInvert = 0;
 
     _asm {
 ;        cld
@@ -6815,6 +6850,10 @@ void CheckEncountersAndStatus() {
             draw_sp();
         }
         if (!Hero.InShip && (CurrentTile == SHIP_TILE)) {
+            if (!Hero.ShipOwned) {
+                start_combat();
+                return;
+            }
             Hero.InShip = 1;
             print_line(MW_X, MW_Y+30, 0, "You board the ship.");
             Hero.PrevX = Hero.X;
@@ -6843,6 +6882,10 @@ void CheckEncountersAndStatus() {
 
     if (Hero.CurrentMap) {
         return;
+    }
+
+    if (!Hero.ShipOwned && (Hero.Level > 6)) {
+        do_pirate_ship();
     }
 
     if (CurrentTile == BRIDGE_TILE) {
@@ -6912,6 +6955,7 @@ void CheckEncountersAndStatus() {
     if (!(Game.Turns&15)) {
         if (Hero.Food) {
             Hero.Food--;
+            draw_food();
         } else {
             play_sound(HIT_SOUND);
             flash_effect();
@@ -6943,6 +6987,66 @@ void CheckEncountersAndStatus() {
     }
 }
 
+void do_pirate_ship() {
+    uint8_t PirateDirection = (rand()&15);
+    int8_t CurrentTile, TmpX, TmpY;
+// = CurrentMap[(Game.MapWidth * Hero.Y) + Hero.X];
+
+
+    // if ((abs(Hero.ShipX - Hero.X) == 1) || (abs(Hero.ShipY - Hero.Y) == 1)) {
+    //     if ((!abs(Hero.ShipX - Hero.X)) || (!abs(Hero.ShipY - Hero.Y))) {
+    //         Hero.X = Hero.ShipX;
+    //         Hero.Y = Hero.ShipY;
+    //         start_combat();
+    //         return;
+    //     }
+    // }
+
+    if (PirateDirection > 3) {
+        return;
+    }
+
+    TmpX = Hero.ShipX;
+    TmpY = Hero.ShipY;
+
+    switch (PirateDirection) {
+        // North
+        case 0:
+            TmpY--;
+            if (TmpY < 0) {
+                TmpY = Game.MapHeight - 1;
+            }
+            break;
+        // East
+        case 1:
+            TmpX++;
+            if (TmpX == Game.MapWidth) {
+                TmpX = 0;
+            }
+            break;
+        // South
+        case 2:
+            TmpY++;
+            if (TmpY == Game.MapHeight) {
+                TmpY = 0;
+            }
+            break;
+        // West
+        case 3:
+            TmpX--;
+            if (TmpX < 0) {
+                TmpX = Game.MapWidth - 1;
+            }
+    }
+
+    CurrentTile = CurrentMap[(Game.MapWidth * TmpY) + TmpX];
+    if ((CurrentTile != WATER_TILE) && (CurrentTile != WATER_TILE_ALT)) {
+        return;
+    }
+
+    move_ship(TmpX, TmpY, 1);
+}
+
 void exit_ship() {
     Hero.InShip = 0;
     if (!Hero.CurrentMap) {
@@ -6959,6 +7063,80 @@ void do_poison() {
     Hero.HomingGem = 1;
     print_line(MW_X, MW_Y+30, 0, "Restocked!");
     Flags.MessageActive = 1;
+//    Hero.Status = STATUS_POISONED;
+}
+
+
+void intro_text() {
+    Font *IntroFont;
+    Bitmap *Dither;
+    FILE *FontFile;
+    FILE *BitFile;
+
+    if (! (FontFile = fopen ("past.fnt", "rb"))) {
+        oh_shit("Can't open \"past.fnt\" for reading.");
+    }
+    fseek(FontFile, 8, SEEK_SET);
+    if(!(IntroFont = fnt_read(FontFile))) {
+        oh_shit("Can't read font from \"past.fnt\".");
+    }
+
+    if (! (BitFile = fopen ("dither.dat", "rb"))) {
+        oh_shit("Can't open \"dither.dat\" for reading.");
+    }
+    fseek(BitFile, 8, SEEK_SET);
+    if(!(Dither = bit_read(BitFile))) {
+        oh_shit("Can't load bitmap in \"dither.dat\".");
+    }
+    fclose (BitFile);
+    fclose (FontFile);
+
+    scr_put (MyScreen, Dither, 80, 20, DRAW_PSET);
+    scr_put (MyScreen, Dither, 80, 2, DRAW_PSET);
+
+    fnt_colours (IntroFont, 0, 3);
+    scr_font(MyScreen, IntroFont);
+
+    scr_palette(MyScreen, 3, 0);
+    scr_ink (MyScreen, 3);
+    scr_box (MyScreen, 80, 2, 160, 196);
+    scr_ink (MyScreen, 2);
+    scr_box (MyScreen, 40, 8, 40, 8);
+    scr_box (MyScreen, 40, 184, 40, 8);
+    scr_box (MyScreen, 240, 8, 40, 8);
+    scr_box (MyScreen, 240, 184, 40, 8);
+    scr_ink (MyScreen, 0);
+    scr_box (MyScreen, 80, 22, 160, 2);
+    scr_box (MyScreen, 80, 176, 160, 2);
+    scr_put (MyScreen, Dither, 80, 20, DRAW_PSET);
+    scr_put (MyScreen, Dither, 80, 2, DRAW_PSET);
+    scr_put (MyScreen, Dither, 80, 178, DRAW_PSET);
+    scr_put (MyScreen, Dither, 80, 196, DRAW_PSET);
+    scr_ink (MyScreen, 3);
+    scr_paper (MyScreen, 0);
+    scr_print (MyScreen, 84, 28, "  As a humble cobbler who lives in the");
+    scr_print (MyScreen, 84, 38, "city of Acadia, you've heard tales of");
+    scr_print (MyScreen, 84, 48, "beasts that are invading the land.");
+    scr_print (MyScreen, 84, 60, "  Recently, you had a dream where you");
+    scr_print (MyScreen, 84, 70, "were visited by a small dragon from");
+    scr_print (MyScreen, 84, 80, "the Fey Realm. You instantly knew that");
+    scr_print (MyScreen, 84, 90, "the dragon chose to bond with you for");
+    scr_print (MyScreen, 84, 100, "an unknown larger goal.");
+    scr_print (MyScreen, 84, 112, "  Upon waking, you realized the dragon");
+    scr_print (MyScreen, 84, 122, "was real! Later that morning, a");
+    scr_print (MyScreen, 84, 132, "messenger arrived with a letter from");
+    scr_print (MyScreen, 84, 142, "the queen. After you read the letter,");
+    scr_print (MyScreen, 84, 152, "you know you must prepare for the");
+    scr_print (MyScreen, 84, 162, "journey ahead...");
+    while (!check_button_press()) {
+    }
+   
+    fnt_destroy (IntroFont);
+    bit_destroy (Dither);
+    scr_ink (MyScreen, 0);
+    scr_box (MyScreen, 40, 2, 240, 196);
+    scr_palette(MyScreen, Game.CurrentPalette, 0);
+    SaveKey = 0;
 }
 
 
@@ -7029,12 +7207,18 @@ int main(int argc, char *argv[]) {
     fclose(CurrentFontFile);  
 
 //    generate_character();
-    load_game();
+    if (!load_game()) {
+        generate_character();
+    }
 
 //    Hero.Gold = 1000;
 //    Hero.X -= 2;
 
 //    Hero.HomingGem = 1;
+
+    // Hero.ShipX = 7;
+    // Hero.ShipY = 50;
+    // Hero.ShipOwned = 0;
 
     Game.Turns = 0;
 
@@ -7184,10 +7368,9 @@ int main(int argc, char *argv[]) {
                         load_arena(Combat.Arena);
                     }
                 }
-                // if (Flags.PrevMoved && !Flags.Moved) {
-                //     Flags.PrevMoved = 0;
-                //     draw_stats(0);
-                // }
+                if (Flags.PrevMoved && !Flags.Moved) {
+                    Flags.PrevMoved = 0;
+                }
                 Game.F3 = abs(ClockTicks - Game.TmpTicks);
                 break;
             case 3:
@@ -7199,7 +7382,7 @@ int main(int argc, char *argv[]) {
                 }
                 if(Flags.Moved && !Combat.Active) {
                     CheckEncountersAndStatus();
-//                    Flags.PrevMoved = 1;
+                    Flags.PrevMoved = 1;
                 }
                 Game.F4 = abs(ClockTicks - Game.TmpTicks);
 //                print_line_formatted(MW_X, MW_Y, 0, "%2d %2d %2d %2d", Game.F1, Game.F2, Game.F3, Game.F4);

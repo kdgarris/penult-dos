@@ -1568,7 +1568,7 @@ const char *Messages[] = {
     "I miss my ship.",
     "The Southern continent holds great mysteries.",
     "Are you the new hero?",
-    "A skilled mage can use 'Sun' for divination.",
+    "A skilled mage can use \"Sun\" for divination.",
     "What is your name? Your job?",
     "The force barriers will keep most from passing.",
     "The castle probably has many secret passages.",
