@@ -614,6 +614,11 @@ const Trigger keep_of_shadow10[] = {
     {25, &start_combat}
 };
 
+const Trigger keep_of_shadow24[] = {
+    {22, &enter_control_room},
+    {23, &exit_control_room}
+};
+
 const Trigger keep_of_shadow37[] = {
     {6, &start_combat}
 };
@@ -700,6 +705,7 @@ const TList thanas_hold_triggers[] = {
 const TList keep_of_shadow_triggers[] = {
     {7, keep_of_shadow7, 1},
     {10, keep_of_shadow10, 1},
+    {24, keep_of_shadow24, 2},
     {37, keep_of_shadow37, 1},
     {40, keep_of_shadow40, 1},
     {0, NULL, 0}
@@ -841,11 +847,13 @@ unsigned volatile int ClockTicks = 0;
 unsigned int PrevTicks = 0;
 uint8_t LogicalTicks = 0;
 extern volatile int SaveKey;
-char *CurrentMap;
+char *CurrentMap = NULL;
+char *EndGameMap = NULL;
 uint16_t *CurrentFont;
 Bitmap *Tiles[NUM_TILES];
 Bitmap *DTiles[NUM_DTILES];
 Bitmap *AltTiles[NUM_ALTTILES];
+Bitmap *BackupTiles[4];
 Bitmap *ViewportBuffer;
 
 struct {
@@ -922,6 +930,7 @@ struct {
    unsigned int DivinationActive : 1;
    unsigned int KeepSide : 1;
    unsigned int MantraSpoken : 1;
+   unsigned int InControlRoom : 1;
 } Flags;
 
 struct {
@@ -934,6 +943,7 @@ struct {
     uint8_t DisguiseTile;
     uint8_t CurrentPalette;
     uint8_t Wind;
+    uint8_t EndGameState;
     unsigned int TmpTicks;
     uint8_t F1;
     uint8_t F2;
@@ -1393,7 +1403,7 @@ void draw_stats(uint8_t FullDraw) {
     if (FullDraw) {
         if (Flags.InDungeon) {
             if (Dungeon.Orb) {
-                print_line_formatted(SW_X, SW_Y, 1, "%-10s(ORB)", DungeonName[Dungeon.Number]);
+                print_line_formatted(SW_X, SW_Y, 1, "%-12sORB", DungeonName[Dungeon.Number]);
             } else {
                 print_line_formatted(SW_X, SW_Y, 1, "%-15s", DungeonName[Dungeon.Number]);
             }
@@ -1486,6 +1496,10 @@ void load_tiles() {
     }
     fclose(TileFile);
 
+    BackupTiles[0] = Tiles[4];
+    BackupTiles[1] = Tiles[5];
+
+
     if (! (TileFile = fopen ("alttiles.cga", "rb"))) {
         oh_shit("Can't open \"alttiles.cga\" for reading.");
     }
@@ -1541,6 +1555,8 @@ void leave_town() {
             print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__EXITING_TO_FARADUR]);
         }
         Flags.MessageActive = 1;
+        Tiles[4] = BackupTiles[0];
+        Tiles[5] = BackupTiles[1];
     }
     load_map(Hero.CurrentMap);
     if(!Flags.Composite) {
@@ -1555,13 +1571,10 @@ void leave_town() {
 
 void update_town_map_at(int8_t MapX, int8_t MapY) {
     int CountX, CountY;
-    int ScreenX, ScreenY;
     int DataTile;
     uint8_t FillTile = CurrentMap[0];
 
-    ScreenY = 0;
     for(CountY = MapY; CountY < (MapY + VIEWPORT_HEIGHT); CountY++) {
-        ScreenX = 0;
         for(CountX = MapX; CountX < (MapX + VIEWPORT_WIDTH); CountX++) {
             if((CountX < 0) || (CountX >= TOWN_WIDTH) || (CountY < 0) || (CountY >= TOWN_HEIGHT)) {
                 DataTile = FillTile;
@@ -1571,9 +1584,7 @@ void update_town_map_at(int8_t MapX, int8_t MapY) {
             viewport_prev[CountX-MapX][CountY-MapY] = viewport[CountX-MapX][CountY-MapY];
             viewport[CountX-MapX][CountY-MapY] = DataTile;
 
-            ScreenX += 16;
         }
-        ScreenY += 16;
     }
     if (Hero.InShip) {
         viewport[5][4] = SHIP_TILE;
@@ -1613,7 +1624,6 @@ void update_dungeon_map_at(int8_t MapX, int8_t MapY) {
 
 void update_world_map_at(int8_t MapX, int8_t MapY) {
     int CountX, CountY;
-    int ScreenX, ScreenY;
     int WrapX, WrapY, WrapYWW;
     int DataTile;
 
@@ -1629,9 +1639,7 @@ void update_world_map_at(int8_t MapX, int8_t MapY) {
         MapY -= WORLD_HEIGHT;
     }
 
-    ScreenY = 0;
     for(CountY = MapY; CountY < (MapY + VIEWPORT_HEIGHT); CountY++) {
-        ScreenX = 0;
         WrapY = CountY;
         if(WrapY < 0) {
             WrapY += WORLD_HEIGHT;
@@ -1649,9 +1657,7 @@ void update_world_map_at(int8_t MapX, int8_t MapY) {
             DataTile = CurrentTiles[CurrentMap[WrapYWW + WrapX]];
             viewport_prev[CountX-MapX][CountY-MapY] = viewport[CountX-MapX][CountY-MapY];
             viewport[CountX-MapX][CountY-MapY] = DataTile;
-            ScreenX += 16;
         }
-        ScreenY += 16;
     }
     
     if (Hero.InShip) {
@@ -2055,6 +2061,64 @@ void display_dungeon_map() {
     scr_put(MyScreen, ViewportBuffer, 4, 4, DRAW_PSET);
 }
 
+void display_endgame_map() {
+     uint8_t CountX, CountY;
+     uint8_t SceneNumber;
+     int ScreenX, ScreenY, DataTile;
+     char *CurrentEndGameMap;
+//    char *CurrentEndGameMap = EndGameMap;
+
+    if (Hero.HomingGem) {
+        SceneNumber = EndGameGemScene[Game.EndGameState - 1];
+        if (SceneNumber == ENDGAME_HOME_SCENE) {
+            Tiles[4] = BackupTiles[0];
+        }
+    } else {
+        SceneNumber = EndGameNoGemScene[Game.EndGameState - 1];
+        if (SceneNumber == ENDGAME_RESURRECTION_SCENE) {
+            Tiles[4] = AltTiles[AltWall[CASTLE_MAP]];
+            Tiles[5] = AltTiles[AltWallSecret[CASTLE_MAP]];
+        }
+    }
+
+    if (SceneNumber == ENDGAME_DUSKGROVE_SCENE) {
+        Tiles[4] = AltTiles[AltWall[DUSKGROVE_MAP]];
+    } else if (SceneNumber == ENDGAME_KNIGHTING_SCENE) {
+        Tiles[4] = AltTiles[AltWall[CASTLE_MAP]];
+    }
+
+    CurrentEndGameMap = (EndGameMap + (SceneNumber * VIEWPORT_WIDTH * VIEWPORT_HEIGHT));
+
+    if (!Flags.Composite && !Flags.Monochrome) {
+        scr_palette(MyScreen, Game.CurrentPalette, 0);
+    }
+
+    for(CountY = 0; CountY < VIEWPORT_HEIGHT; CountY++) {
+        for(CountX = 0; CountX < VIEWPORT_WIDTH; CountX++) {
+            if (SceneNumber == ENDGAME_VOID_SCENE) {
+                DataTile = NOTHING_TILE;
+            } else {
+                DataTile = CurrentTiles[CurrentEndGameMap[(CountY * VIEWPORT_WIDTH) + CountX]];
+            }
+            viewport_prev[CountX][CountY] = viewport[CountX][CountY];
+            viewport[CountX][CountY] = DataTile;
+        }
+    }
+
+    ScreenY = 0;
+    for(CountY = 0; CountY < VIEWPORT_HEIGHT; CountY++) {
+        ScreenX = 0;
+        for(CountX = 0; CountX < VIEWPORT_WIDTH; CountX++) {
+            if((viewport_prev[CountX][CountY] != viewport[CountX][CountY])) {
+                bit_put(ViewportBuffer, Tiles[viewport[CountX][CountY]], ScreenX, ScreenY, DRAW_PSET);
+            }
+            ScreenX += 16;
+        }
+        ScreenY += 16;
+    }
+    scr_put(MyScreen, ViewportBuffer, 4, 4, DRAW_PSET);   
+}
+
 int get_direction() {
     if((SaveKey == KEY_LEFT) || (SaveKey == KEY_RIGHT) ||
        (SaveKey == KEY_UP) || (SaveKey == KEY_DOWN)) {
@@ -2173,6 +2237,7 @@ void CheckMoveHero() {
         if (Game.Turns&3) {
             Hero.X = Hero.PrevX;
             Hero.Y = Hero.PrevY;
+            clear_text_window();
             print_line(MW_X, MW_Y+30, 0, "Slow progress!");
             Flags.MessageActive = 1;
             SaveKey = 0;
@@ -2363,8 +2428,15 @@ void cleanup() {
     MyKeyHandler->destroy();
     outp( 0x61, ( inp( 0x61 ) & 0xFC ) );
     set_timer(0);
-    free(CurrentMap);
-    free(CurrentFont);
+    if (CurrentMap) {
+        free(CurrentMap);
+    }
+    if (EndGameMap) {
+        free(EndGameMap);
+    }
+    if (CurrentFont) {
+        free(CurrentFont);
+    }
 }
 
 void set_timer(unsigned int Divisor) {
@@ -2517,7 +2589,7 @@ uint8_t dungeon_triggers() {
             }
             print_line(MW_X, MW_Y+30, 0, "Teleported!");
             Flags.MessageActive = 1;
-            play_sound(CAST_SOUND);
+            play_sound(WIND_SOUND);
             break;
         case DUNGEON_MESSAGE:
             while(1) {
@@ -2610,6 +2682,8 @@ void do_death() {
     Hero.HP = Hero.MHP;
     Hero.SP = Hero.MSP;
     Hero.Status = STATUS_GOOD;
+    Tiles[4] = BackupTiles[0];
+    Tiles[5] = BackupTiles[1];
     load_map(Hero.CurrentMap);
     print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_HAVE_BEEN_RESTORED]);
     Flags.MessageActive = 1;
@@ -2870,8 +2944,10 @@ void load_town(uint8_t TownX, uint8_t TownY, uint8_t TownMap) {
     Hero.PrevY = Hero.Y;
     Hero.X = TownX;
     Hero.Y = TownY;
-    Tiles[4] = AltTiles[AltWall[TownMap]];
-    Tiles[5] = AltTiles[AltWallSecret[TownMap]];
+    if (TownMap != ACADIA_MAP) {
+        Tiles[4] = AltTiles[AltWall[TownMap]];
+        Tiles[5] = AltTiles[AltWallSecret[TownMap]];
+    }
     load_map(TownMap);   
     Flags.MessageActive = 1;
 }
@@ -3082,7 +3158,7 @@ void load_map(uint8_t MapNum) {
         Game.MapWidth = DUNGEON_WIDTH;
         Game.MapHeight = DUNGEON_HEIGHT;
 
-        if(fread(CurrentMap, 1, (DUNGEON_WIDTH * DUNGEON_HEIGHT * DUNGEON_LEVELS), CurrentMapFile) != (DUNGEON_WIDTH * DUNGEON_HEIGHT * DUNGEON_LEVELS)) {
+        if(fread(CurrentMap, DUNGEON_LEVELS, (DUNGEON_WIDTH * DUNGEON_HEIGHT), CurrentMapFile) != (DUNGEON_WIDTH * DUNGEON_HEIGHT)) {
             oh_shit("Dungeon map file is corrupt.");
         }
 
@@ -3121,6 +3197,9 @@ void load_map(uint8_t MapNum) {
     }
     Game.PrevTurns = Game.Turns;
     Game.Turns++;
+    if (Flags.InControlRoom) {
+        exit_control_room();
+    }
     clear_stat_window();
     draw_stats(1);
 }
@@ -3793,7 +3872,7 @@ void queen_talk() {
             play_sound(CAST_SOUND);
             print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_ARE_NOW_GREATER]);
             Hero.XP -= 128;
-            draw_stats(0);
+            draw_stats(1);
         }
     } else {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__GO_AND_EXPERIENCE_MORE]);
@@ -3978,7 +4057,7 @@ void do_buy_yes() {
             Hero.Armor = 2;
             break;
         case CURE_POTION_VENDOR:
-            if(Hero.HealPotions >= 7) {
+            if(Hero.CurePotions >= 7) {
                 print_line(MW_X, MW_Y, 1, Messages[STATUS__THE_MERCHANT_SAYS]);  
                 print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__YOU_HAVE_ENOUGH_ALREADY]);
                 return;
@@ -4288,6 +4367,8 @@ void circle_control_result() {
         print_line(MW_X, MW_Y+30, 0, "The force field is deactivated!");
         flash_effect();
         play_sound(CAST_SOUND);
+        Tiles[FORCE_FIELD_TILE] = AltTiles[21];
+        Tiles[FORCE_FIELD_TILE_ALT] = AltTiles[21];
         Flags.MantraSpoken = 1;
     } else {
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__NOTHING_MUCH_HAPPENS]);
@@ -4898,8 +4979,8 @@ void do_homing_gem() {
     Hero.PrevX = 48;
     Hero.PrevY = 15;
     Hero.CurrentMap = ACADIA_MAP;
-    Tiles[4] = AltTiles[AltWall[ACADIA_MAP]];
-    Tiles[5] = AltTiles[AltWallSecret[ACADIA_MAP]];
+    Tiles[4] = BackupTiles[0];
+    Tiles[5] = BackupTiles[1];
     print_line(MW_X, MW_Y+30, 0, "Teleported!");
     flash_effect();
     Flags.MessageActive = 1;
@@ -5103,7 +5184,8 @@ void load_arena(int CurrentArena) {
         print_line(MW_X, MW_Y+30, 0, Messages[STATUS__VICTORY]);
         play_music(VICTORY_MUSIC);
         Combat.Timer = 15;
-        if (!Hero.InShip && (Combat.Arena != SHIP_ARENA)) {
+        if (!Hero.InShip && (Combat.Arena != SHIP_ARENA) &&
+         (Hero.CurrentMap != KEEP_OF_SHADOW_MAP)) {
             Combat.Gold = find_gold(Combat.EnemyPower);
         }
         return;
@@ -5775,9 +5857,9 @@ void damage_dragon(int Damage) {
         Hero.DragonHP -= Damage;
     } else {
         if (Combat.DragonGrappled && (Enemy == Combat.DragonGrappleEnemy)) {
-            print_line(MW_X, MW_Y+30, 0, "Dragon gets squeezed!");
+            print_line(MW_X, MW_Y+20, 0, "Dragon gets squeezed!");
         } else {
-            print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__THE_DRAGON_IS_HIT]);
+            print_line(MW_X, MW_Y+20, 0, Messages[MESSAGE__THE_DRAGON_IS_HIT]);
         }
         print_line(MW_X, MW_Y+30, 0, Messages[MESSAGE__FEY_DRAGON_DISSIPATES]);
         Combat.Timer += 10;
@@ -6565,6 +6647,13 @@ void do_cast_sun() {
         }
     }
 
+    if (Flags.InControlRoom) {
+        if (Flags.MantraSpoken) {
+            advance_endgame_state();
+            return;
+        }
+    }
+
     if (Flags.InDungeon && !Dungeon.Light && Combat.Active) {
         strncpy(Combat.EnemyName, MonsterName[Combat.EnemyNumber], 12);
         Combat.EnemyTile = EnemyToTile[Combat.EnemyNumber];
@@ -6865,10 +6954,13 @@ void CheckEncountersAndStatus() {
         if (check_triggers()) {
             return;
         }
-        if (((Hero.CurrentMap == DUSKGROVE_MAP) ||
+        if ((Hero.CurrentMap == DUSKGROVE_MAP) ||
          (Hero.CurrentMap == THANAS_HOLD_MAP) ||
-         (Hero.CurrentMap == KEEP_OF_SHADOW_MAP)) &&
-         !Flags.Disguised) {
+         (Hero.CurrentMap == KEEP_OF_SHADOW_MAP)) {
+            if (Flags.Disguised || (CurrentTile == FLOOR_TILE) ||
+             Flags.InControlRoom) {
+                return;
+            }
             if (!((Hero.X + Hero.Y)&7)) {
                 start_combat();
                 return;
@@ -7061,9 +7153,13 @@ void do_poison() {
     Hero.CurePotions = 7;
     Hero.DisguiseDust = 1;
     Hero.HomingGem = 1;
+    Hero.Gold = 1000;
     print_line(MW_X, MW_Y+30, 0, "Restocked!");
     Flags.MessageActive = 1;
 //    Hero.Status = STATUS_POISONED;
+//    enter_control_room();
+//    Game.EndGameState = 1;
+    Hero.XP = 128;
 }
 
 
@@ -7305,7 +7401,7 @@ int main(int argc, char *argv[]) {
                         Flags.Flipped = 1;
                     }
                 }
-                if(!Menu.Active && !Game.Pause) {
+                if(!Menu.Active && !Game.Pause && !Game.EndGameState) {
                     if(Flags.InDungeon) {
                         CheckMoveHeroDungeon();
                     } else {
@@ -7320,7 +7416,7 @@ int main(int argc, char *argv[]) {
             case 1:
                 Game.TmpTicks = ClockTicks;
                 if(!Combat.Active) {
-                    if(!Game.FlashTimer && !Game.Pause) {
+                    if(!Game.FlashTimer && !Game.Pause && !Game.EndGameState) {
                         if(Flags.InDungeon) {
                             update_dungeon_map_at(Dungeon.X - 2, Dungeon.Y - 2);
                         } else {
@@ -7332,10 +7428,14 @@ int main(int argc, char *argv[]) {
                         }
                     }
                 }
-                if(Menu.Active && !Game.FlashTimer) {
+                if(Menu.Active && !Game.FlashTimer && !Game.EndGameState) {
                     check_update_menu();
                 }
                 if(check_button_press() && !Game.FlashTimer) {
+                    if (Game.EndGameState) {
+                        advance_endgame_state();
+                        break;
+                    }
                     if (Game.Pause == 0xFF) {
                         Game.Pause = 0;
                         clear_text_window();
@@ -7359,7 +7459,9 @@ int main(int argc, char *argv[]) {
                 Game.TmpTicks = ClockTicks;
                 if(!Combat.Active) {
                     if (!Flags.InDungeon) {
-                        do_vision();
+                        if (!Game.EndGameState) {
+                            do_vision();
+                        }
                     } else if (!Flags.DivinationActive) {
                         do_dungeon_vision();
                     }
@@ -7378,9 +7480,13 @@ int main(int argc, char *argv[]) {
                 if(Flags.InDungeon && !Combat.Active) {
                     display_dungeon_map();
                 } else {
-                    display_map_alt();
+                    if (Game.EndGameState) {
+                        display_endgame_map();
+                    } else {
+                        display_map_alt();
+                    }
                 }
-                if(Flags.Moved && !Combat.Active) {
+                if(Flags.Moved && !Combat.Active && !Game.EndGameState) {
                     CheckEncountersAndStatus();
                     Flags.PrevMoved = 1;
                 }
@@ -7408,7 +7514,7 @@ void check_spirit_hammer() {
             Menu.Choices = 1;
             Menu.MarkerPos[0] = 0;
             Menu.Selection = 0;
-            Menu.Actions[0] = fire_ritual_function;
+            Menu.Actions[0] = give_spirit_hammer;
         }
         print_pager_line(TmpLine);
     } else {
@@ -7430,5 +7536,93 @@ void give_spirit_hammer() {
     Flags.MessageActive = 1;
 }
 
+void enter_control_room() {
+    FILE *EndGameMapFile;
+
+    int EndGameBytes = VIEWPORT_WIDTH * VIEWPORT_HEIGHT * 6;
+
+    if (Flags.InControlRoom) {
+        return;
+    }
+    Flags.InControlRoom = 1;
+    BackupTiles[2] = Tiles[FORCE_FIELD_TILE];
+    BackupTiles[3] = Tiles[FORCE_FIELD_TILE_ALT];
+    TileProperties[FORCE_FIELD_TILE].Solid = 1;
+    TileProperties[FORCE_FIELD_TILE_ALT].Solid = 1;
+
+    if(!(EndGameMapFile = fopen("endgame.map", "rb"))) {
+        oh_shit("Can't open endgame.map!");
+    }
+
+    EndGameMap = malloc(EndGameBytes);
+
+    if(fread(EndGameMap, 1, EndGameBytes, EndGameMapFile) != EndGameBytes) {
+        oh_shit("End Game map file is corrupt.");
+    }
+
+    fclose(EndGameMapFile);
+
+
+    print_line(MW_X, MW_Y, 1, Messages[STATUS__THANA_THE_USURPER]);
+    print_line(MW_X, MW_Y+30, 0, "Ha! You can not defeat me! >>");  
+    Game.Pause = 0xFF;
+}
+
+
+void exit_control_room() {
+    if (!Flags.InControlRoom) {
+        return;
+    }
+    Flags.InControlRoom = 0;
+    Tiles[FORCE_FIELD_TILE] = BackupTiles[2];
+    Tiles[FORCE_FIELD_TILE_ALT] = BackupTiles[3];
+    if (Hero.EnergyRitual) {
+        TileProperties[FORCE_FIELD_TILE].Solid = 0;
+        TileProperties[FORCE_FIELD_TILE_ALT].Solid = 0;
+    }
+    Game.EndGameState = 0;
+    Game.CurrentPalette = DEFAULT_PALETTE;
+    free(EndGameMap);
+}
+
+void advance_endgame_state() {
+    char *TmpLine;
+    char Honorific[7];
+
+    if (Game.EndGameState == 7) {
+        return;
+    }
+
+    if (Game.EndGameState < 7) {
+        Game.EndGameState++;
+    }
+
+    clear_text_window();
+
+    if (EndGameGemText[Game.EndGameState - 1] == ENDGAME_KNIGHTING_TEXT) {
+        switch (Hero.Gender) {
+            case 0:
+                strcpy(Honorific, "Dame");
+                break;
+            case 1:
+                strcpy(Honorific, "Sir");
+                break;
+            case 2:
+                strcpy(Honorific, "Knight");
+                break;
+
+        }
+        TmpLine = malloc(strlen(EndGameMessages[ENDGAME_KNIGHTING_TEXT]) + 15);
+        sprintf(TmpLine, EndGameMessages[ENDGAME_KNIGHTING_TEXT], Honorific, Hero.Name);
+    } else {
+        if (Hero.HomingGem) {
+            TmpLine = (char *)EndGameMessages[EndGameGemText[Game.EndGameState - 1]];
+        } else {
+            TmpLine = (char *)EndGameMessages[EndGameNoGemText[Game.EndGameState - 1]];
+        }
+    }
+
+    print_pager_line(TmpLine);
+}
 
 

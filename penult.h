@@ -104,6 +104,7 @@ void do_dungeon_vision();
 // void display_map();
 void display_map_alt();
 void display_dungeon_map();
+void display_endgame_map();
 int get_direction();
 void CheckMoveHero();
 void CheckMoveHeroDungeon();
@@ -270,6 +271,9 @@ void do_poison();
 void intro_text();
 void check_spirit_hammer();
 void give_spirit_hammer();
+void enter_control_room();
+void exit_control_room();
+void advance_endgame_state();
 
 typedef struct {
    uint8_t Y;
@@ -308,6 +312,7 @@ typedef struct {
 #define TARGET_TILE 90
 #define FORCE_FIELD_TILE 21
 #define FORCE_FIELD_TILE_ALT 165
+#define FLOOR_TILE 22
 
 #define PLAINS_ARENA 0
 #define FOREST_ARENA 1

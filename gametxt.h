@@ -4,6 +4,7 @@
 #define __CGALIB__
 
 
+extern const char *EndGameMessages[];
 extern const char *Messages[];
 extern const char *DungeonMessages[];
 extern const char *Armor[];
@@ -11,6 +12,10 @@ extern const char *Melee[];
 extern const char *Ranged[];
 extern const char *Status[];
 extern const char *Gender[];
+extern const char EndGameNoGemScene[];
+extern const char EndGameGemScene[];
+extern const char EndGameNoGemText[];
+extern const char EndGameGemText[];
 extern const char MenuText[];
 extern const char MenuChoices[];
 extern const char *MarkerPos[];
@@ -147,6 +152,25 @@ extern const char AltWallSecret[];
 #define DRAGON_MONSTER_TILE_NUMBER 107
 
 #define DUNGEON_MONSTER_OFFSET 26
+
+#define ENDGAME_OPENING_SCENE       0
+#define ENDGAME_BLAST_SCENE         1
+#define ENDGAME_RESURRECTION_SCENE  2
+#define ENDGAME_HOME_SCENE          3
+#define ENDGAME_DUSKGROVE_SCENE     4
+#define ENDGAME_KNIGHTING_SCENE     5
+#define ENDGAME_VOID_SCENE          6
+
+#define ENDGAME_OPENING_TEXT        0
+#define ENDGAME_BLAST_TEXT          1
+#define ENDGAME_RESURRECTION_TEXT   2
+#define ENDGAME_HOME_TEXT           3
+#define ENDGAME_DUSKGROVE_TEXT      4
+#define ENDGAME_KNIGHTING_TEXT      5
+#define ENDGAME_VOID_TEXT           6
+#define ENDGAME_VOID_GEM_TEXT       7
+#define ENDGAME_FINAL_TEXT          8
+
 
 
 #define STATUS__QUEEN_AVALINE 0
@@ -314,8 +338,8 @@ extern const char AltWallSecret[];
 #define MESSAGE__GO_AND_EXPERIENCE_MORE 162
 #define MESSAGE__YOU_CANT_GO_THAT_WAY 163
 #define MESSAGE__DUNGEON_MENU 164
-#define MESSAGE__DUNGEON_MENU_UP 165
-#define MESSAGE__DUNGEON_MENU_DOWN 166
+#define MESSAGE__ROGUE_GOBLIN_ULA 165
+#define STATUS__ROGUE_GOBLIN_ULA 166
 #define MESSAGE__DUNGEON_MENU_UP_DOWN 167
 #define MESSAGE__OUTDOOR_MENU 168
 #define MESSAGE__HERO_COMBAT_MENU 169
@@ -648,8 +672,9 @@ extern const char AltWallSecret[];
 #define RAY_THE_APPRENTICE 126
 #define SAM_THE_ADVENTURER 127
 #define ROLF_THE_MIGHTY 128
+#define ROGUE_GOBLIN_ULA 129
 
-#define NPC_MAX      ROLF_THE_MIGHTY
+#define NPC_MAX      ROGUE_GOBLIN_ULA
 
 #define DEFAULT_FUNCTION            0
 #define QUEEN_FUNCTION              1
