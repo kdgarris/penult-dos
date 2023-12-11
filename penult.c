@@ -917,6 +917,7 @@ struct {
 struct {
    unsigned int JoystickPresent : 1;
    unsigned int Monochrome : 1;
+   unsigned int HiRes : 1;
    unsigned int Composite : 1;
    unsigned int Fast : 1;
    unsigned int FastDelayed : 1;
@@ -924,7 +925,6 @@ struct {
    unsigned int InDungeon : 1;
    unsigned int Flipped : 1;
    unsigned int Moved : 1;
-   unsigned int PrevMoved : 1;
    unsigned int WeaponCorroded : 1;
    unsigned int Disguised : 1;
    unsigned int DivinationActive : 1;
@@ -1334,6 +1334,10 @@ void parse_option(char Opt) {
         case 'M':
             Flags.Monochrome = 1;
             break;
+        case 'h':
+        case 'H':
+            Flags.HiRes = 1;
+            break;
         case 'c':
         case 'C':
             Flags.Composite = 1;
@@ -1354,8 +1358,14 @@ void load_display_gui() {
     bit_box(ScreenBuffer, 0, 0, 320, 200);
     bit_ink(ScreenBuffer, 3);
 
-    if (! (GUIFile = fopen ("gui.dat", "rb"))) {
-        oh_shit("Can't open \"gui.dat\" for reading.");
+    if (Flags.Monochrome) {
+        if (! (GUIFile = fopen ("guimono.dat", "rb"))) {
+            oh_shit("Can't open \"guimono.dat\" for reading.");
+        }
+    } else {
+        if (! (GUIFile = fopen ("gui.dat", "rb"))) {
+            oh_shit("Can't open \"gui.dat\" for reading.");
+        }
     }
     fseek(GUIFile, 8, SEEK_SET);
     if(!(HSep = bit_read(GUIFile))) {
@@ -1484,9 +1494,15 @@ void load_tiles() {
     FILE *DTileFile;
     int Count;
 
-    if (! (TileFile = fopen ("tiles.cga", "rb"))) {
-        oh_shit("Can't open \"tiles.cga\" for reading.");
-    }
+    if (Flags.Monochrome) {
+        if (! (TileFile = fopen ("montiles.cga", "rb"))) {
+            oh_shit("Can't open \"montiles.cga\" for reading.");
+        }
+    } else {
+        if (! (TileFile = fopen ("tiles.cga", "rb"))) {
+            oh_shit("Can't open \"tiles.cga\" for reading.");
+        }
+    } 
     fseek(TileFile, 8, SEEK_SET);
     for(Count = 0; Count < NUM_TILES; Count++) {
         Tiles[Count] = bit_read(TileFile);
@@ -1499,9 +1515,14 @@ void load_tiles() {
     BackupTiles[0] = Tiles[4];
     BackupTiles[1] = Tiles[5];
 
-
-    if (! (TileFile = fopen ("alttiles.cga", "rb"))) {
-        oh_shit("Can't open \"alttiles.cga\" for reading.");
+    if (Flags.Monochrome) {
+        if (! (TileFile = fopen ("altdtile.cga", "rb"))) {
+            oh_shit("Can't open \"altdtile.cga\" for reading.");
+        }
+    } else {
+        if (! (TileFile = fopen ("alttiles.cga", "rb"))) {
+            oh_shit("Can't open \"alttiles.cga\" for reading.");
+        }
     }
     fseek(TileFile, 8, SEEK_SET);
     for(Count = 0; Count < NUM_ALTTILES; Count++) {
@@ -1512,8 +1533,14 @@ void load_tiles() {
     }
     fclose(TileFile);
 
-    if (! (DTileFile = fopen ("dtiles.cga", "rb"))) {
-        oh_shit("Can't open \"dtiles.cga\" for reading.");
+    if (Flags.Monochrome) {
+        if (! (DTileFile = fopen ("dtilesm.cga", "rb"))) {
+            oh_shit("Can't open \"dtilesm.cga\" for reading.");
+        }
+    } else {
+        if (! (DTileFile = fopen ("dtiles.cga", "rb"))) {
+            oh_shit("Can't open \"dtiles.cga\" for reading.");
+        }
     }
     fseek(DTileFile, 8, SEEK_SET);
     for(Count = 0; Count < NUM_DTILES; Count++) {
@@ -1996,7 +2023,7 @@ void display_map_alt() {
     }
 
 
-    if (!Flags.Composite && !Flags.Monochrome) {
+    if (!Flags.Composite && !Flags.Monochrome && !Flags.HiRes) {
         scr_palette(MyScreen, Game.CurrentPalette, 0);
     }
     for(CountY = 0; CountY < VIEWPORT_HEIGHT; CountY++) {
@@ -2034,7 +2061,7 @@ void display_dungeon_map() {
     int CountX, CountY;
     int ScreenX, ScreenY;
 
-    if (!Flags.Composite && !Flags.Monochrome) {
+    if (!Flags.Composite && !Flags.Monochrome && !Flags.HiRes) {
         scr_palette(MyScreen, Game.CurrentPalette, 0);
     }
 
@@ -2089,7 +2116,7 @@ void display_endgame_map() {
 
     CurrentEndGameMap = (EndGameMap + (SceneNumber * VIEWPORT_WIDTH * VIEWPORT_HEIGHT));
 
-    if (!Flags.Composite && !Flags.Monochrome) {
+    if (!Flags.Composite && !Flags.Monochrome && !Flags.HiRes) {
         scr_palette(MyScreen, Game.CurrentPalette, 0);
     }
 
@@ -5717,7 +5744,7 @@ void update_missile() {
                     Combat.MissileActive = 0;
                     play_sound(MISS_SOUND);
                 }
-                Combat.Timer = 6;
+                Combat.Timer += 6;
                 advance_combat_state();
                 return;
             } // else enemy shot passes through enemy
@@ -7149,6 +7176,7 @@ void exit_ship() {
 }
 
 void do_poison() {
+    return;
     Hero.HealPotions = 7;
     Hero.CurePotions = 7;
     Hero.DisguiseDust = 1;
@@ -7258,7 +7286,7 @@ int main(int argc, char *argv[]) {
         Count++;
     }
 
-    if(Flags.Monochrome) {
+    if(Flags.HiRes) {
         Mode = 6;
     } else {
         if(Flags.Composite) {
@@ -7470,9 +7498,6 @@ int main(int argc, char *argv[]) {
                         load_arena(Combat.Arena);
                     }
                 }
-                if (Flags.PrevMoved && !Flags.Moved) {
-                    Flags.PrevMoved = 0;
-                }
                 Game.F3 = abs(ClockTicks - Game.TmpTicks);
                 break;
             case 3:
@@ -7488,7 +7513,6 @@ int main(int argc, char *argv[]) {
                 }
                 if(Flags.Moved && !Combat.Active && !Game.EndGameState) {
                     CheckEncountersAndStatus();
-                    Flags.PrevMoved = 1;
                 }
                 Game.F4 = abs(ClockTicks - Game.TmpTicks);
 //                print_line_formatted(MW_X, MW_Y, 0, "%2d %2d %2d %2d", Game.F1, Game.F2, Game.F3, Game.F4);

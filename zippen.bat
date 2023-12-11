@@ -1,0 +1,1 @@
+zip penult.zip penult.exe *.fnt *.dat *.map *.cga
